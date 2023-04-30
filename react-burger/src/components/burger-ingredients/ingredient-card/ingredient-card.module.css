@@ -1,0 +1,34 @@
+.main {
+    max-width: 272px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.priceBlock {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+}
+
+.nameText {
+    text-align: center;
+    height: 48px;
+    padding-top: 4px;
+}
+
+.quantity {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background-color: #4C4CFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+}

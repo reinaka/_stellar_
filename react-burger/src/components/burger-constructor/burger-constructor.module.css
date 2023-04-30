@@ -1,0 +1,46 @@
+
+.scroll {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: calc(100vh - 520px);
+}
+
+.scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    width: 8px;
+    background-color: #2F2F37;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+    height: 63%;
+    min-height: 50%;
+}
+
+.preOrderInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 40px;
+}
+
+.prePriceInfo {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.prePriceInfo svg {
+    width: 33px;
+    height: 33px;
+}
+
+
+

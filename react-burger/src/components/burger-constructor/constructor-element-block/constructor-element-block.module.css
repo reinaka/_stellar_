@@ -1,0 +1,6 @@
+.constructorElementBlock {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+}
