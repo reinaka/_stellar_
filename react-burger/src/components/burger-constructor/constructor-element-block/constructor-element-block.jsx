@@ -26,12 +26,13 @@ class ConstructorElementBlock extends React.Component {
 
 ConstructorElementBlock.propTypes = {
     type: PropTypes.string,
-    text: PropTypes.string,
+    name: PropTypes.string,
     price: PropTypes.oneOfType([PropTypes.string,PropTypes.number]),
     thumbnail: PropTypes.string,
     isLocked: PropTypes.oneOfType([PropTypes.string,PropTypes.bool]),
     _id: PropTypes.string,
     selectedBun: PropTypes.string,
+    image: PropTypes.string,
 }
 
 export default ConstructorElementBlock;
