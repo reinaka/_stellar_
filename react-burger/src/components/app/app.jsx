@@ -19,9 +19,14 @@ class App extends React.Component {
     }
 
     getData = () => {
-        let address = 'https://norma.nomoreparties.space/api/ingredients';
+        const address = 'https://norma.nomoreparties.space/api/ingredients';
         fetch(address)
-            .then(res => res.json())
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка ${res.status}`);
+            })
             .then(apiData => this.setState({...this.state, data: apiData.data, isLoading: false, hasError: false}))
             .catch(e => this.setState({...this.state, isLoading: false, hasError: true}))
     };
@@ -32,7 +37,7 @@ class App extends React.Component {
                 <AppHeader />
                 <div className={styles.generalBlock}>
                     <main>
-                        <p className="text text_type_main-large pt-10 pb-5">Соберите бургер</p>
+                        <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
                         <div className={styles.contentBlock}>
                             <BurgerIngredients data={this.state.data}/>
                             <BurgerConstructor data={this.state.data}/>

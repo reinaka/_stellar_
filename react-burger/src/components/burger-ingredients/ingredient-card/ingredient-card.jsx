@@ -4,13 +4,9 @@ import styles from './ingredient-card.module.css';
 import PropTypes from 'prop-types';
 
 class IngredientCard extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
-            <div className={styles.main}>
+            <div className={styles.main} key={this.props.keyId}>
                 {this.props.quantity && (
                     <div className={styles.quantity}>
                         <p className="text text_type_digits-default">1</p>
@@ -32,6 +28,7 @@ IngredientCard.propTypes = {
     name: PropTypes.string,
     price: PropTypes.oneOfType([PropTypes.string,PropTypes.number]),
     quantity: PropTypes.oneOfType([PropTypes.string,PropTypes.number,PropTypes.bool]),
+    keyId: PropTypes.string,
 }
 
 export default IngredientCard;

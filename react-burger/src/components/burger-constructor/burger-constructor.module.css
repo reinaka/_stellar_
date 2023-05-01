@@ -42,5 +42,19 @@
     height: 33px;
 }
 
+.button_text {
+    font-size: 16px;
+}
+
+.button {
+    width: 215px;
+}
+
+.listUl {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
 
 

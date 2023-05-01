@@ -6,7 +6,7 @@ import styles from './app-header.module.css';
 class AppHeader extends React.Component {
     render() {
         return (
-            <div className={`${styles.headerWrapper} pt-4 pb-4`}>
+            <header className={`${styles.headerWrapper} pt-4 pb-4`}>
                 <nav className={styles.general}>
                     <span className={styles.span}>
                         <HeaderItemBlock icon={<BurgerIcon type="primary" />} text="Конструктор"/>
@@ -19,7 +19,7 @@ class AppHeader extends React.Component {
                         <HeaderItemBlock icon={<ProfileIcon type="secondary" />} text="Личный кабинет" textColor="text_color_inactive" styles="max-width:207px"/>
                     </span>
                 </nav>
-            </div>
+            </header>
         )
     }
 }

@@ -6,10 +6,6 @@ import PropTypes from 'prop-types';
 
 
 class BurgerIngredients extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const buns = this.props.data.filter(item => item.type === 'bun');
         const sauces = this.props.data.filter(item => item.type === 'sauce');
