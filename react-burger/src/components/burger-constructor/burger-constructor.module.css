@@ -1,9 +1,6 @@
 
 .scroll {
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
     height: calc(100vh - 536px);
 }
 
@@ -50,11 +47,22 @@
     width: 215px;
 }
 
+.constructorElementBlock {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+}
+
 .listUl {
     padding: 0;
     margin: 0;
     list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
+
 
 
 

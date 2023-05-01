@@ -1,12 +1,3 @@
-.main {
-    max-width: 272px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-}
-
 .priceBlock {
     display: flex;
     flex-direction: row;

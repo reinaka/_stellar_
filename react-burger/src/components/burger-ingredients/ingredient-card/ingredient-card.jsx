@@ -6,19 +6,19 @@ import PropTypes from 'prop-types';
 class IngredientCard extends React.Component {
     render() {
         return (
-            <div className={styles.main} key={this.props.keyId}>
-                {this.props.quantity && (
-                    <div className={styles.quantity}>
-                        <p className="text text_type_digits-default">1</p>
-                    </div>
-                )}
-                <img src={this.props.image} alt={this.props.name} className='pr-4 pl-4'/>
-                <span className={`${styles.priceBlock} mt-1 mb-1 pr-4 pl-4 pt-1`}>
-                    <p className="text text_type_digits-default">{this.props.price}</p>
-                    <CurrencyIcon />
-                </span>
-                <p className={`text text_type_main-default ${styles.nameText}`}>{this.props.name}</p>
-            </div>
+                <>
+                    {this.props.quantity && (
+                        <div className={styles.quantity}>
+                            <p className="text text_type_digits-default">1</p>
+                        </div>
+                    )}
+                    <img src={this.props.image} alt={this.props.name} className='pr-4 pl-4'/>
+                    <span className={`${styles.priceBlock} mt-1 mb-1 pr-4 pl-4 pt-1`}>
+                        <p className="text text_type_digits-default">{this.props.price}</p>
+                        <CurrencyIcon />
+                    </span>
+                    <p className={`text text_type_main-default ${styles.nameText}`}>{this.props.name}</p>
+                </>
         )
     }
 }

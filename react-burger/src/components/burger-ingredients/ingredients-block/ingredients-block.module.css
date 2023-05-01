@@ -1,5 +1,16 @@
-.main {
+.ulStyle {
+    margin: 0;
+    padding: 0;
     display: grid;
     grid-template-columns: minmax(auto, 272px) minmax(auto, 272px);
     gap: 24px;
+}
+
+.liStyle {
+    max-width: 272px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
 }

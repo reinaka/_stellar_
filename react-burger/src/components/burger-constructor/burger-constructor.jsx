@@ -8,17 +8,25 @@ class BurgerConstructor extends React.Component {
     render() {
         return ( 
             <article>
-                <ConstructorElementBlock {...this.props.data[0]} isLocked='true' selectedBun="верх"/>
+                <li className={`${styles.constructorElementBlock} ml-4`}>
+                    <ConstructorElementBlock {...this.props.data[0]} isLocked='true' selectedBun="верх" type="top"/>
+                </li>
                 <section className={`${styles.scroll} mt-4 mb-4`}>
-                    {this.props.data.map(item => {
-                        if (item.type !== 'bun') {
-                            return (
-                                <ConstructorElementBlock {...item}/>
-                            )
-                        }
-                    })}
+                    <ul className={styles.listUl}>
+                        {this.props.data.map(item => {
+                            if (item.type !== 'bun') {
+                                return (
+                                    <li className={`${styles.constructorElementBlock} ml-4`} key={item._id}>
+                                        <ConstructorElementBlock {...item}/>
+                                    </li>
+                                )
+                            }
+                        })}
+                    </ul>
                 </section> 
-                <ConstructorElementBlock {...this.props.data[0]} isLocked='true' selectedBun="низ"/>
+                <li className={`${styles.constructorElementBlock} ml-4`}>
+                    <ConstructorElementBlock {...this.props.data[0]} isLocked='true' selectedBun="низ" type="bottom"/>
+                </li>
 
                 <span className={`${styles.preOrderInfo} mt-10`}>
                     <span className={styles.prePriceInfo}>

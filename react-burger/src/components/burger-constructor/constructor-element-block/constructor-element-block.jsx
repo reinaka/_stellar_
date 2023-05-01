@@ -9,7 +9,7 @@ class ConstructorElementBlock extends React.Component {
         if(this.props.selectedBun) {selectedName = `${this.props.name} (${this.props.selectedBun})`}
         
         return (
-            <div className={`${styles.constructorElementBlock} ml-4`} key={this.props._id}>
+            <>
                 {!this.props.isLocked && <span className="pr-3"><DragIcon /></span>}
                 {this.props.isLocked && <span className={`${styles.dragHidden} pr-3`}><DragIcon /></span>}
                 <ConstructorElement 
@@ -19,7 +19,7 @@ class ConstructorElementBlock extends React.Component {
                     thumbnail={this.props.image}
                     isLocked={this.props.isLocked}
                 />
-            </div>
+            </>
         )
     }
 }
