@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 class IngredientsBlock extends React.Component {
     render() {
         return (
-            <>
+            <section>
                 <h2 className="text text_type_main-medium">{this.props.title}</h2>
                 <section className={`${styles.main} pl-4 pr-4 pt-6 pb-10`}>
                     {this.props.arr.map(item => {
@@ -22,7 +22,7 @@ class IngredientsBlock extends React.Component {
                         }
                     )}
                 </section>
-        </>
+        </section>
         )
     }
 }

@@ -7,15 +7,13 @@ import PropTypes from 'prop-types';
 class BurgerConstructor extends React.Component {
     render() {
         return ( 
-            <div>
+            <article>
                 <ConstructorElementBlock {...this.props.data[0]} isLocked='true' selectedBun="верх"/>
                 <section className={`${styles.scroll} mt-4 mb-4`}>
                     {this.props.data.map(item => {
                         if (item.type !== 'bun') {
                             return (
-                                <ul className={styles.listUl}>
-                                    <ConstructorElementBlock {...item}/>
-                                </ul>
+                                <ConstructorElementBlock {...item}/>
                             )
                         }
                     })}
@@ -31,7 +29,7 @@ class BurgerConstructor extends React.Component {
                         <p className={`${styles.button_text} text text_type_main-small`}>Оформить заказ</p>
                     </Button>
                 </span>
-            </div>
+            </article>
         )
     }
 }

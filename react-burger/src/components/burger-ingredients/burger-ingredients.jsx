@@ -12,14 +12,14 @@ class BurgerIngredients extends React.Component {
         const fillings = this.props.data.filter(item => item.type === 'main');
 
         return (
-            <section>
+            <article>
                 <Tabs />
                 <div className={styles.scroll}>
                     <IngredientsBlock arr={buns} title='Булки' id='bun'/>
                     <IngredientsBlock arr={sauces} title='Соусы' id='sauce'/>
                     <IngredientsBlock arr={fillings} title='Начинки' id='main'/>
                 </div>
-            </section>
+            </article>
         )
     }
 }
