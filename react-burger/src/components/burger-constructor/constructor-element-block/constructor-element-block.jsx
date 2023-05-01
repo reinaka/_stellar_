@@ -30,7 +30,7 @@ ConstructorElementBlock.propTypes = {
     text: PropTypes.string,
     price: PropTypes.oneOfType([PropTypes.string,PropTypes.number]),
     thumbnail: PropTypes.string,
-    isLocked: PropTypes.bool,
+    isLocked: PropTypes.oneOfType([PropTypes.string,PropTypes.bool]),
 }
 
 export default ConstructorElementBlock;

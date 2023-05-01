@@ -31,7 +31,7 @@ IngredientCard.propTypes = {
     image: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.oneOfType([PropTypes.string,PropTypes.number]),
-    quantity: PropTypes.oneOfType([PropTypes.string,PropTypes.number]),
+    quantity: PropTypes.oneOfType([PropTypes.string,PropTypes.number,PropTypes.bool]),
 }
 
 export default IngredientCard;

@@ -16,7 +16,7 @@ class HeaderItemBlock extends React.Component {
 }
 
 HeaderItemBlock.propTypes = {
-    icon: PropTypes.oneOf([PropTypes.BurgerIcon, PropTypes.ListIcon, PropTypes.ProfileIcon]),
+    icon: PropTypes.object,
     textColor: PropTypes.string,
     text: PropTypes.string,
 }
