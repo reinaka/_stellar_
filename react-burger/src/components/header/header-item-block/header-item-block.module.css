@@ -1,0 +1,7 @@
+.general {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: auto;
+    cursor: pointer;
+}

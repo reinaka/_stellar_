@@ -1,0 +1,15 @@
+.viewPort {
+    max-height: 100vh;
+}
+
+.generalBlock {
+    max-width: 1240px;
+    margin: auto;
+    max-height: 100%;
+}
+
+.contentBlock {
+    display: grid;
+    grid-template-columns: minmax(auto, 600px) minmax(auto, 600px);
+    gap: 40px;
+}
