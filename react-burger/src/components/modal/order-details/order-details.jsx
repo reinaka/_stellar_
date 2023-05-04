@@ -1,8 +1,7 @@
-import React from "react";
 import image from '../../../images/done.png';
 import styles from './order-details.module.css';
 
-export default function OrderDetails(props) {
+export default function OrderDetails() {
     return (
         <div className={styles.wrapper}>
             <p className="text text_type_digits-large">034536</p>

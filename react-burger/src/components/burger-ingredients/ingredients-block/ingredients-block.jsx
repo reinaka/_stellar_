@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from './ingredients-block.module.css';
 import IngredientCard from "../ingredient-card/ingredient-card";
 import Modal from "../../modal/modal";
@@ -57,5 +57,5 @@ export default function IngredientsBlock(props) {
 
 IngredientsBlock.propTypes = {
     title: PropTypes.string,
-    arr: PropTypes.array,
+    arr: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

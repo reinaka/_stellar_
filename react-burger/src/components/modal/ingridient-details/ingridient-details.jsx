@@ -1,6 +1,6 @@
-import React from "react";
 import styles from './ingridient-details.module.css';
 import SupplementBlock from "./supplement-block/supplement-block";
+import PropTypes from 'prop-types';
 
 export default function IngridientDetails(props) {
     return (
@@ -15,4 +15,10 @@ export default function IngridientDetails(props) {
             </div>
         </div>
     )
+}
+
+IngridientDetails.propTypes = {
+    data: PropTypes.objectOf(PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,])).isRequired,
 }

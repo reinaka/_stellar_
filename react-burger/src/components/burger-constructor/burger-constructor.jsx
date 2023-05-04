@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ConstructorElementBlock from './constructor-element-block/constructor-element-block';
 import Modal from "../modal/modal";
@@ -66,7 +66,7 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.array,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default BurgerConstructor;
