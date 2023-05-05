@@ -10,19 +10,17 @@ export default function IngredientCard(props) {
                         <p className="text text_type_digits-default">1</p>
                     </div>
                 )}
-                <img src={props.image} alt={props.name} className='pr-4 pl-4'/>
+                <img src={props.ingredient.image} className='pr-4 pl-4' alt={props.ingredient.name}/>
                 <span className={`${styles.priceBlock} mt-1 mb-1 pr-4 pl-4 pt-1`}>
-                    <p className="text text_type_digits-default">{props.price}</p>
+                    <p className="text text_type_digits-default">{props.ingredient.price}</p>
                     <CurrencyIcon />
                 </span>
-                    <p className={`text text_type_main-default ${styles.nameText}`}>{props.name}</p>
-                </>
+                    <p className={`text text_type_main-default ${styles.nameText}`}>{props.ingredient.name}</p>
+            </>
         )
 }
 
 IngredientCard.propTypes = {
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.oneOfType([PropTypes.string,PropTypes.number]).isRequired,
+    ingredient: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     quantity: PropTypes.oneOfType([PropTypes.string,PropTypes.number,PropTypes.bool]).isRequired,
 }

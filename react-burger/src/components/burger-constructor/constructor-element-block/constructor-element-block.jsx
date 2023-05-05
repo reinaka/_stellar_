@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function ConstructorElementBlock(props) {
         let selectedName = undefined;
-        if(props.selectedBun) {selectedName = `${props.name} (${props.selectedBun})`}
+        if(props.selectedBun) {selectedName = `${props.ingredient.name} (${props.selectedBun})`}
         
         return (
             <>
@@ -12,22 +12,16 @@ export default function ConstructorElementBlock(props) {
                 {props.isLocked && <span className={`${styles.dragHidden} pr-3`}><DragIcon /></span>}
                 <ConstructorElement 
                     type={props.type}
-                    text={selectedName || props.name}
-                    price={props.price}
-                    thumbnail={props.image}
-                    isLocked={props.isLocked}
+                    text={selectedName || props.ingredient.name}
+                    price={props.ingredient.price}
+                    thumbnail={props.ingredient.image}
+                    isLocked={props.ingredient.isLocked}
                 />
             </>
         )
     }
 
 ConstructorElementBlock.propTypes = {
-    type: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.oneOfType([PropTypes.string,PropTypes.number]).isRequired,
-    thumbnail: PropTypes.string,
-    isLocked: PropTypes.oneOfType([PropTypes.string,PropTypes.bool]),
-    _id: PropTypes.string.isRequired,
-    selectedBun: PropTypes.string,
-    image: PropTypes.string,
+    type: PropTypes.string,
+    ingredient: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
 }

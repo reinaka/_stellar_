@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 export default function ModalOverlay(props) {
     return (
-    <div className={styles.overlay} onClick={props.onclick}>{props.children}</div>
+    <div className={styles.overlay} onClick={props.onClick}>{props.children}</div>
     )
 }
 
 ModalOverlay.propTypes = {
-    onclick: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired,
 }
