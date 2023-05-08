@@ -4,6 +4,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../modal/order-details/order-details";
 import styles from './burger-constructor.module.css';
 import { useModal } from "../../hooks/useModal";
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 function BurgerConstructor(props) {

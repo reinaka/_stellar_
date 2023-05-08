@@ -1,4 +1,3 @@
-import React from "react";
 import styles from './supplement-block.module.css';
 
 export default function SupplementBlock(props) {
