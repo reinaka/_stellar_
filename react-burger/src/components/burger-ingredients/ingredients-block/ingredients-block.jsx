@@ -66,5 +66,4 @@ export default function IngredientsBlock(props) {
 
 IngredientsBlock.propTypes = {
     title: PropTypes.string,
-    arr: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

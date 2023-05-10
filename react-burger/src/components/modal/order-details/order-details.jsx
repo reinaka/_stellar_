@@ -1,5 +1,6 @@
 import image from '../../../images/done.png';
 import styles from './order-details.module.css';
+import PropTypes from 'prop-types';
 
 export default function OrderDetails(props) {
     return (
@@ -12,3 +13,8 @@ export default function OrderDetails(props) {
         </div>
     )
 }
+
+OrderDetails.propTypes = {
+    orderNum: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+}
+

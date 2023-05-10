@@ -34,4 +34,5 @@ ConstructorElementBlock.propTypes = {
     type: PropTypes.string,
     ingredient: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     isLocked: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    selectedBun: PropTypes.string,
 }
