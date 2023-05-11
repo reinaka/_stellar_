@@ -4,16 +4,15 @@ import EmptyConstructorBlock from './empty-constructor-block/empty-constructor-b
 import Modal from "../modal/modal";
 import OrderDetails from "../modal/order-details/order-details";
 import styles from './burger-constructor.module.css';
-import { useModal } from "../../hooks/use-modal";
 import PropTypes from 'prop-types';
 import { SelectedBunContext } from '../../services/selected-bun-context';
 import { TotalPriceContext } from '../../services/total-price-context';
 import { ConstructorDataContext } from '../../services/constructor-data-context';
 import { useContext } from 'react';
 import { useOrderData } from '../../hooks/use-order-data';
+import { BUN } from '../../constants/constants';
 
 function BurgerConstructor(props) {
-    const [isModalVisible, openModal, closeModal] = useModal();
     const {selectedBun} = useContext(SelectedBunContext);
     const {totalPrice} = useContext(TotalPriceContext);
     const {constructorData, setConstructorData} = useContext(ConstructorDataContext);
@@ -29,7 +28,7 @@ function BurgerConstructor(props) {
                 {constructorData.length > 0 ? (
                     <ul className={styles.listUl}>
                         {constructorData.map(item => {
-                            if (item.type !== 'bun') {
+                            if (item.type !== BUN) {
                                 return (
                                     <li className={`${styles.constructorElementBlock} ml-4`} key={item._id}>
                                         <ConstructorElementBlock ingredient={item}/>
@@ -54,13 +53,12 @@ function BurgerConstructor(props) {
                 <Button htmlType="button" type="primary" size="large" extraClass={`${styles.button} ml-2 mr-4`} 
                     onClick={async() => {
                         getOrderNum();
-                        openModal();
                         }}>
                     <p className={`${styles.button_text} text text_type_main-small`}>Оформить заказ</p>
                 </Button>
             </span>
-            {isModalVisible && !orderNum.isLoading && !orderNum.hasError &&
-                <Modal onClose={() => {closeModal(); clearOrderNum(); setConstructorData([])}}>
+            {!orderNum.isLoading && !orderNum.hasError && orderNum &&
+                <Modal onClose={() => {clearOrderNum(); setConstructorData([])}}>
                     <OrderDetails orderNum={orderNum.num}/>
                 </Modal>
             }

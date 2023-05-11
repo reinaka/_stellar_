@@ -7,10 +7,10 @@ import { SelectedBunContext } from '../../services/selected-bun-context';
 import { TotalPriceContext } from '../../services/total-price-context';
 import { ConstructorDataContext } from '../../services/constructor-data-context';
 import { useState, Provider, useEffect} from 'react';
+import { GET_INGREDIENTS_URL } from '../../constants/constants';
 
 export default function App(props) {
-    const URLAddress = 'https://norma.nomoreparties.space/api/ingredients';
-    const ingredientsData = useIngredientsData(URLAddress);
+    const ingredientsData = useIngredientsData(GET_INGREDIENTS_URL);
     const checkDataloadedCondition = !ingredientsData.isLoading && !ingredientsData.hasError && ingredientsData.data.length > 0;
     const [selectedBun, setSelectedBun] = useState({});
     const [totalPrice, setTotalPrice] = useState(0);

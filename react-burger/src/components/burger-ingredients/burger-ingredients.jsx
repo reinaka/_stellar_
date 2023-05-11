@@ -2,11 +2,12 @@ import Tabs from './tabs/tabs';
 import IngredientsBlock from "./ingredients-block/ingredients-block";
 import styles from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
+import { BUN, MAIN, SAUCE } from '../../constants/constants';
 
 export default function BurgerIngredients(props) {
-    const buns = props.data.filter(item => item.type === 'bun');
-    const sauces = props.data.filter(item => item.type === 'sauce');
-    const fillings = props.data.filter(item => item.type === 'main');
+    const buns = props.data.filter(item => item.type === BUN);
+    const sauces = props.data.filter(item => item.type === SAUCE);
+    const fillings = props.data.filter(item => item.type === MAIN);
 
     return (
         <article>

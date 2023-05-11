@@ -7,6 +7,7 @@ import IngredientDetails from "../../modal/ingredient-details/ingredient-details
 import PropTypes from 'prop-types';
 import { SelectedBunContext } from '../../../services/selected-bun-context';
 import { ConstructorDataContext } from '../../../services/constructor-data-context';
+import { BUN } from '../../../constants/constants';
 
 export default function IngredientsBlock(props) {
     const [isModalVisible, openModal, closeModal] = useModal();
@@ -15,7 +16,7 @@ export default function IngredientsBlock(props) {
     const {constructorData, setConstructorData } = useContext(ConstructorDataContext);
 
     const addIngredient = (ingredient) => {
-        if (ingredient.type !== 'bun') {
+        if (ingredient.type !== BUN) {
             let isInArr = false;
         if (ConstructorDataContext.length === 0) {
             setConstructorData([ingredient]);
