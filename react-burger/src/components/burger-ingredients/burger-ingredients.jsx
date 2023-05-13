@@ -1,26 +1,43 @@
 import Tabs from './tabs/tabs';
 import IngredientsBlock from "./ingredients-block/ingredients-block";
 import styles from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
 import { BUN, MAIN, SAUCE } from '../../constants/constants';
+import IngredientDetails from '../modal/ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
+import { useModal } from '../../hooks/use-modal';
+import { useState, useMemo, memo, useCallback } from 'react';
 
-export default function BurgerIngredients(props) {
-    const buns = props.data.filter(item => item.type === BUN);
-    const sauces = props.data.filter(item => item.type === SAUCE);
-    const fillings = props.data.filter(item => item.type === MAIN);
+
+const BurgerIngredients = memo(() => {
+    const [isModalVisible, openModal, closeModal] = useModal();
+    const [selectedIngredient, setSelectedIngredient] = useState();
+
+    const handleIngredientModal = useCallback(item => {
+        setSelectedIngredient(item);
+        openModal();
+    }, [openModal])
+
+    const modal = useMemo(
+        () => {
+            return (
+                <Modal onClose={closeModal} title='Детали ингредиента'>
+                    {selectedIngredient &&
+                        <IngredientDetails ingredientData={selectedIngredient}/>
+                }
+                </Modal>)
+        }, [selectedIngredient, closeModal]);
 
     return (
         <article>
             <Tabs />
             <div className={styles.scroll}>
-                <IngredientsBlock arr={buns} title='Булки' id='bun'/>
-                <IngredientsBlock arr={sauces} title='Соусы' id='sauce'/>
-                <IngredientsBlock arr={fillings} title='Начинки' id='main'/>
+                <IngredientsBlock title='Булки' id='bun' onClickHandler={handleIngredientModal} filter={BUN}/>
+                <IngredientsBlock title='Соусы' id='sauce' onClickHandler={handleIngredientModal} filter={SAUCE}/>
+                <IngredientsBlock title='Начинки' id='main' onClickHandler={handleIngredientModal} filter={MAIN}/>
             </div>
+            {isModalVisible && modal}
         </article>
         )
-    }
+    })
 
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
-}
+    export default BurgerIngredients;

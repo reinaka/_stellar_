@@ -18,9 +18,8 @@ function getOrderdata(url, dataToPost) {
 }
 
 // useOrderData hook
-export const useOrderData = (url, arr) => {
-    const idsArr = arr.map(item => item._id);
-    const dataToPost = {"ingredients": idsArr};
+export const useOrderData = (url, data) => {
+    const dataToPost = {"ingredients": data};
     const [orderNum, setOrderNum] = useState({
         isLoading: true,
         hasError: false,
@@ -32,11 +31,11 @@ export const useOrderData = (url, arr) => {
         const result = getOrderdata(url, dataToPost);
         result.then(data => setOrderNum({isLoading: false, hasError: false, num: data.order.number}))
         .catch(e => setOrderNum({...orderNum, isLoading: false, hasError: true}))
-    });
+    }, [dataToPost, url, orderNum]);
 
     const clearOrderNum = useCallback(
         () => setOrderNum({isLoading: true, hasError: false, num: null})
-    );
+    , []);
     
     return [orderNum, getOrderNum, clearOrderNum];
 }
