@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './tabs.module.css';
 
-const Tabs = (props) => {
+const Tabs = memo((props) => {
     const [current, setCurrent] = React.useState('bun')
     return (
         <div className={styles.tabsWrapper}>
@@ -17,6 +17,6 @@ const Tabs = (props) => {
             </Tab>
         </div>
     )
-}
+})
 
 export default Tabs;

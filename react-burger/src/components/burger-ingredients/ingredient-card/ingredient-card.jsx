@@ -22,5 +22,5 @@ export default function IngredientCard(props) {
 
 IngredientCard.propTypes = {
     ingredient: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-    quantity: PropTypes.oneOfType([PropTypes.string,PropTypes.number,PropTypes.bool]).isRequired,
+    quantity: PropTypes.oneOfType([PropTypes.string,PropTypes.number,PropTypes.bool]),
 }

@@ -5,7 +5,7 @@ export const useModal = () => {
 
     const openModal = useCallback(() => {setIsModalVisible(true)}, [] );
 
-    const closeModal = useCallback((e) => {
+    const closeModal = useCallback(() => {
         setIsModalVisible(false)}, []);
 
     return [
