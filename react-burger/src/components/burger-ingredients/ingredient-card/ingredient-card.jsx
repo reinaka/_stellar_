@@ -1,26 +1,39 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-card.module.css';
 import PropTypes from 'prop-types';
+import { useDrag } from 'react-dnd';
+import { memo } from 'react';
 
-export default function IngredientCard(props) {
+const IngredientCard = memo((props) => {
+    const ingredient = props.ingredient;
+    const [{ isDragging }, ref] = useDrag({
+        type: 'ingredient',
+        item: ingredient,
+        collect: monitor => ({
+            isDragging: monitor.isDragging()
+        })
+    })
+
     return (
-            <>
+            <div ref={ref}>
                 {props.quantity && (
                     <div className={styles.quantity}>
-                        <p className="text text_type_digits-default">1</p>
+                        <p className="text text_type_digits-default">{props.quantity}</p>
                     </div>
                 )}
-                <img src={props.ingredient.image} className='pr-4 pl-4' alt={props.ingredient.name}/>
+                <img src={ingredient.image} className='pr-4 pl-4' alt={ingredient.name}/>
                 <span className={`${styles.priceBlock} mt-1 mb-1 pr-4 pl-4 pt-1`}>
-                    <p className="text text_type_digits-default">{props.ingredient.price}</p>
+                    <p className="text text_type_digits-default">{ingredient.price}</p>
                     <CurrencyIcon />
                 </span>
-                    <p className={`text text_type_main-default ${styles.nameText}`}>{props.ingredient.name}</p>
-            </>
+                    <p className={`text text_type_main-default ${styles.nameText}`}>{ingredient.name}</p>
+            </div>
         )
-}
+});
 
 IngredientCard.propTypes = {
     ingredient: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     quantity: PropTypes.oneOfType([PropTypes.string,PropTypes.number,PropTypes.bool]),
 }
+
+export default IngredientCard;

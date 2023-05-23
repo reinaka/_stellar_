@@ -5,37 +5,50 @@ import { BUN, MAIN, SAUCE } from '../../constants/constants';
 import IngredientDetails from '../modal/ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { useModal } from '../../hooks/use-modal';
-import { useState, useMemo, memo, useCallback } from 'react';
+import { useMemo, memo, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS } from '../../services/actions/current-ingredient-actions';
 
 
 const BurgerIngredients = memo(() => {
     const [isModalVisible, openModal, closeModal] = useModal();
-    const [selectedIngredient, setSelectedIngredient] = useState();
-
-    const handleIngredientModal = useCallback(item => {
-        setSelectedIngredient(item);
+    const dispatch = useDispatch();
+    
+    const openIngredientModal = useCallback(item => {
+        dispatch({
+            type: ADD_INGREDIENT_DETAILS,
+            payload: item.ingredient,
+        });
         openModal();
-    }, [openModal])
+    }, [openModal, dispatch]);
 
+    const closeIngredientModal = useCallback(() => {
+        closeModal();
+        dispatch({type: DELETE_INGREDIENT_DETAILS});
+    }, [dispatch, closeModal]);
+
+    const currentIngredient = useSelector(store => store.ingredientDetails);
+    
     const modal = useMemo(
         () => {
             return (
-                <Modal onClose={closeModal} title='Детали ингредиента'>
-                    {selectedIngredient &&
-                        <IngredientDetails ingredientData={selectedIngredient}/>
+                <Modal onClose={closeIngredientModal} title='Детали ингредиента'>
+                    {currentIngredient &&
+                        <IngredientDetails ingredientData={currentIngredient}/>
                 }
                 </Modal>)
-        }, [selectedIngredient, closeModal]);
+        }, [currentIngredient, closeIngredientModal]);
+
 
     return (
         <article>
             <Tabs />
-            <div className={styles.scroll}>
-                <IngredientsBlock title='Булки' id='bun' onClickHandler={handleIngredientModal} filter={BUN}/>
-                <IngredientsBlock title='Соусы' id='sauce' onClickHandler={handleIngredientModal} filter={SAUCE}/>
-                <IngredientsBlock title='Начинки' id='main' onClickHandler={handleIngredientModal} filter={MAIN}/>
+                <div className={styles.scroll}>
+                <IngredientsBlock title='Булки' id='bun' onClickHandler={openIngredientModal} filter={BUN}/>
+                <IngredientsBlock title='Соусы' id='sauce' onClickHandler={openIngredientModal} filter={SAUCE}/>
+                <IngredientsBlock title='Начинки' id='main' onClickHandler={openIngredientModal} filter={MAIN}/>
             </div>
-            {isModalVisible && modal}
+            {isModalVisible && modal} 
         </article>
         )
     })

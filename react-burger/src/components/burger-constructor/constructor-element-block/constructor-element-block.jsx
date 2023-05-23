@@ -16,7 +16,7 @@ export default function ConstructorElementBlock(props) {
                     price={props.ingredient.price}
                     thumbnail={props.ingredient.image}
                     isLocked={props.isLocked}
-                    handleClose={() => props.handleDelete(props.ingredient)}
+                    handleClose={() => props.handleDelete(props.uuid, props.ingredient.price, props.ingredient)}
                 />
             </>
         )
@@ -24,7 +24,7 @@ export default function ConstructorElementBlock(props) {
 
 ConstructorElementBlock.propTypes = {
     type: PropTypes.string,
-    ingredient: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    ingredient: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number])),
     isLocked: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     selectedBun: PropTypes.string,
 }

@@ -1,13 +1,14 @@
 import styles from './ingredients-block.module.css';
 import IngredientCard from "../ingredient-card/ingredient-card";
 import { memo } from 'react';
-import { useContext } from 'react';
-import { AllIngredientsContext } from '../../../services/all-ingredients-context';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 const IngredientsBlock = memo((props) => {
-    const ingredientsData = useContext(AllIngredientsContext);
-    const ingredients = ingredientsData.filter(item => item.type === props.filter);
+    const ingredientsData = useSelector(store => store.burgerIngredients.items);
+    const ingredients = ingredientsData.filter(item => item.ingredient.type === props.filter);
+
+    
         return (
             <section>
                 <h2 className="text text_type_main-medium">{props.title}</h2>
@@ -15,10 +16,10 @@ const IngredientsBlock = memo((props) => {
                     <ul className={styles.ulStyle}>
                         {ingredients.map(item => {
                                 return (
-                                    <li className={styles.liStyle} key={item._id} 
+                                    <li className={styles.liStyle} key={item.ingredient._id} 
                                     onClick={() => props.onClickHandler(item)}>
-                                        <IngredientCard ingredient={item} 
-                                            // quantity={}
+                                        <IngredientCard ingredient={item.ingredient} 
+                                                        quantity={item.quantity}
                                         />
                                     </li>)
                                 }
