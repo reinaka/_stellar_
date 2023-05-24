@@ -3,11 +3,12 @@ import styles from './ingredient-card.module.css';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { memo } from 'react';
+import { INGREDIENT } from '../../../constants/constants';
 
 const IngredientCard = memo((props) => {
     const ingredient = props.ingredient;
     const [{ isDragging }, ref] = useDrag({
-        type: 'ingredient',
+        type: INGREDIENT,
         item: ingredient,
         collect: monitor => ({
             isDragging: monitor.isDragging()
@@ -15,7 +16,7 @@ const IngredientCard = memo((props) => {
     })
 
     return (
-            <div ref={ref}>
+            <div ref={ref} draggable={true}>
                 {props.quantity && (
                     <div className={styles.quantity}>
                         <p className="text text_type_digits-default">{props.quantity}</p>

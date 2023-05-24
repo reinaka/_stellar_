@@ -1,4 +1,27 @@
-
 .dragHidden {
     visibility: hidden;
 }
+
+.constructorElementBlock {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+}
+
+.styles.opacity0 {
+    opacity: 0;
+}
+
+.styles.opacity1 {
+    opacity: 1;
+}
+
+.dragInvisible {
+    opacity: 0;
+}
+
+.dragVisible {
+    opacity: 1;
+}
+

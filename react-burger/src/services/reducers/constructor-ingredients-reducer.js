@@ -1,4 +1,9 @@
-import { ADD_INGREDIENT_CONSTRUCTOR, DELETE_INGREDIENT_CONSTRUCTOR, ADD_BUN_CONSTRUCTOR} from '../actions/constructor-actions';
+import { 
+        ADD_INGREDIENT_CONSTRUCTOR, 
+        DELETE_INGREDIENT_CONSTRUCTOR, 
+        ADD_BUN_CONSTRUCTOR,
+        REORDER_INGREDIENTS_CONSTRUCTOR
+    } from '../actions/constructor-actions';
 import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
@@ -26,7 +31,7 @@ export const constructorIngredientsReducer = (state=initialState, action) => {
                 ...state,
                 selectedBun: action.payload,
                 totalCost: state.selectedBun 
-                            ? (state.totalCost - state.selectedBun.price*2 + action.payload.price*2) 
+                            ? (state.totalCost - state.selectedBun.price * 2 + action.payload.price * 2) 
                             : state.totalCost + action.payload.price * 2,
             }
         }
@@ -35,6 +40,18 @@ export const constructorIngredientsReducer = (state=initialState, action) => {
                 ...state,
                 items: action.payload,
                 totalCost: state.totalCost - action.price,
+            }
+        }
+        case REORDER_INGREDIENTS_CONSTRUCTOR: {
+            let newOrderList = state.items.slice();
+            const originalIndex = state.items.findIndex(item => item.uuid === action.uuid);
+            const draggableItem = state.items[originalIndex];
+
+            newOrderList.splice(originalIndex, 1);
+            newOrderList.splice(action.index, 0, draggableItem);
+            return {
+                ...state,
+                items: newOrderList,
             }
         }
         default: {

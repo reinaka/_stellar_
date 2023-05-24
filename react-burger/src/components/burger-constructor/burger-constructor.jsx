@@ -12,6 +12,7 @@ import { addToConstructor, deleteFromConstructor } from '../../services/actions/
 import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY } from '../../services/actions/all-ingredients-actions';
 import { getOrderNum } from '../../services/actions/order-details-actions';
 import { useModal } from '../../hooks/use-modal';
+import { INGREDIENT } from '../../constants/constants';
 
 function BurgerConstructor() {
     const items = useSelector(store => store.burgerConstructor.items);
@@ -33,9 +34,9 @@ function BurgerConstructor() {
     //верхняя булка
     const topBun = useMemo(
         () => {
-            return (<li className={`${styles.constructorElementBlock} ml-4`}>
+            return (<div className={`${styles.constructorElementBlock} ml-4`}>
                 <ConstructorElementBlock ingredient={selectedBun} isLocked='true' selectedBun="верх" type="top"/>
-            </li>)
+                </div>)
         }
     , [selectedBun]);
     
@@ -43,25 +44,12 @@ function BurgerConstructor() {
     const bottomBun = useMemo(
         () => {
             return (
-                <li className={`${styles.constructorElementBlock} ml-4`}>
+                <div className={`${styles.constructorElementBlock} ml-4`}>
                     <ConstructorElementBlock ingredient={selectedBun} isLocked='true' selectedBun="низ" type="bottom"/>
-                </li>
+                </div>
             )
         }
     , [selectedBun])
-
-    //dnd
-    const [{ isHover }, dropTarget] = useDrop({
-        accept: 'ingredient',
-        collect: monitor => ({
-            isHover: monitor.isOver()
-        }),
-        drop(item) {
-            dispatch(addToConstructor(item));
-            dispatch({type: INCREASE_INGREDIENT_QUANTITY, id: item._id, checkType: item.type});
-        }
-    })
-    const borderColor = isHover ? styles.borderStyling : styles.borderInvisible;
 
     //хэндлер удаления ингредиентов из конструктора
     const deleteIngredientfromConstructor = useCallback((uuid, price, item) => {
@@ -84,6 +72,26 @@ function BurgerConstructor() {
         }
     },[dispatch, items, selectedBun]);
 
+    //dnd добавление ингредиента в конструктор
+    const [{ isHover }, dropTarget] = useDrop({
+        accept: INGREDIENT,
+        collect: monitor => ({
+            isHover: monitor.isOver()
+        }),
+        drop(item) {
+            dispatch(addToConstructor(item));
+            dispatch({type: INCREASE_INGREDIENT_QUANTITY, id: item._id, checkType: item.type});
+        }
+    })
+    const borderColor = isHover ? styles.borderStyling : styles.borderInvisible;
+
+    //dnd получение индекса перетаскиваемого ингредиента
+    const findIngredient = useCallback(
+        (id) => {
+            const draggableItem = items.filter((item) => item.uuid === id)[0];
+            return items.indexOf(draggableItem);
+        },[items]);
+
     return ( 
         <article>
             <div ref={dropTarget} className={borderColor}>
@@ -92,12 +100,15 @@ function BurgerConstructor() {
                     {items.length > 0 ? (
                         <ul className={styles.listUl}>
                             {
-                                items.map(item => {
+                                items.map((item, index) => {
                                     return (
-                                        <li className={`${styles.constructorElementBlock} ml-4`} key={item.uuid}>
+                                        <li className={`${styles.constructorLi} ml-4`} key={item.uuid}>
                                             <ConstructorElementBlock ingredient={item.ingredient} 
                                                 handleDelete={deleteIngredientfromConstructor} 
-                                                uuid={item.uuid}
+                                                findIngredient={findIngredient}
+                                                draggableIngredient={item}
+                                                ingredientObject={item}
+                                                id={item.ingredient._id}
                                             />
                                         </li>
                                 )})

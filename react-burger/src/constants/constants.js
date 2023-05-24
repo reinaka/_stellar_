@@ -3,3 +3,5 @@ export const GET_ORDER_NUMBER_URL = 'https://norma.nomoreparties.space/api/order
 export const BUN = 'bun';
 export const MAIN = 'main';
 export const SAUCE = 'sauce';
+export const INGREDIENT = 'INGREDIENT';
+export const INGREDIENT_ITEM = 'INGREDIENT_ITEM';
