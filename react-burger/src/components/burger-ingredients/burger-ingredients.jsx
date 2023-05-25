@@ -18,7 +18,7 @@ const BurgerIngredients = memo(() => {
     const openIngredientModal = useCallback(item => {
         dispatch({
             type: ADD_INGREDIENT_DETAILS,
-            payload: item.ingredient,
+            payload: item,
         });
         openModal();
     }, [openModal, dispatch]);
