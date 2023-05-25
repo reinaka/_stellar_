@@ -31,6 +31,7 @@ export const allIngredientsReducer = (state = initialState, action) => {
                 ...state, 
                 itemsFailed: true, 
                 itemsRequest: false,
+                items: []
             }
         }
         default: {
