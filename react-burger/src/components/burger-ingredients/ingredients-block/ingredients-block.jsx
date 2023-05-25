@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 const IngredientsBlock = memo((props) => {
     const ingredientsData = useSelector(store => store.burgerIngredients.items);
-    const ingredients = ingredientsData.filter(item => item.ingredient.type === props.filter);
+    const ingredients = ingredientsData.filter(item => item.type === props.filter);
     const setCurrentSection = props.setCurrentSection;
 
     const ref = useRef();
@@ -21,8 +21,6 @@ const IngredientsBlock = memo((props) => {
         });
         observer.observe(ref.current);
     }, []);
-
-
     
         return (
             <section className='observedSection' id={`${props.filter}_id`}>
@@ -31,11 +29,9 @@ const IngredientsBlock = memo((props) => {
                     <ul className={styles.ulStyle}>
                         {ingredients.map(item => {
                                 return (
-                                    <li className={styles.liStyle} key={item.ingredient._id} 
+                                    <li className={styles.liStyle} key={item._id} 
                                     onClick={() => props.onClickHandler(item)}>
-                                        <IngredientCard ingredient={item.ingredient} 
-                                                        quantity={item.quantity}
-                                        />
+                                        <IngredientCard ingredient={item}/>
                                     </li>)
                                 }
                         )}

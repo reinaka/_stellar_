@@ -52,9 +52,8 @@ function BurgerConstructor() {
     , [selectedBun])
 
     //хэндлер удаления ингредиентов из конструктора
-    const deleteIngredientfromConstructor = useCallback((uuid, price, item) => {
+    const deleteIngredientfromConstructor = useCallback((uuid, price) => {
         dispatch(deleteFromConstructor(items, uuid, price));
-        dispatch({type: DECREASE_INGREDIENT_QUANTITY, id: item._id, checkType: item.type});
     }, [dispatch, items])
 
     //хэндлер для получения номера заказа
@@ -80,7 +79,6 @@ function BurgerConstructor() {
         }),
         drop(item) {
             dispatch(addToConstructor(item));
-            dispatch({type: INCREASE_INGREDIENT_QUANTITY, id: item._id, checkType: item.type});
         }
     })
     const borderColor = isHover ? styles.borderStyling : styles.borderInvisible;
