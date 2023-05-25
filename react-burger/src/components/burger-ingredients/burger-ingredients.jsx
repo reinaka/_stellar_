@@ -5,7 +5,7 @@ import { BUN, MAIN, SAUCE } from '../../constants/constants';
 import IngredientDetails from '../modal/ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { useModal } from '../../hooks/use-modal';
-import { useMemo, memo, useCallback } from 'react';
+import { useMemo, memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS } from '../../services/actions/current-ingredient-actions';
 
@@ -13,7 +13,8 @@ import { ADD_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS } from '../../service
 const BurgerIngredients = memo(() => {
     const [isModalVisible, openModal, closeModal] = useModal();
     const dispatch = useDispatch();
-    
+    const [currentSection, setCurrentSection] = useState(BUN);
+
     const openIngredientModal = useCallback(item => {
         dispatch({
             type: ADD_INGREDIENT_DETAILS,
@@ -29,6 +30,7 @@ const BurgerIngredients = memo(() => {
 
     const currentIngredient = useSelector(store => store.ingredientDetails);
     
+    //модальное окно
     const modal = useMemo(
         () => {
             return (
@@ -39,15 +41,32 @@ const BurgerIngredients = memo(() => {
                 </Modal>)
         }, [currentIngredient, closeIngredientModal]);
 
-
     return (
         <article>
-            <Tabs />
+            <Tabs currentSection={currentSection} setCurrentSection={setCurrentSection}/>
                 <div className={styles.scroll}>
-                <IngredientsBlock title='Булки' id='bun' onClickHandler={openIngredientModal} filter={BUN}/>
-                <IngredientsBlock title='Соусы' id='sauce' onClickHandler={openIngredientModal} filter={SAUCE}/>
-                <IngredientsBlock title='Начинки' id='main' onClickHandler={openIngredientModal} filter={MAIN}/>
-            </div>
+                    <IngredientsBlock 
+                        title='Булки' 
+                        onClickHandler={openIngredientModal} 
+                        filter={BUN} 
+                        currentSection={currentSection} 
+                        setCurrentSection={setCurrentSection}
+                    />
+                    <IngredientsBlock 
+                        title='Соусы' 
+                        onClickHandler={openIngredientModal} 
+                        filter={SAUCE} 
+                        currentSection={currentSection} 
+                        setCurrentSection={setCurrentSection}
+                    />
+                    <IngredientsBlock 
+                        title='Начинки' 
+                        onClickHandler={openIngredientModal} 
+                        filter={MAIN} 
+                        currentSection={currentSection} 
+                        setCurrentSection={setCurrentSection}
+                    />
+                </div>
             {isModalVisible && modal} 
         </article>
         )
