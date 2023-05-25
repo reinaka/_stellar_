@@ -9,7 +9,6 @@ import { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { addToConstructor, deleteFromConstructor } from '../../services/actions/constructor-actions';
-import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY } from '../../services/actions/all-ingredients-actions';
 import { getOrderNum } from '../../services/actions/order-details-actions';
 import { useModal } from '../../hooks/use-modal';
 import { INGREDIENT } from '../../constants/constants';
@@ -81,7 +80,6 @@ function BurgerConstructor() {
             dispatch(addToConstructor(item));
         }
     })
-    const borderColor = isHover ? styles.borderStyling : styles.borderInvisible;
 
     //dnd получение индекса перетаскиваемого ингредиента
     const findIngredient = useCallback(
@@ -92,7 +90,7 @@ function BurgerConstructor() {
 
     return ( 
         <article>
-            <div ref={dropTarget} className={borderColor}>
+            <div ref={dropTarget} className={isHover ? styles.borderStyling : styles.borderInvisible}>
                 {selectedBun && topBun || <EmptyBunBlock />}
                 <section className={`${styles.scroll} mt-4 mb-4`}>
                     {items.length > 0 ? (

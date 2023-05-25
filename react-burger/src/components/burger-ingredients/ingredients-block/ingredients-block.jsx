@@ -43,7 +43,9 @@ const IngredientsBlock = memo((props) => {
 
 IngredientsBlock.propTypes = {
     title: PropTypes.string,
-    openIngredientDetails: PropTypes.func,
+    onClickHandler: PropTypes.func,
+    filter: PropTypes.string,
+    setCurrentSection: PropTypes.func,
 }
 
 export default IngredientsBlock;

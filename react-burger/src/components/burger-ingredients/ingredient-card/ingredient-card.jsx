@@ -61,7 +61,6 @@ const IngredientCard = memo((props) => {
 
 IngredientCard.propTypes = {
     ingredient: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-    quantity: PropTypes.oneOfType([PropTypes.string,PropTypes.number,PropTypes.bool]),
 }
 
 export default IngredientCard;

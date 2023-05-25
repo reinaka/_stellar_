@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './tabs.module.css';
 import { BUN, MAIN, SAUCE } from "../../../constants/constants";
+import PropTypes from 'prop-types';
 
 const Tabs = memo((props) => {
     const {currentSection, setCurrentSection} = props;
@@ -26,5 +27,10 @@ const Tabs = memo((props) => {
         </div>
     )
 });
+
+Tabs.propTypes = {
+    currentSection: PropTypes.string,
+    setCurrentSection: PropTypes.func,
+}
 
 export default Tabs;

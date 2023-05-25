@@ -55,10 +55,8 @@ const ConstructorElementBlock = memo(
             [props.findIngredient],
         );
 
-        const opacityWhileDragging = isDragging ? styles.dragInvisible :  styles.dragVisible;
-
         return (
-            <div className={`${styles.constructorElementBlock} ${opacityWhileDragging} ${styles.bbb}`} 
+            <div className={`${styles.constructorElementBlock} ${isDragging ? styles.dragInvisible :  styles.dragVisible}`} 
                 draggable={true} 
                 ref={(node) => !props.isLocked && dragReorder(dropReorder(node))}
             > 

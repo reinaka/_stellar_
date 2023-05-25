@@ -49,21 +49,18 @@ const BurgerIngredients = memo(() => {
                         title='Булки' 
                         onClickHandler={openIngredientModal} 
                         filter={BUN} 
-                        currentSection={currentSection} 
                         setCurrentSection={setCurrentSection}
                     />
                     <IngredientsBlock 
                         title='Соусы' 
                         onClickHandler={openIngredientModal} 
                         filter={SAUCE} 
-                        currentSection={currentSection} 
                         setCurrentSection={setCurrentSection}
                     />
                     <IngredientsBlock 
                         title='Начинки' 
                         onClickHandler={openIngredientModal} 
                         filter={MAIN} 
-                        currentSection={currentSection} 
                         setCurrentSection={setCurrentSection}
                     />
                 </div>
