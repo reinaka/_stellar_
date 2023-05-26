@@ -2,9 +2,9 @@ import {
         ADD_INGREDIENT_CONSTRUCTOR, 
         DELETE_INGREDIENT_CONSTRUCTOR, 
         ADD_BUN_CONSTRUCTOR,
-        REORDER_INGREDIENTS_CONSTRUCTOR
+        REORDER_INGREDIENTS_CONSTRUCTOR,
+        CLEAR_CONSTRUCTOR
     } from '../actions/constructor-actions';
-import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
     selectedBun: null,
@@ -17,7 +17,7 @@ export const constructorIngredientsReducer = (state=initialState, action) => {
         case ADD_INGREDIENT_CONSTRUCTOR: {
             const ingredient = {
                 ingredient: action.payload,
-                uuid: uuidv4(),
+                uuid: action.uuid,
             }
             return {
                 ...state,
@@ -53,6 +53,9 @@ export const constructorIngredientsReducer = (state=initialState, action) => {
                 ...state,
                 items: newOrderList,
             }
+        }
+        case CLEAR_CONSTRUCTOR: {
+            return initialState;
         }
         default: {
             return state;

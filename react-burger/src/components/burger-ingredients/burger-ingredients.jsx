@@ -8,6 +8,7 @@ import { useModal } from '../../hooks/use-modal';
 import { useMemo, memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS } from '../../services/actions/current-ingredient-actions';
+import { selectIngredientDetails } from '../../services/selectorFunctions';
 
 
 const BurgerIngredients = memo(() => {
@@ -28,7 +29,7 @@ const BurgerIngredients = memo(() => {
         dispatch({type: DELETE_INGREDIENT_DETAILS});
     }, [dispatch, closeModal]);
 
-    const currentIngredient = useSelector(store => store.ingredientDetails);
+    const currentIngredient = useSelector(selectIngredientDetails);
     
     //модальное окно
     const modal = useMemo(

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getData } from '../../services/actions/all-ingredients-actions';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { selectAllIngredients } from '../../services/selectorFunctions';
 
 export default function App() {
     const dispatch = useDispatch();
@@ -15,7 +16,7 @@ export default function App() {
         dispatch(getData())
     }, [dispatch])
 
-    const {items, itemsRequest} = useSelector(store => store.burgerIngredients);
+    const {items, itemsRequest} = useSelector(selectAllIngredients);
 
     return (
             <div className={styles.viewPort}>

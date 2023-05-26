@@ -5,12 +5,13 @@ import { useDrag } from 'react-dnd';
 import { memo, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { INGREDIENT } from '../../../constants/constants';
+import { selectBurgerConstructorItems, selectSelectedBun } from '../../../services/selectorFunctions';
 
 const IngredientCard = memo((props) => {
     const ingredient = props.ingredient;
     const [quantity, setQuantity] = useState(null);
-    const constructorIngredients = useSelector(store => store.burgerConstructor.items);
-    const selectedBun = useSelector(store => store.burgerConstructor.selectedBun);
+    const constructorIngredients = useSelector(selectBurgerConstructorItems);
+    const selectedBun = useSelector(selectSelectedBun);
 
     useEffect(() => {
         if(ingredient.type === 'bun' ) {

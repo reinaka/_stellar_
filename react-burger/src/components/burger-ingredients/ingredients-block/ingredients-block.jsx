@@ -1,12 +1,13 @@
 import styles from './ingredients-block.module.css';
 import IngredientCard from "../ingredient-card/ingredient-card";
-import { memo, useRef, useEffect } from 'react';
+import { memo, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { selectAllIngredientsItems } from '../../../services/selectorFunctions';
 
 const IngredientsBlock = memo((props) => {
-    const ingredientsData = useSelector(store => store.burgerIngredients.items);
-    const ingredients = ingredientsData.filter(item => item.type === props.filter);
+    const ingredientsData = useSelector(selectAllIngredientsItems);
+    const ingredients = useMemo(() => ingredientsData.filter(item => item.type === props.filter), [props.filter, ingredientsData]);
     const setCurrentSection = props.setCurrentSection;
 
     const ref = useRef();
@@ -20,7 +21,7 @@ const IngredientsBlock = memo((props) => {
             rootMargin: '-45% 0px -45% 0px',
         });
         observer.observe(ref.current);
-    }, []);
+    }, [props.filter, setCurrentSection]);
     
         return (
             <section className='observedSection' id={`${props.filter}_id`}>

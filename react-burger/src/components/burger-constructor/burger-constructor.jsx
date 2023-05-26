@@ -8,23 +8,31 @@ import styles from './burger-constructor.module.css';
 import { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { addToConstructor, deleteFromConstructor } from '../../services/actions/constructor-actions';
+import { addToConstructor, deleteFromConstructor, CLEAR_CONSTRUCTOR } from '../../services/actions/constructor-actions';
 import { getOrderNum } from '../../services/actions/order-details-actions';
 import { useModal } from '../../hooks/use-modal';
 import { INGREDIENT } from '../../constants/constants';
+import { v4 as uuidv4 } from 'uuid';
+import { 
+        selectBurgerConstructorItems, 
+        selectSelectedBun, 
+        selectConstructorTotalCost, 
+        selectOrderNum 
+    } from '../../services/selectorFunctions';
+import { BUN } from '../../constants/constants';
 
 function BurgerConstructor() {
-    const items = useSelector(store => store.burgerConstructor.items);
-    const selectedBun = useSelector(store => store.burgerConstructor.selectedBun);
-    const totalCost = useSelector(store => store.burgerConstructor.totalCost);
-    const orderNum = useSelector(store => store.orderDetails.orderNum);
+    const items = useSelector(selectBurgerConstructorItems);
+    const selectedBun = useSelector(selectSelectedBun);
+    const totalCost = useSelector(selectConstructorTotalCost);
+    const orderNum = useSelector(selectOrderNum);
     const [isModalVisible, openModal, closeModal] = useModal();
     const dispatch = useDispatch();
 
     //модальное окно
     const modal = useMemo(
         () => orderNum && (
-                (<Modal onClose={() => closeModal()}>
+                (<Modal onClose={() => {closeModal(); dispatch({type: CLEAR_CONSTRUCTOR})}}>
                     <OrderDetails orderNum={orderNum}/>
                 </Modal>)
             )
@@ -77,7 +85,12 @@ function BurgerConstructor() {
             isHover: monitor.isOver()
         }),
         drop(item) {
-            dispatch(addToConstructor(item));
+            if(item.type === BUN) {
+                dispatch(addToConstructor(item));
+            } else {
+                const uuid = uuidv4();
+                dispatch(addToConstructor(item, uuid));
+            }  
         }
     })
 

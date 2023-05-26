@@ -1,6 +1,5 @@
 import { GET_INGREDIENTS_URL } from '../../constants/constants';
-import { useIngredientsData } from '../../hooks/use-ingredients-data';
-
+import { checkServerResponse } from '../checkServerResponse';
 export const UPLOAD_INGREDIENTS_DATA_REQUEST = 'UPLOAD_INGREDIENTS_DATA_REQUEST';
 export const UPLOAD_INGREDIENTS_DATA_SUCCESS = 'UPLOAD_INGREDIENTS_DATA_SUCCESS';
 export const UPLOAD_INGREDIENTS_DATA_FAILED = 'UPLOAD_INGREDIENTS_DATA_FAILED';
@@ -10,7 +9,8 @@ export function getData() {
         dispatch({
             type: UPLOAD_INGREDIENTS_DATA_REQUEST
         });
-        useIngredientsData(GET_INGREDIENTS_URL)
+        fetch(GET_INGREDIENTS_URL)
+        .then(res => checkServerResponse(res))
         .then(res => {
             if(res.success) {
                 dispatch({

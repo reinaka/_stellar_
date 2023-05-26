@@ -15,13 +15,13 @@ const Tabs = memo((props) => {
 
     return (
         <div className={styles.tabsWrapper} id={props.forId}>
-            <Tab value={BUN} active={currentSection === `${BUN}`} onClick={() => {setCurrentSection(); scrollToDection(BUN)}}>
+            <Tab value={BUN} active={currentSection === BUN} onClick={() => {setCurrentSection(); scrollToDection(BUN)}}>
                 Булки
             </Tab>
-            <Tab value={SAUCE} active={currentSection === `${SAUCE}`} onClick={() => {setCurrentSection(); scrollToDection(SAUCE)}}>
+            <Tab value={SAUCE} active={currentSection ===SAUCE} onClick={() => {setCurrentSection(); scrollToDection(SAUCE)}}>
                 Соусы
             </Tab>
-            <Tab value={MAIN} active={currentSection === `${MAIN}`} onClick={() => {setCurrentSection(); scrollToDection(MAIN)}}>
+            <Tab value={MAIN} active={currentSection === MAIN} onClick={() => {setCurrentSection(); scrollToDection(MAIN)}}>
                 Начинки
             </Tab>
         </div>
