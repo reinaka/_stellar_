@@ -8,7 +8,7 @@ import styles from './burger-constructor.module.css';
 import { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { addToConstructor, deleteFromConstructor, CLEAR_CONSTRUCTOR } from '../../services/actions/constructor-actions';
+import { addToConstructor, deleteFromConstructor } from '../../services/actions/constructor-actions';
 import { getOrderNum } from '../../services/actions/order-details-actions';
 import { useModal } from '../../hooks/use-modal';
 import { INGREDIENT } from '../../constants/constants';
@@ -32,7 +32,7 @@ function BurgerConstructor() {
     //модальное окно
     const modal = useMemo(
         () => orderNum && (
-                (<Modal onClose={() => {closeModal(); dispatch({type: CLEAR_CONSTRUCTOR})}}>
+                (<Modal onClose={() => closeModal()}>
                     <OrderDetails orderNum={orderNum}/>
                 </Modal>)
             )
