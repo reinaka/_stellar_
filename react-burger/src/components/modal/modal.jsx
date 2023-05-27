@@ -12,7 +12,7 @@ export default function Modal(props) {
         function closeByEsc(e) {if(e.key === 'Escape') props.onClose()}
         document.addEventListener('keydown', closeByEsc);
         return () => {document.removeEventListener('keydown', closeByEsc)}
-    }, []);
+    }, [props]);
 
     const element = (
         <>

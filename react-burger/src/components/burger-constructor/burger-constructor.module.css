@@ -47,13 +47,6 @@
     width: 215px;
 }
 
-.constructorElementBlock {
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    align-items: center;
-}
-
 .listUl {
     padding: 0;
     margin: 0;
@@ -63,8 +56,23 @@
     gap: 16px;
 }
 
+.constructorLi {
+    list-style-type: none;
+}
+
 .hidden {
     visibility: hidden;
+}
+
+.borderStyling {
+    box-shadow:  inset 0px 0px 70px rgba(19,19,22, 1), inset 0px 0px 70px rgba(19,19,22,1), 10px 0px 0px rgba(19,19,22,1);
+    border-radius: 10%;
+    background: radial-gradient(circle at 50% 50%,  rgba(19, 19, 64, 0.9), rgba(19,19,22, 0.9))
+}
+
+.borderInvisible {
+    box-shadow: none;
+    border: none;
 }
 
 
