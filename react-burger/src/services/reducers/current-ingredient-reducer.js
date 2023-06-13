@@ -1,6 +1,6 @@
 import { ADD_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS} from '../actions/current-ingredient-actions';
 
-const initialState = {};
+const initialState = null;
 
 export const currentIngredientReducer = (state=initialState, action) => {
     switch(action.type) {

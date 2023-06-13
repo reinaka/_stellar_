@@ -5,13 +5,15 @@ import { useDrag } from 'react-dnd';
 import { memo, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { INGREDIENT } from '../../../constants/constants';
-import { selectBurgerConstructorItems, selectSelectedBun } from '../../../services/selectorFunctions';
+import { selectBurgerConstructorItems, selectSelectedBun } from '../../../services/functions/selectorFunctions';
+import { Link, useLocation } from 'react-router-dom';
 
 const IngredientCard = memo((props) => {
     const ingredient = props.ingredient;
     const [quantity, setQuantity] = useState(null);
     const constructorIngredients = useSelector(selectBurgerConstructorItems);
     const selectedBun = useSelector(selectSelectedBun);
+    const location = useLocation();
 
     useEffect(() => {
         if(ingredient.type === 'bun' ) {
@@ -19,6 +21,8 @@ const IngredientCard = memo((props) => {
             selectedBun._id === ingredient._id
             ? setQuantity(2)
             : setQuantity(null)
+            } else {
+                setQuantity(null)
             }
         } else {
             let count = 0;
@@ -44,19 +48,27 @@ const IngredientCard = memo((props) => {
     })
 
     return (
-            <div ref={ref} draggable={true}>
-                {quantity && (
-                    <div className={styles.quantity}>
-                        <p className="text text_type_digits-default">{quantity}</p>
-                    </div>
-                )}
-                <img src={ingredient.image} className='pr-4 pl-4' alt={ingredient.name}/>
-                <span className={`${styles.priceBlock} mt-1 mb-1 pr-4 pl-4 pt-1`}>
-                    <p className="text text_type_digits-default">{ingredient.price}</p>
-                    <CurrencyIcon />
-                </span>
-                    <p className={`text text_type_main-default ${styles.nameText}`}>{ingredient.name}</p>
-            </div>
+            <Link
+                key={ingredient._id} 
+                to={{
+                    pathname: `/ingredients/${ingredient._id}`,
+                }}
+                state={{background: location}}
+            >
+                <div ref={ref} draggable={true}>
+                    {quantity && (
+                        <div className={styles.quantity}>
+                            <p className="text text_type_digits-default">{quantity}</p>
+                        </div>
+                    )}
+                    <img src={ingredient.image} className='pr-4 pl-4' alt={ingredient.name}/>
+                    <span className={`${styles.priceBlock} mt-1 mb-1 pr-4 pl-4 pt-1`}>
+                        <p className="text text_type_digits-default">{ingredient.price}</p>
+                        <CurrencyIcon />
+                    </span>
+                        <p className={`text text_type_main-default ${styles.nameText}`}>{ingredient.name}</p>
+                </div>
+            </Link>
         )
 });
 

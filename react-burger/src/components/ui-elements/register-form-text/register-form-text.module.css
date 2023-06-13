@@ -1,0 +1,8 @@
+.link {
+    color: #4C4CFF;
+}
+
+.textBlock {
+    display: flex;
+    flex-direction: row;
+}

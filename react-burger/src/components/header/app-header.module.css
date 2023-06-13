@@ -25,3 +25,20 @@
     display: flex;
     justify-content:right;
 }
+
+.link a {
+    text-decoration: none;
+}
+
+.link a:visited {
+    color: #8585AD;
+}
+
+.activeLink p {
+    color: #fff;
+}
+
+.inactiveIcon svg {
+    fill: #8585AD;
+}
+

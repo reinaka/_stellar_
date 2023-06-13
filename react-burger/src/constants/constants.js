@@ -1,7 +1,15 @@
 export const GET_INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
 export const GET_ORDER_NUMBER_URL = 'https://norma.nomoreparties.space/api/orders';
+export const AUTH_ENDPOINT = "https://norma.nomoreparties.space/api/auth/login";
+export const REGISTRATION_ENDPOINT = 'https://norma.nomoreparties.space/api/auth/register';
+export const LOGOUT_ENDPOINT = "https://norma.nomoreparties.space/api/auth/logout";
+export const GET_TOKEN_ENDPOINT = "https://norma.nomoreparties.space/api/auth/token";
+export const FORGOT_PASSWORD_ENDPOINT = "https://norma.nomoreparties.space/api/password-reset";
+export const RESET_PASSWORD_ENDPOINT = "https://norma.nomoreparties.space/api/password-reset/reset";
+export const GET_USER_INFO_ENDPOINT = "https://norma.nomoreparties.space/api/auth/user";
 export const BUN = 'bun';
 export const MAIN = 'main';
 export const SAUCE = 'sauce';
 export const INGREDIENT = 'INGREDIENT';
 export const INGREDIENT_ITEM = 'INGREDIENT_ITEM';
+export const ERROR_TEXT = "Что-то пошло не так, попробуйте ещё раз";

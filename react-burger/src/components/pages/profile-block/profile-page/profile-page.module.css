@@ -1,0 +1,6 @@
+.buttonBox {
+    display: flex;
+    flex-direction: row;
+    max-width: 480px;
+    justify-content: space-evenly;
+}
