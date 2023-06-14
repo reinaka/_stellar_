@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectLoginSuccess } from "../../services/functions/selectorFunctions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { checkAccess } from "../../services/functions/checkAccess";
 
 export const ForbiddenForLoggedInRoute = ({ element }) => {
@@ -9,18 +9,15 @@ export const ForbiddenForLoggedInRoute = ({ element }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const accessToken = localStorage.getItem("accessToken");
-    
     const access = useSelector(selectLoginSuccess);
+    const [loggedIn, setLoggedIn] = useState(access);
+
     useEffect(() => {
         checkAccess(dispatch);
         if(access && accessToken) {
-            console.log("navigated");
-            console.log(location);
-            navigate(-1, {state: location, replace: true});
-            console.log(location);
-    }}, [access, location, accessToken]);
+            setLoggedIn(true);
+            navigate("/", {state: location, replace: true});
+    }}, [access, accessToken, location, navigate, dispatch])
     
-    if(!access || !accessToken) {
-        return element
-    }
+    if (!loggedIn) return element;
 }

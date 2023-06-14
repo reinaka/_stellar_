@@ -11,7 +11,8 @@ import { resetPassword } from '../../../services/actions/auth-actions';
 import ErrorModal from '../../modal/error-modal/error-modal';
 import { useModal } from '../../../services/hooks/use-modal';
 import { selectAuthError } from '../../../services/functions/selectorFunctions';
-import { ERROR_TEXT } from '../../../constants/constants';
+import { RESET_PASSWORD_ENDPOINT } from '../../../constants/constants';
+
 
 export function ResetPasswordPage (props) {
     const loggedIn = useSelector(selectLoginSuccess);
@@ -40,11 +41,9 @@ export function ResetPasswordPage (props) {
     useEffect(() => {
         if(authError) {
             if(authError === "Incorrect reset token") {
-                setErrorText("Неверный код восстановления")
-            } else {
-                setErrorText(ERROR_TEXT)
+                setErrorText("Неверный код восстановления");
+                openModal();
             }
-            openModal();
         }
     }, [authError, openModal])
 
@@ -53,7 +52,13 @@ export function ResetPasswordPage (props) {
     : (
         <>
         <RegistrationWrapper>
-            <RegistrationForm title="Восстановление пароля" buttonText="Сохранить">
+            <RegistrationForm 
+                title="Восстановление пароля" 
+                buttonText="Сохранить"
+                onSubmit={(e) => {e.preventDefault(); handleResetPassword()}}
+                action={RESET_PASSWORD_ENDPOINT}
+                method="POST"
+            >
                 <PasswordInput 
                     extraClass="mb-6" 
                     value={password.value} 
@@ -68,9 +73,9 @@ export function ResetPasswordPage (props) {
                     name={'name'} 
                     onChange={(e) => handleName(e)}
                 />
-                <Button extraClass="mb-20 mt-6" htmlType="button" onClick={() => handleResetPassword()}>Сохранить</Button>
+                <Button extraClass="mb-20 mt-6" htmlType="submit">Сохранить</Button>
             </RegistrationForm>
-            <RegisterFormText linkText="Войти" linkAddress="/">Вспомнили пароль?</RegisterFormText>
+            <RegisterFormText linkText="Войти" linkAddress="/login">Вспомнили пароль?</RegisterFormText>
         </RegistrationWrapper>
         {authError && isModalVisible && <ErrorModal message={errorText} closeModal={closeModal}/>}
         </>

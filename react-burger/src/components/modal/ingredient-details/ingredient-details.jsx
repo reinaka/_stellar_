@@ -8,13 +8,10 @@ export default function IngredientDetails() {
     const params = useParams();
     const selectedIngredient = useSelector(selectIngredientDetails);
     const allIngredients = useSelector(selectAllIngredients).items;
-    console.log(params);
 
     const ingredientData = selectedIngredient 
                         ? selectedIngredient 
                         : allIngredients.filter(item => item._id === params.ingredientId)[0];
-
-    console.log(ingredientData);
 
     return ingredientData && (
         <div className={`${styles.wrapper} mb-5`}>

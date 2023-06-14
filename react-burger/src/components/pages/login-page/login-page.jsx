@@ -12,7 +12,6 @@ import { Navigate } from 'react-router-dom';
 import { AUTH_ENDPOINT } from '../../../constants/constants';
 import ErrorModal from '../../modal/error-modal/error-modal';
 import { useModal } from '../../../services/hooks/use-modal';
-import { ERROR_TEXT } from '../../../constants/constants';
 import { useLocation } from 'react-router-dom';
 
 export function LoginPage (props) {
@@ -26,13 +25,10 @@ export function LoginPage (props) {
     useEffect(() => {
         if(authError) {
             if(authError === "email or password are incorrect") {
-                setErrorText("Неверный логин или пароль")
-            } else {
-                setErrorText(ERROR_TEXT)
+                setErrorText("Неверный логин или пароль");
+                openModal();
             }
-            openModal();
-        }
-    }, [authError, openModal])
+    }}, [authError, openModal]);
 
     const {email, validateEmail, fillEmail} = useEmailValidation();
     const {password, validatePassword, fillPassword} = usePasswordValidation();
@@ -56,7 +52,13 @@ export function LoginPage (props) {
     : (
         <>
         <RegistrationWrapper>
-            <RegistrationForm title="Вход" buttonText="Войти">
+            <RegistrationForm 
+                title="Вход" 
+                buttonText="Войти" 
+                onSubmit={(e) => {e.preventDefault(); handleLogin(dataToPost)}}
+                action={AUTH_ENDPOINT}
+                methos="POST"
+            >
                 <EmailInput 
                     extraClass="mb-6" 
                     value={email.value} 
@@ -74,8 +76,7 @@ export function LoginPage (props) {
                 />
                 <Button 
                     extraClass="mb-20 mt-6" 
-                    htmlType="button" 
-                    onClick={() => handleLogin(dataToPost)}
+                    htmlType="submit" 
                 >Войти</Button>
             </RegistrationForm>
             <RegisterFormText linkText="Зарегистрироваться" linkAddress="/register">Вы — новый пользователь?</RegisterFormText>

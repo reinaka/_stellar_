@@ -1,12 +1,20 @@
 import styles from './register-form-text.module.css';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export function RegisterFormText(props) {
+    const location = useLocation();
+    
     return (
         <div className={styles.textBlock}>
             <p className="text text_type_main-default text_color_inactive">{props.children}&nbsp;</p>
-            <Link className={`text text_type_main-default ${styles.link}`} to={props.linkAddress} replace={true}>{props.linkText}</Link>
+            <Link 
+                to={{ pathname: props.linkAddress }}
+                state={{ from: location.pathname }}
+                className={`text text_type_main-default ${styles.link}`} 
+            >
+                {props.linkText}
+            </Link>
         </div>
     )
 }

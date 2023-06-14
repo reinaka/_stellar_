@@ -50,10 +50,8 @@ const IngredientCard = memo((props) => {
     return (
             <Link
                 key={ingredient._id} 
-                to={{
-                    pathname: `/ingredients/${ingredient._id}`,
-                }}
-                state={{background: location}}
+                to={{ pathname: `/ingredients/${ingredient._id}` }}
+                state={{ background: location }}
             >
                 <div ref={ref} draggable={true}>
                     {quantity && (

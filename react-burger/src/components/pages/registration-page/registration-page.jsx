@@ -47,11 +47,9 @@ export function RegistrationPage (props) {
     useEffect(() => {
         if(authError) {
             if(authError === "User already exists") {
-                setErrorText("Такой пользователь уже зарегистрирован")
-            } else {
-                setErrorText(ERROR_TEXT)
+                setErrorText("Такой пользователь уже зарегистрирован");
+                openModal();
             }
-            openModal();
         }
     }, [authError, openModal])
 
@@ -59,8 +57,10 @@ export function RegistrationPage (props) {
     ? <Navigate to={location?.state?.location?.pathname || "/"} replace="true" state={{location}}/>
     : (
         <RegistrationWrapper>
-            <RegistrationForm title="Регистрация">
-                <Input 
+            <RegistrationForm  
+                title="Регистрация" 
+                onSubmit={() => {handleRegistration(dataToPost)}}>
+            <Input 
                         extraClass="mb-6" 
                         value={name.value} 
                         placeholder="Имя" 
@@ -86,8 +86,7 @@ export function RegistrationPage (props) {
                 />
                 <Button 
                         extraClass="mb-20 mt-6" 
-                        htmlType="button" 
-                        onClick={() => {handleRegistration(dataToPost)}}
+                        htmlType="submit" 
                 >Зарегистрироваться</Button>
             </RegistrationForm>
             <RegisterFormText linkText="Войти" linkAddress="/login">Уже зарегистрированы?</RegisterFormText>

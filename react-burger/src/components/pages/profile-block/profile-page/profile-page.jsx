@@ -7,13 +7,11 @@ import { useEffect, useCallback, useMemo, useState } from 'react';
 import { useNameValidation } from '../../../../services/hooks/use-name-validation';
 import { useEmailValidation } from '../../../../services/hooks/use-email-validation';
 import { usePasswordValidation } from '../../../../services/hooks/use-password-validation';
-import { useLocation } from 'react-router-dom';
+import { GET_USER_INFO_ENDPOINT } from '../../../../constants/constants';
 
 export function ProfilePage() {
     const dispatch = useDispatch();
     const [buttonsVisible, setButtonsVisible] = useState(false);
-    const location = useLocation();
-    console.log(location);
 
     useEffect(() => {
         dispatch(getUserInfo());
@@ -76,7 +74,11 @@ export function ProfilePage() {
     }, [email.value, name.value, password.value, userName, userEmail]);
 
     return (
-        <form>
+        <form 
+            onSubmit={(e) => {e.preventDefault(); handleReset(dataToPost)}}
+            method="PATCH" 
+            action={GET_USER_INFO_ENDPOINT}
+        >
             <Input 
                 extraClass="mb-6" 
                 placeholder="Имя" 
@@ -105,7 +107,7 @@ export function ProfilePage() {
             />
             {buttonsVisible && (
                 <div className={styles.buttonBox}>
-                <Button extraClass="mt-6" htmlType='button' onClick={() => handleReset(dataToPost)}>Сохранить</Button>
+                <Button extraClass="mt-6" htmlType='submit'>Сохранить</Button>
                 <Button extraClass="mt-6" htmlType='button' onClick={() => fillDefaultValues()}>Отменить</Button>
             </div>
             )}
