@@ -9,7 +9,7 @@ import { getServerResponse } from '../../../services/functions/getServerResponse
 import { FORGOT_PASSWORD_ENDPOINT } from '../../../constants/constants';
 import { useEmailValidation } from '../../../services/hooks/use-email-validation';
 
-export function ForgotPasswordPage (props) {
+export function ForgotPasswordPage () {
     const loggedIn = useSelector(selectLoginSuccess);
     const navigate = useNavigate();
     const location = useLocation();

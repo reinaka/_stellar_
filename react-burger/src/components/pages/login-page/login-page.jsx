@@ -14,7 +14,7 @@ import ErrorModal from '../../modal/error-modal/error-modal';
 import { useModal } from '../../../services/hooks/use-modal';
 import { useLocation } from 'react-router-dom';
 
-export function LoginPage (props) {
+export function LoginPage () {
     const dispatch = useDispatch();
     const loggedIn = useSelector(selectLoginSuccess);
     const authError = useSelector(selectAuthError);

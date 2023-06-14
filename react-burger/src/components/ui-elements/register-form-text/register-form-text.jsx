@@ -22,4 +22,5 @@ export function RegisterFormText(props) {
 RegisterFormText.propTypes = {
     textBlock: PropTypes.string,
     linkText: PropTypes.string,
+    linkAddress: PropTypes.string,
 }

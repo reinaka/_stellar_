@@ -14,7 +14,7 @@ import { selectAuthError } from '../../../services/functions/selectorFunctions';
 import { RESET_PASSWORD_ENDPOINT } from '../../../constants/constants';
 
 
-export function ResetPasswordPage (props) {
+export function ResetPasswordPage () {
     const loggedIn = useSelector(selectLoginSuccess);
     const navigate = useNavigate();
     const dispatch = useDispatch();

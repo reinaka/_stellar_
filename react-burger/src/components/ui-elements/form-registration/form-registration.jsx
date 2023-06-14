@@ -14,4 +14,7 @@ export function RegistrationForm(props) {
 
 RegistrationForm.propTypes = {
     title: PropTypes.string,
+    action: PropTypes.string,
+    method: PropTypes.string,
+    onSubmit: PropTypes.func.isRequired,
 }

@@ -10,12 +10,12 @@ import { usePasswordValidation } from '../../../services/hooks/use-password-vali
 import { useNameValidation } from '../../../services/hooks/use-name-validation';
 import { Navigate, useLocation } from 'react-router-dom';
 import { selectLoginSuccess } from '../../../services/functions/selectorFunctions';
-import { REGISTRATION_ENDPOINT, ERROR_TEXT } from '../../../constants/constants';
+import { REGISTRATION_ENDPOINT } from '../../../constants/constants';
 import { useModal } from '../../../services/hooks/use-modal';
 import ErrorModal from '../../modal/error-modal/error-modal';
 import { selectAuthError } from '../../../services/functions/selectorFunctions';
 
-export function RegistrationPage (props) {
+export function RegistrationPage () {
     const dispatch = useDispatch();
     const loggedIn = useSelector(selectLoginSuccess);
     const location = useLocation();
@@ -59,7 +59,10 @@ export function RegistrationPage (props) {
         <RegistrationWrapper>
             <RegistrationForm  
                 title="Регистрация" 
-                onSubmit={() => {handleRegistration(dataToPost)}}>
+                onSubmit={(e) => {e.preventDefault(); handleRegistration(dataToPost)}}
+                action={REGISTRATION_ENDPOINT}
+                method="POST"
+        >
             <Input 
                         extraClass="mb-6" 
                         value={name.value} 
