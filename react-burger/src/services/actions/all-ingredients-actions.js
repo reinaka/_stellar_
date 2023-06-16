@@ -5,20 +5,27 @@ export const UPLOAD_INGREDIENTS_DATA_SUCCESS = 'UPLOAD_INGREDIENTS_DATA_SUCCESS'
 export const UPLOAD_INGREDIENTS_DATA_FAILED = 'UPLOAD_INGREDIENTS_DATA_FAILED';
 
 export function getData() {
-    return async function(dispatch) {
+    return async function(dispatch) { 
         try {
             dispatch({
                 type: UPLOAD_INGREDIENTS_DATA_REQUEST
             });
-            const response = await getServerResponse(GET_INGREDIENTS_URL, {});
-            dispatch({
-                type: UPLOAD_INGREDIENTS_DATA_SUCCESS,
-                items: response.data,
+            getServerResponse(GET_INGREDIENTS_URL, {})
+            .then(res => {
+                if(res.success) {
+                    dispatch({
+                        type: UPLOAD_INGREDIENTS_DATA_SUCCESS,
+                        items: res.data,
+                    })
+                } else {
+                    dispatch({
+                        type: UPLOAD_INGREDIENTS_DATA_FAILED
+                    })
+                }
             })
-        } catch (error) {
-            dispatch({
-                type: UPLOAD_INGREDIENTS_DATA_FAILED
-            })
+        }
+        catch(error) {
+            throw new Error(`Ошибка: ${error}`)
         }
     }
 } 

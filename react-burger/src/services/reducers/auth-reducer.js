@@ -1,9 +1,10 @@
-import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILED, UPDATE_TOKEN, VERIFY_USER, LOGOUT } from '../actions/auth-actions';
+import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILED, UPDATE_TOKEN, LOGOUT, AUTH_CHECKED } from '../actions/auth-actions';
 
 const initialState = {
     requestFailed: false,
     authError: null,
     requestPending: false,
+    isAuthChecked: false,
     userData: {
         "success": false,
         "accessToken": "",
@@ -29,7 +30,11 @@ export const authReducer = (state = initialState, action) => {
                 requestFailed: false,
                 authError: null,
                 requestPending: false,
-                userData: action.payload
+                userData: {
+                    ...state.userData,
+                    success: action.payload.success,
+                    user: action.payload.user,
+                }
             }
         }
         case UPDATE_TOKEN: {
@@ -40,26 +45,17 @@ export const authReducer = (state = initialState, action) => {
                 requestPending: false,
                 userData: {
                     ...state.userData,
+                    success: true,
                     accessToken: action.payload.accessToken,
                     refreshToken: action.payload.refreshToken,
                 }
             }
         }
-        case VERIFY_USER: {
+        case LOGOUT: {
             return {
                 ...state,
-                requestFailed: false,
-                authError: null,
-                requestPending: false,
-                userData: {
-                    ...state.userData,
-                    success: action.payload.success,
-                    user: action.payload.user,
-                }
+                userData: initialState.userData,
             }
-        }
-        case LOGOUT: {
-            return initialState;
         }
         case AUTH_FAILED: {
             return {
@@ -68,6 +64,12 @@ export const authReducer = (state = initialState, action) => {
                 authError: action.payload,
                 requestPending: false,
                 userData: initialState.userData,
+            }
+        }
+        case AUTH_CHECKED: {
+            return {
+                ...state,
+                isAuthChecked: true,
             }
         }
         default: {

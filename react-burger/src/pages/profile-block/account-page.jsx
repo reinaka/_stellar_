@@ -1,6 +1,6 @@
 import styles from './account.module.css';
 import { Outlet, NavLink } from 'react-router-dom';
-import { logout } from '../../../services/actions/auth-actions';
+import { logout } from '../../services/actions/auth-actions';
 import { useDispatch } from 'react-redux';
 
 export function AccountPage() {

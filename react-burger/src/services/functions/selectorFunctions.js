@@ -38,6 +38,10 @@ export function selectLoginSuccess(store) {
     return store.authData.userData.success;
 }
 
+export function selectAuthChecked(store) {
+    return store.authData.isAuthChecked;
+}
+
 export function selectAuthError(store) {
     return store.authData.authError;
 }

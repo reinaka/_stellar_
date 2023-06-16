@@ -1,20 +1,27 @@
-import { useLocation , useNavigate} from "react-router-dom";
-import { checkAccess } from "../../services/functions/checkAccess";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { selectLoginSuccess } from "../../services/functions/selectorFunctions";
+import { useLocation, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectLoginSuccess, selectAuthChecked } from "../../services/functions/selectorFunctions";
 
-export const ProtectedRouteElement = ({ element }) => {
-    const dispatch = useDispatch();
+export const ProtectedRouteElement = ({ element, anonymous }) => {
     const location = useLocation();
-    const navigate = useNavigate();
-    const refreshToken = localStorage.getItem("refreshToken");
+    const from = location.state?.from || '/';
     
-    useEffect(() => {
-        checkAccess(dispatch);
-        if(!refreshToken) navigate("/login", {state: location} );
-    }, [refreshToken])
+    const authChecked = useSelector(selectAuthChecked);
     const access = useSelector(selectLoginSuccess);
-    
-    if(access) return element;
+
+    if(!authChecked) {
+        return <div>Loading</div>
+    }
+
+    if(authChecked) {
+        if (anonymous && access) {
+            return <Navigate to={from} />;
+        }
+        
+        if (!anonymous && !access) {
+            return <Navigate to="/login" state={{ from: location.pathname }}/>;
+        }
+        
+        return element;
+    }
 }

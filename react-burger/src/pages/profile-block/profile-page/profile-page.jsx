@@ -1,13 +1,13 @@
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile-page.module.css';
-import { selectUserName, selectUserEmail } from '../../../../services/functions/selectorFunctions';
+import { selectUserName, selectUserEmail } from '../../../services/functions/selectorFunctions';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserInfo, changeUserInfo } from '../../../../services/actions/auth-actions';
+import { getUserInfo, changeUserInfo } from '../../../services/actions/auth-actions';
 import { useEffect, useCallback, useMemo, useState } from 'react';
-import { useNameValidation } from '../../../../services/hooks/use-name-validation';
-import { useEmailValidation } from '../../../../services/hooks/use-email-validation';
-import { usePasswordValidation } from '../../../../services/hooks/use-password-validation';
-import { GET_USER_INFO_ENDPOINT } from '../../../../constants/constants';
+import { useNameValidation } from '../../../services/hooks/use-name-validation';
+import { useEmailValidation } from '../../../services/hooks/use-email-validation';
+import { usePasswordValidation } from '../../../services/hooks/use-password-validation';
+import { GET_USER_INFO_ENDPOINT, BASE_URL } from '../../../constants/constants';
 
 export function ProfilePage() {
     const dispatch = useDispatch();
@@ -77,7 +77,7 @@ export function ProfilePage() {
         <form 
             onSubmit={(e) => {e.preventDefault(); handleReset(dataToPost)}}
             method="PATCH" 
-            action={GET_USER_INFO_ENDPOINT}
+            action={`${BASE_URL}${GET_USER_INFO_ENDPOINT}`}
         >
             <Input 
                 extraClass="mb-6" 

@@ -1,25 +1,23 @@
-function checkServerResponse(res) {
-    if(res.ok) {
-        return res.json();
-    } else {
-        res.json()
-        .then(error => {
-            Promise.reject(`Ошибка ${res.status}: ${error.message}`);
-            }
-        )
-    }
-}
+import { BASE_URL } from "../../constants/constants";
+import { AUTH_FAILED } from "../actions/auth-actions";
 
-function checkResponseSuccess(res) {
-    if(res && res.success) {
-        return res;
-    } else {
-        return Promise.reject(`Неуспешный запрос`);
-    }
+export function checkServerResponse(res) {
+    return res.ok
+    ? res.json()
+    : Promise.reject(res.json())
 }
 
 export async function getServerResponse(endpoint, options) {
-    return fetch(endpoint, options)
-    .then(res => checkServerResponse(res))
-    .then(res => checkResponseSuccess(res))
+    return fetch(`${BASE_URL}${endpoint}`, options)
+    .then(checkServerResponse)
+}
+
+export function catchServerResponseError(error, dispatch) {
+    return error.then(res => {
+        dispatch({
+            type: AUTH_FAILED,
+            payload: res.message
+        })
+        throw new Error(`Error: ${res.message}`);
+    })
 }

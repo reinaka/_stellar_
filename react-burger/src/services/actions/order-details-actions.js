@@ -11,19 +11,23 @@ export const getOrderNum = (dataToPost) => {
             dispatch({
                 type: UPLOAD_ORDER_DETAILS_REQUEST
             });
-            const response = await getServerResponse(GET_ORDER_NUMBER_URL, {
+            getServerResponse(GET_ORDER_NUMBER_URL, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(dataToPost)
-            });
-            dispatch({
-                type: UPLOAD_ORDER_DETAILS_SUCCESS,
-                payload: response.order.number,
             })
-            dispatch({
-                type: CLEAR_CONSTRUCTOR
+            .then(res => {
+                if(res.success) {
+                    dispatch({
+                        type: UPLOAD_ORDER_DETAILS_SUCCESS,
+                        payload: res.order.number,
+                    })
+                    dispatch({
+                        type: CLEAR_CONSTRUCTOR
+                    })
+                }
             })
         } catch (error) {
             dispatch({

@@ -1,18 +1,18 @@
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components' ;
-import { RegistrationForm } from '../../ui-elements/form-registration/form-registration';
-import { RegisterFormText } from '../../ui-elements/register-form-text/register-form-text';
-import { RegistrationWrapper } from '../../ui-elements/form-registration-wrapper/form-registration-wrapper';
-import { getAuth } from '../../../services/actions/auth-actions';
+import { RegistrationForm } from '../../components/ui-elements/form-registration/form-registration';
+import { RegisterFormText } from '../../components/ui-elements/register-form-text/register-form-text';
+import { RegistrationWrapper } from '../../components/ui-elements/form-registration-wrapper/form-registration-wrapper';
+import { getAuth } from '../../services/actions/auth-actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEmailValidation } from '../../../services/hooks/use-email-validation';
-import { usePasswordValidation } from '../../../services/hooks/use-password-validation';
-import { selectLoginSuccess, selectAuthError } from '../../../services/functions/selectorFunctions';
+import { useEmailValidation } from '../../services/hooks/use-email-validation';
+import { usePasswordValidation } from '../../services/hooks/use-password-validation';
+import { selectLoginSuccess, selectAuthError } from '../../services/functions/selectorFunctions';
 import { useCallback, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AUTH_ENDPOINT } from '../../../constants/constants';
-import ErrorModal from '../../modal/error-modal/error-modal';
-import { useModal } from '../../../services/hooks/use-modal';
+import ErrorModal from '../../components/modal/error-modal/error-modal';
+import { useModal } from '../../services/hooks/use-modal';
 import { useLocation } from 'react-router-dom';
+import { BASE_URL, AUTH_ENDPOINT } from '../../constants/constants';
 
 export function LoginPage () {
     const dispatch = useDispatch();
@@ -56,7 +56,7 @@ export function LoginPage () {
                 title="Вход" 
                 buttonText="Войти" 
                 onSubmit={(e) => {e.preventDefault(); handleLogin(dataToPost)}}
-                action={AUTH_ENDPOINT}
+                action={`${BASE_URL}${AUTH_ENDPOINT}`}
                 methos="POST"
             >
                 <EmailInput 

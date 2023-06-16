@@ -1,17 +1,17 @@
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components' ;
-import { RegistrationForm } from '../../ui-elements/form-registration/form-registration';
-import { RegisterFormText } from '../../ui-elements/register-form-text/register-form-text';
-import { RegistrationWrapper } from '../../ui-elements/form-registration-wrapper/form-registration-wrapper';
+import { RegistrationForm } from '../../components/ui-elements/form-registration/form-registration';
+import { RegisterFormText } from '../../components/ui-elements/register-form-text/register-form-text';
+import { RegistrationWrapper } from '../../components/ui-elements/form-registration-wrapper/form-registration-wrapper';
 import { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { selectLoginSuccess } from '../../../services/functions/selectorFunctions';
-import { usePasswordValidation } from '../../../services/hooks/use-password-validation';
-import { resetPassword } from '../../../services/actions/auth-actions';
-import ErrorModal from '../../modal/error-modal/error-modal';
-import { useModal } from '../../../services/hooks/use-modal';
-import { selectAuthError } from '../../../services/functions/selectorFunctions';
-import { RESET_PASSWORD_ENDPOINT } from '../../../constants/constants';
+import { selectLoginSuccess } from '../../services/functions/selectorFunctions';
+import { usePasswordValidation } from '../../services/hooks/use-password-validation';
+import { resetPassword } from '../../services/actions/auth-actions';
+import ErrorModal from '../../components/modal/error-modal/error-modal';
+import { useModal } from '../../services/hooks/use-modal';
+import { selectAuthError } from '../../services/functions/selectorFunctions';
+import { RESET_PASSWORD_ENDPOINT, BASE_URL } from '../../constants/constants';
 
 
 export function ResetPasswordPage () {
@@ -56,7 +56,7 @@ export function ResetPasswordPage () {
                 title="Восстановление пароля" 
                 buttonText="Сохранить"
                 onSubmit={(e) => {e.preventDefault(); handleResetPassword()}}
-                action={RESET_PASSWORD_ENDPOINT}
+                action={`${BASE_URL}${RESET_PASSWORD_ENDPOINT}`}
                 method="POST"
             >
                 <PasswordInput 
