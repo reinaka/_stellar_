@@ -33,6 +33,7 @@ export const getOrderNum = (dataToPost) => {
             dispatch({
                 type: UPLOAD_ORDER_DETAILS_FAILED
             })
+            throw new Error(`Ошибка: ${error}`);
         }
     }
 }
