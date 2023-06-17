@@ -12,14 +12,17 @@ import ErrorModal from '../../components/modal/error-modal/error-modal';
 import { useModal } from '../../services/hooks/use-modal';
 import { selectAuthError } from '../../services/functions/selectorFunctions';
 import { RESET_PASSWORD_ENDPOINT, BASE_URL } from '../../constants/constants';
+import { useLocation } from 'react-router-dom';
 
 
 export function ResetPasswordPage () {
     const loggedIn = useSelector(selectLoginSuccess);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
     const authError = useSelector(selectAuthError);
     const {password, fillPassword, validatePassword} = usePasswordValidation('');
+    const from = location.state?.from || '/';
 
     const [code, setCode] = useState('');
     const handleName = e => {
@@ -48,7 +51,7 @@ export function ResetPasswordPage () {
     }, [authError, openModal])
 
     return loggedIn
-    ? <Navigate to="/" replace="true"/>
+    ? <Navigate to={from} replace="true" />
     : (
         <>
         <RegistrationWrapper>

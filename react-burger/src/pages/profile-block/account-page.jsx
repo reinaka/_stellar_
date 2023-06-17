@@ -1,19 +1,20 @@
 import styles from './account.module.css';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import { logout } from '../../services/actions/auth-actions';
 import { useDispatch } from 'react-redux';
 
 export function AccountPage() {
     const dispatch = useDispatch();
+    const location = useLocation();
     const textColor = ({ isActive }) => isActive ? styles.text_color_active : "";
     
     return (
         <div className={styles.wrapper}>
             <nav className={`${styles.contentBlock} ${styles.link}`}>
-                <NavLink to="/profile" className={textColor} end>
+                <NavLink to="/profile" state={{ from: location.pathname }} className={textColor} end>
                     <div className={`text text_type_main-medium ${styles.linkBlock}`}>Профиль</div>
                 </NavLink>
-                <NavLink to="/profile/orders" className={textColor}>
+                <NavLink to="/profile/orders" state={{ from: location.pathname }} className={textColor}>
                     <div className={`text text_type_main-medium ${styles.linkBlock}`}>История заказов</div>
                 </NavLink>
                 <NavLink>

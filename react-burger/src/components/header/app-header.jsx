@@ -2,9 +2,10 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-deve
 import HeaderItemBlock from "./header-item-block/Header-item-block"; 
 import styles from './app-header.module.css';
 import { memo } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const AppHeader = memo(() => {
+    const location = useLocation();
     const activeLink = ({ isActive }) => isActive ? styles.activeLink : styles.inactiveIcon;
 
     return (
@@ -12,6 +13,7 @@ const AppHeader = memo(() => {
             <nav className={`${styles.general} ${styles.link}`}>
                 <span className={styles.span}>
                     <NavLink to="/"
+                            state={{ from: location.pathname }}
                             className={activeLink}
                     >
                         <HeaderItemBlock 
@@ -26,6 +28,7 @@ const AppHeader = memo(() => {
                 </span>
                 <span className={styles.alignRight}>
                     <NavLink to="/profile"
+                            state={{ from: location.pathname }}
                             className={activeLink}
                     >
                         <HeaderItemBlock 

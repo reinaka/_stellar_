@@ -2,15 +2,12 @@ import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-comp
 import { RegistrationForm } from '../../components/ui-elements/form-registration/form-registration';
 import { RegisterFormText } from '../../components/ui-elements/register-form-text/register-form-text';
 import { RegistrationWrapper } from '../../components/ui-elements/form-registration-wrapper/form-registration-wrapper';
-import { useSelector } from 'react-redux';
-import { useNavigate, Navigate, useLocation } from 'react-router-dom';
-import { selectLoginSuccess } from '../../services/functions/selectorFunctions';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getServerResponse } from '../../services/functions/getServerResponse';
 import { FORGOT_PASSWORD_ENDPOINT, BASE_URL } from '../../constants/constants';
 import { useEmailValidation } from '../../services/hooks/use-email-validation';
 
 export function ForgotPasswordPage () {
-    const loggedIn = useSelector(selectLoginSuccess);
     const navigate = useNavigate();
     const location = useLocation();
     const {email, validateEmail, fillEmail} = useEmailValidation();
@@ -37,9 +34,7 @@ export function ForgotPasswordPage () {
         }
     }   
 
-    return loggedIn
-    ? <Navigate to="/" replace="true"/>
-    : (<>
+    return (<>
         <RegistrationWrapper>
             <RegistrationForm 
                 action={`${BASE_URL}${FORGOT_PASSWORD_ENDPOINT}`}
@@ -57,7 +52,7 @@ export function ForgotPasswordPage () {
                     onChange={(e) => fillEmail(e.target.value)}/>
                 <Button extraClass="mb-20 mt-6" htmlType="submit">Восстановить</Button>
             </RegistrationForm>
-            <RegisterFormText linkText="Войти" linkAddress="/">Вспомнили пароль?</RegisterFormText>
+            <RegisterFormText linkText="Войти" linkAddress="/login">Вспомнили пароль?</RegisterFormText>
         </RegistrationWrapper>
         </>
     )

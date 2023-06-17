@@ -3,11 +3,9 @@ import styles from './profile-page.module.css';
 import { selectUserName, selectUserEmail } from '../../../services/functions/selectorFunctions';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserInfo, changeUserInfo } from '../../../services/actions/auth-actions';
-import { useEffect, useCallback, useMemo, useState } from 'react';
-import { useNameValidation } from '../../../services/hooks/use-name-validation';
-import { useEmailValidation } from '../../../services/hooks/use-email-validation';
-import { usePasswordValidation } from '../../../services/hooks/use-password-validation';
+import { useEffect, useCallback, useState } from 'react';
 import { GET_USER_INFO_ENDPOINT, BASE_URL } from '../../../constants/constants';
+import { useFormAndValidation } from '../../../services/hooks/use-form-validation';
 
 export function ProfilePage() {
     const dispatch = useDispatch();
@@ -20,95 +18,71 @@ export function ProfilePage() {
 
     const userName = useSelector(selectUserName);
     const userEmail = useSelector(selectUserEmail);
-    const {name, fillName, validateName} = useNameValidation(userName);
-    const {email, fillEmail, validateEmail} = useEmailValidation(userEmail);
-    const {password, fillPassword, validatePassword} = usePasswordValidation('');
+    const [initialValues, setInitialValues] = useState({
+        name: userName,
+        email: userEmail,
+    });
 
     useEffect(() => {
-        fillName(userName);
-        fillEmail(userEmail);
-    }, [userEmail, userName])
+        setInitialValues({
+            name: userName,
+            email: userEmail,
+        })
+    }, [userEmail, userName]);
 
-    const fillDefaultValues = useCallback(() => {
-        fillEmail(userEmail);
-        fillName(userName);
-        fillPassword('');
-    }, [fillEmail, fillName, fillPassword, userEmail, userName]);
-
-    const dataToPost = useMemo(() => (
-        password.value !== ''
-        ? {
-            name: name.value,
-            email: email.value,
-            password: password.value
-        }
-        : {
-            name: name.value,
-            email: email.value,
-        }),[email.value, name.value, password.value]);
+    const {values, handleChange, errors,resetForm} = useFormAndValidation(initialValues);
 
     const handleReset = useCallback(() => {
-        if(password.value !== '') {
-            validatePassword(password.value);
-            validateEmail(email.value);
-            validateName(name.value);
-            if(validateEmail && validateName && validatePassword) {
-                dispatch(changeUserInfo(dataToPost));
-            }
-        } else {
-            validateEmail(email.value);
-            validateName(name.value);
-            if(validateEmail && validateName) {
-                dispatch(changeUserInfo(dataToPost));
-            }
-        }
-        
-    }, [dataToPost, dispatch, email.value, name.value, validateEmail, validateName, password.value, validatePassword]);
+        dispatch(changeUserInfo(values));
+    }, [values, dispatch]);
 
     useEffect(() => {
-        if(userEmail !== email.value || userName !== name.value || password.value !== '') {
+        if(userEmail !== values.email || userName !== values.name || values.password) {
             setButtonsVisible(true);
         } else {
             setButtonsVisible(false);
         }
-    }, [email.value, name.value, password.value, userName, userEmail]);
+    }, [userEmail, userName, values.email, values.name, values.password]);
 
     return (
         <form 
-            onSubmit={(e) => {e.preventDefault(); handleReset(dataToPost)}}
+            onSubmit={(e) => {e.preventDefault(); handleReset(values)}}
             method="PATCH" 
             action={`${BASE_URL}${GET_USER_INFO_ENDPOINT}`}
         >
             <Input 
                 extraClass="mb-6" 
                 placeholder="Имя" 
-                value={name.value} 
+                value={values?.name || ""} 
                 icon="EditIcon"
-                error={name.error}
-                errorText={name.errorText}
-                onChange={e => fillName(e.target.value)}
+                error={Boolean(errors.name)}
+                errorText={errors.name}
+                onChange={e => handleChange(e)}
+                name="name"
             />
             <EmailInput 
                 extraClass="mb-6" 
                 placeholder="Логин" 
-                value={email.value} 
+                value={values?.email || ""} 
                 icon="EditIcon"
-                error={email.error}
-                errorText={email.errorText}
-                onChange={e => fillEmail(e.target.value)}
+                error={Boolean(errors.email)}
+                errorText={errors.email}
+                onChange={e => handleChange(e)}
+                name="email"
             />
             <PasswordInput 
                 placeholder="Пароль" 
-                value={password.value} 
+                value={values?.password || ""} 
                 icon="EditIcon"
-                error={password.error}
-                errorText={password.errorText}
-                onChange={e => fillPassword(e.target.value)}
+                error={Boolean(errors.password)}
+                errorText={errors.password}
+                onChange={e => handleChange(e)}
+                name="password"
             />
             {buttonsVisible && (
                 <div className={styles.buttonBox}>
                 <Button extraClass="mt-6" htmlType='submit'>Сохранить</Button>
-                <Button extraClass="mt-6" htmlType='button' onClick={() => fillDefaultValues()}>Отменить</Button>
+                <Button extraClass="mt-6" htmlType='button' onClick={() => resetForm(initialValues)}>Отменить</Button>
             </div>
             )}
         </form> 
