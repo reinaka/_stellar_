@@ -1,6 +1,6 @@
 export const BASE_URL = "https://norma.nomoreparties.space/api";
-export const GET_INGREDIENTS_URL = '/ingredients';
-export const GET_ORDER_NUMBER_URL = '/orders';
+export const GET_INGREDIENTS_ENDPOINT = '/ingredients';
+export const GET_ORDER_NUMBER_ENDPOINT = '/orders';
 export const AUTH_ENDPOINT = "/auth/login";
 export const REGISTRATION_ENDPOINT = '/auth/register';
 export const LOGOUT_ENDPOINT = "/auth/logout";

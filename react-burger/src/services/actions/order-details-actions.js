@@ -1,4 +1,4 @@
-import { GET_ORDER_NUMBER_URL } from '../../constants/constants';
+import { GET_ORDER_NUMBER_ENDPOINT } from '../../constants/constants';
 import { getServerResponse } from '../functions/getServerResponse';
 import { CLEAR_CONSTRUCTOR } from './constructor-actions';
 export const UPLOAD_ORDER_DETAILS_REQUEST = 'UPLOAD_ORDER_DETAILS_REQUEST';
@@ -11,7 +11,7 @@ export const getOrderNum = (dataToPost) => {
             dispatch({
                 type: UPLOAD_ORDER_DETAILS_REQUEST
             });
-            getServerResponse(GET_ORDER_NUMBER_URL, {
+            getServerResponse(GET_ORDER_NUMBER_ENDPOINT, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'
