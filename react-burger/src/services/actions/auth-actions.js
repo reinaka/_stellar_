@@ -1,6 +1,12 @@
 import { getServerResponse, catchServerResponseError } from '../functions/getServerResponse';
 import { saveTokens, clearTokens } from '../functions/handleTokens';
-import { GET_TOKEN_ENDPOINT, GET_USER_INFO_ENDPOINT, LOGOUT_ENDPOINT, RESET_PASSWORD_ENDPOINT } from '../../constants/constants';
+import { 
+        GET_TOKEN_ENDPOINT, 
+        GET_USER_INFO_ENDPOINT, 
+        LOGOUT_ENDPOINT, 
+        RESET_PASSWORD_ENDPOINT, 
+        FORGOT_PASSWORD_ENDPOINT 
+    } from '../../constants/constants';
 
 export const AUTH_REQUEST="AUTH_REQUEST";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
@@ -23,13 +29,11 @@ export function getAuth(endpoint, dataToPost) {
                     body: JSON.stringify(dataToPost)
         })
         .then(res => {
-            if(res.success) {
                 dispatch({
                     type: AUTH_SUCCESS,
                     payload: res
                 });
                 saveTokens(res);
-            }
         })
         .catch(error => catchServerResponseError(error, dispatch))
     }
@@ -47,13 +51,11 @@ export function refreshToken() {
                     }),
         })
         .then(res => {
-            if(res.success) {
                 dispatch({
                     type: UPDATE_TOKEN,
                     payload: res
                 });
                 saveTokens(res);
-            }
         })
         .catch(error => catchServerResponseError(error, dispatch))
     }  
@@ -69,12 +71,10 @@ export function verifyToken() {
             },
         })
         .then(res => {
-            if(res.success) {
                 dispatch({
                     type: AUTH_SUCCESS,
                     payload: res
                 });
-            } 
             return true;
         })
         .catch(error => {
@@ -102,12 +102,10 @@ export function getUserInfo() {
             },
         })
         .then(res => {
-            if(res.success) {
                 dispatch({
                     type: AUTH_SUCCESS,
                     payload: res
                 });
-            }
         })
         .catch(error => catchServerResponseError(error, dispatch))
 }}
@@ -123,12 +121,10 @@ export function changeUserInfo(dataToPost) {
             body: JSON.stringify(dataToPost)
         })
         .then(res => {
-            if(res.success) {
                 dispatch({
                     type: AUTH_SUCCESS,
                     payload: res
                 });
-            }
         })
         .catch(error => catchServerResponseError(error, dispatch))
     }
@@ -146,12 +142,10 @@ export function logout() {
             })
         })
         .then(res => {
-            if(res.success) {
                 dispatch({
                     type: LOGOUT
                 });
                 clearTokens();
-            }
         })
         .catch(error => catchServerResponseError(error, dispatch))
     }
@@ -169,10 +163,26 @@ export function resetPassword(navigate, dataToPost) {
                 token: dataToPost.token
             })
         })
-        .then(res => {
-            if(res.success) {
+        .then(() => {
                 navigate("/profile", {replace: true});
-            }
+        })
+        .catch(error => catchServerResponseError(error, dispatch))
+    }
+}
+
+export function forgotPassword(navigate, location, dataToPost) {
+    return async function(dispatch) {
+        getServerResponse(FORGOT_PASSWORD_ENDPOINT, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: dataToPost
+            })
+        })
+        .then(() => {
+                navigate("/reset-password", {state: { from: location.pathname}});
         })
         .catch(error => catchServerResponseError(error, dispatch))
     }

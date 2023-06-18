@@ -10,22 +10,19 @@ export function getData() {
             dispatch({
                 type: UPLOAD_INGREDIENTS_DATA_REQUEST
             });
-            getServerResponse(GET_INGREDIENTS_URL, {})
+            getServerResponse(GET_INGREDIENTS_URL)
             .then(res => {
-                if(res.success) {
                     dispatch({
                         type: UPLOAD_INGREDIENTS_DATA_SUCCESS,
                         items: res.data,
                     })
-                } else {
-                    dispatch({
-                        type: UPLOAD_INGREDIENTS_DATA_FAILED
-                    })
                 }
-            })
+            )
         }
         catch(error) {
-            throw new Error(`Ошибка: ${error}`)
+            dispatch({
+                type: UPLOAD_INGREDIENTS_DATA_FAILED
+            })
         }
     }
 } 

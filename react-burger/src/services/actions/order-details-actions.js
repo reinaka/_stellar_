@@ -19,7 +19,6 @@ export const getOrderNum = (dataToPost) => {
                 body: JSON.stringify(dataToPost)
             })
             .then(res => {
-                if(res.success) {
                     dispatch({
                         type: UPLOAD_ORDER_DETAILS_SUCCESS,
                         payload: res.order.number,
@@ -28,12 +27,11 @@ export const getOrderNum = (dataToPost) => {
                         type: CLEAR_CONSTRUCTOR
                     })
                 }
-            })
+            )
         } catch (error) {
             dispatch({
                 type: UPLOAD_ORDER_DETAILS_FAILED
             })
-            throw new Error(`Ошибка: ${error}`);
         }
     }
 }

@@ -3,35 +3,21 @@ import { RegistrationForm } from '../../components/ui-elements/form-registration
 import { RegisterFormText } from '../../components/ui-elements/register-form-text/register-form-text';
 import { RegistrationWrapper } from '../../components/ui-elements/form-registration-wrapper/form-registration-wrapper';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getServerResponse } from '../../services/functions/getServerResponse';
 import { FORGOT_PASSWORD_ENDPOINT, BASE_URL } from '../../constants/constants';
 import { useEmailValidation } from '../../services/hooks/use-email-validation';
+import { useDispatch } from 'react-redux';
+import { forgotPassword } from '../../services/actions/auth-actions';
 
 export function ForgotPasswordPage () {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
     const {email, validateEmail, fillEmail} = useEmailValidation();
 
     const handleResetPassword = () => {
+        const dataToPost = email.value;
         validateEmail(email.value);
-        try {
-            getServerResponse(FORGOT_PASSWORD_ENDPOINT, {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email.value
-            })
-        })
-        .then(res => {
-            if(res.success) {
-                navigate("/reset-password", {state: { from: location.pathname}});
-            } 
-        })}
-        catch(error) {
-            throw new Error(`Ошибка: ${error}`);
-        }
+        dispatch(forgotPassword(navigate, location, dataToPost))
     }   
 
     return (<>

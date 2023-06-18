@@ -7,9 +7,16 @@ export function checkServerResponse(res) {
     : Promise.reject(res.json())
 }
 
+function checkSuccess(res) {
+    return (res && res.success)
+    ? res
+    : Promise.reject(`Ответ не success: ${res}`)
+}
+
 export async function getServerResponse(endpoint, options) {
     return fetch(`${BASE_URL}${endpoint}`, options)
     .then(checkServerResponse)
+    .then(checkSuccess)
 }
 
 export function catchServerResponseError(error, dispatch) {
@@ -18,6 +25,5 @@ export function catchServerResponseError(error, dispatch) {
             type: AUTH_FAILED,
             payload: res.message
         })
-        throw new Error(`Error: ${res.message}`);
     })
 }
