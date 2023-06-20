@@ -1,9 +1,8 @@
 import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from "./modal-overlay/modal-overlay";
 import PropTypes from 'prop-types';
-import styles from './modal.module.css';
+import { ModalWrapper } from '../ui-elements/modal-wrapper/modal-wrapper';
 
 const modalRoot = document.getElementById("modalRoot");
 
@@ -17,18 +16,12 @@ export default function Modal(props) {
     const element = (
         <>
         <ModalOverlay onClick={props.onClose} />
-        <div className={`${styles.wrapper} p-10`}>
-            <span className={`${styles.top} mb-4`}>
-                <p className={`${styles.title} mr-9 text text_type_main-large`}>{props.title}</p>
-                    <CloseIcon type="primary" onClick={props.onClose}/>
-            </span>
-            {props.children}
-        </div>
+            <ModalWrapper title={props.title} onClose={props.onClose} children={props.children}/>
         </>
         );
 
     return ReactDOM.createPortal (
-            element,
+        element,
         modalRoot
     )
 }

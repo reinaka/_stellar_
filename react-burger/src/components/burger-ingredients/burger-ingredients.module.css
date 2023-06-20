@@ -4,6 +4,15 @@
     height: calc(100vh - 284px);
 }
 
+.scroll a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.scroll a:visited {
+    color: #fff;
+}
+
 .scroll::-webkit-scrollbar {
     width: 8px;
 }

@@ -3,7 +3,7 @@ import IngredientCard from "../ingredient-card/ingredient-card";
 import { memo, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { selectAllIngredientsItems } from '../../../services/selectorFunctions';
+import { selectAllIngredientsItems } from '../../../services/functions/selectorFunctions';
 
 const IngredientsBlock = memo((props) => {
     const ingredientsData = useSelector(selectAllIngredientsItems);

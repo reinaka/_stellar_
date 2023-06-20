@@ -8,9 +8,9 @@ export const useModal = () => {
     const closeModal = useCallback(() => {
         setIsModalVisible(false)}, []);
 
-    return [
-        isModalVisible,
+    return (
+        [isModalVisible,
         openModal,
-        closeModal
-    ]
+        closeModal]
+    )
 }

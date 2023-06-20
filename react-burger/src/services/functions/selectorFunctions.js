@@ -26,3 +26,23 @@ export function selectIngredientDetails(store) {
     return store.ingredientDetails;
 }
 
+export function selectUserName(store) {
+    return store.authData.userData.user.name;
+}
+
+export function selectUserEmail(store) {
+    return store.authData.userData.user.email;
+}
+
+export function selectLoginSuccess(store) {
+    return store.authData.userData.success;
+}
+
+export function selectAuthChecked(store) {
+    return store.authData.isAuthChecked;
+}
+
+export function selectAuthError(store) {
+    return store.authData.authError;
+}
+

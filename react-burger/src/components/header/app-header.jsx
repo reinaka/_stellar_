@@ -2,20 +2,42 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-deve
 import HeaderItemBlock from "./header-item-block/Header-item-block"; 
 import styles from './app-header.module.css';
 import { memo } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const AppHeader = memo(() => {
+    const location = useLocation();
+    const activeLink = ({ isActive }) => isActive ? styles.activeLink : styles.inactiveIcon;
+
     return (
         <header className={`${styles.headerWrapper} pt-4 pb-4`}>
-            <nav className={styles.general}>
+            <nav className={`${styles.general} ${styles.link}`}>
                 <span className={styles.span}>
-                    <HeaderItemBlock icon={<BurgerIcon type="primary" />} text="Конструктор"/>
+                    <NavLink to="/"
+                            state={{ from: location.pathname }}
+                            className={activeLink}
+                    >
+                        <HeaderItemBlock 
+                                icon={<BurgerIcon />} 
+                                text="Конструктор"
+                        />
+                    </NavLink>
                     <HeaderItemBlock icon ={<ListIcon type="secondary" />} text="Лента заказов" textColor="text_color_inactive"/>
                 </span>
                 <span className={styles.alignCenter}>
                     <Logo className={styles.logo}/>
                 </span>
                 <span className={styles.alignRight}>
-                    <HeaderItemBlock icon={<ProfileIcon type="secondary" />} text="Личный кабинет" textColor="text_color_inactive" styles="max-width:207px"/>
+                    <NavLink to="/profile"
+                            state={{ from: location.pathname }}
+                            className={activeLink}
+                    >
+                        <HeaderItemBlock 
+                                icon={<ProfileIcon />} 
+                                text="Личный кабинет" 
+                                textColor="text_color_inactive" 
+                                styles="max-width:207px"
+                        />
+                    </NavLink>
                 </span>
             </nav>
         </header>

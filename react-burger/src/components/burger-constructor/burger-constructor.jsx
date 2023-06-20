@@ -10,7 +10,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { addToConstructor, deleteFromConstructor } from '../../services/actions/constructor-actions';
 import { getOrderNum } from '../../services/actions/order-details-actions';
-import { useModal } from '../../hooks/use-modal';
+import { useModal } from '../../services/hooks/use-modal';
+import { selectLoginSuccess } from '../../services/functions/selectorFunctions';
 import { INGREDIENT } from '../../constants/constants';
 import { v4 as uuidv4 } from 'uuid';
 import { 
@@ -18,16 +19,20 @@ import {
         selectSelectedBun, 
         selectConstructorTotalCost, 
         selectOrderNum 
-    } from '../../services/selectorFunctions';
+    } from '../../services/functions/selectorFunctions';
 import { BUN } from '../../constants/constants';
+import { useNavigate } from 'react-router-dom';
+
 
 function BurgerConstructor() {
     const items = useSelector(selectBurgerConstructorItems);
     const selectedBun = useSelector(selectSelectedBun);
     const totalCost = useSelector(selectConstructorTotalCost);
     const orderNum = useSelector(selectOrderNum);
+    const loggedIn = useSelector(selectLoginSuccess);
     const [isModalVisible, openModal, closeModal] = useModal();
     const dispatch = useDispatch();
+    const navigate= useNavigate();
 
     //модальное окно
     const modal = useMemo(
@@ -65,18 +70,21 @@ function BurgerConstructor() {
 
     //хэндлер для получения номера заказа
     const handleOrderNum = useCallback(() => {
-        //получаю айдишники для отправления на сервер
         if(selectedBun) {
-            const getDataToPost = (items) => {
-                let resultArr = [];
-                    resultArr.push(selectedBun._id);
-                    if (items.length) items.forEach(item => resultArr.push(item.ingredient._id));
-                return resultArr;
-            };
-            const dataToPost = {"ingredients": [...getDataToPost(items)]};
-            dispatch(getOrderNum(dataToPost));
+            if(loggedIn) {
+                    const data = (items) => {
+                        let resultArr = [];
+                            resultArr.push(selectedBun._id);
+                            if (items.length) items.forEach(item => resultArr.push(item.ingredient._id));
+                        return resultArr;
+                    };
+                    const dataToPost = {"ingredients": [...data(items)]};
+                    dispatch(getOrderNum(dataToPost));
+            } else {
+                navigate("/login");
+            }
         }
-    },[dispatch, items, selectedBun]);
+    },[dispatch, items, selectedBun, navigate, loggedIn]);
 
     //dnd добавление ингредиента в конструктор
     const [{ isHover }, dropTarget] = useDrop({
