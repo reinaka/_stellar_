@@ -28,7 +28,7 @@ export const getOrderNum = (dataToPost) => {
                     })
                 }
             )
-        } catch (error) {
+        } catch (e) {
             dispatch({
                 type: UPLOAD_ORDER_DETAILS_FAILED
             })

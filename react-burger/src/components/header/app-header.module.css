@@ -34,11 +34,7 @@
     color: #8585AD;
 }
 
-.activeLink p {
-    color: #fff;
-}
-
-.inactiveIcon svg {
-    fill: #8585AD;
+.profile {
+    max-width: 207px;
 }
 
