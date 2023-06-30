@@ -35,9 +35,7 @@ export function selectUserEmail(store) {
 }
 
 export function selectUserPassword(store) {
-    return store.authData.userData.user.password
-    ? store.authData.userData.user.password 
-    : ""
+    return store.authData.userData.user?.password || ""
 }
 
 export function selectLoginSuccess(store) {
