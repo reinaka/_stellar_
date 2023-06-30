@@ -13,12 +13,22 @@ import RegistrationForm from '../../components/ui-elements/form-registration/for
 import RegisterFormText from '../../components/ui-elements/register-form-text/register-form-text';
 import { useFormAndValidation } from '../../services/hooks/use-form-validation';
 
+type FormStateType = {
+    name : string,
+    email : string,
+    password : string,
+};
+
 export function RegistrationPage () {
     const dispatch = useDispatch() as any;
     const loggedIn = useSelector(selectLoginSuccess);
     const location = useLocation();
     
-    const {values, handleChange} = useFormAndValidation({});
+    const {values, handleChange} = useFormAndValidation<FormStateType>({
+        name : "",
+        email : "",
+        password : "",
+    });
 
     const dataToPost = {
         "email": values.email,
@@ -60,8 +70,6 @@ export function RegistrationPage () {
                 placeholder="Имя" 
                 name={'name'} 
                 onChange={(e) => handleChange(e)}
-                error={values.error ? true : false}
-                errorText={values.error}
                 icon="EditIcon"
             />
             <EmailInput 

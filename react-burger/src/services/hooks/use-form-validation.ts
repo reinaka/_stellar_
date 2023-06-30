@@ -1,33 +1,16 @@
 import {useState, useCallback} from 'react';
 
-type TValues = {
-    [key: string] : string
-};
+export function useFormAndValidation<T>(inputValues: T) {
+    const [ values, setValues ] = useState<T>(inputValues);
 
-type TErrors = {
-    [key: string] : string | undefined
-}
-
-
-export function useFormAndValidation(initialValues : TValues) {
-    const [ values, setValues ] = useState(initialValues);
-    const [ errors, setErrors ] = useState<TErrors>({});
-    const [ isValid, setIsValid ] = useState(true);
-
-    const handleChange = (e: { target: { validationMessage?: string; closest?: any; name: string; value: string; }; }) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target
         setValues({...values, [name]: value });
-        setErrors({...errors, [name]: e.target.validationMessage});
-        setIsValid(e.target.closest('form').checkValidity());
     };
 
+    const resetForm = useCallback(() => {
+        setValues(inputValues);
+    }, [setValues, inputValues]);
 
-
-    const resetForm = useCallback((initialValues : {[key: string]: string;}, newErrors = {}, newIsValid = false) => {
-        setValues(initialValues);
-        setErrors(newErrors);
-        setIsValid(newIsValid);
-    }, [setValues, setErrors, setIsValid]);
-
-    return { values, handleChange, errors, isValid, resetForm, setValues, setIsValid };
+    return { values, handleChange, resetForm, setValues };
 }

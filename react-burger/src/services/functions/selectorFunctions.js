@@ -34,6 +34,12 @@ export function selectUserEmail(store) {
     return store.authData.userData.user.email;
 }
 
+export function selectUserPassword(store) {
+    return store.authData.userData.user.password
+    ? store.authData.userData.user.password 
+    : ""
+}
+
 export function selectLoginSuccess(store) {
     return store.authData.userData.success;
 }

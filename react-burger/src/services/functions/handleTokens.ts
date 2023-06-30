@@ -1,4 +1,4 @@
-export function saveTokens(response: { success?: any; accessToken?: any; refreshToken?: any; }) {
+export function saveTokens(response: { success: boolean; accessToken: string; refreshToken: string; }) {
     localStorage.setItem('accessToken', response.accessToken);
     localStorage.setItem('refreshToken', response.refreshToken);
 }

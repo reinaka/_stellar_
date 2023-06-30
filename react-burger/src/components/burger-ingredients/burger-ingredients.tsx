@@ -5,7 +5,7 @@ import { BUN, MAIN, SAUCE } from '../../constants/constants';
 import { memo, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ADD_INGREDIENT_DETAILS } from '../../services/actions/current-ingredient-actions';
-import { TIngredient } from '../../services/types/ingredinet-type';
+import { TIngredient } from '../../services/types/types';
 
 const BurgerIngredients = memo(() => {
     const dispatch = useDispatch();

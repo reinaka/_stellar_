@@ -1,16 +1,21 @@
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile-page.module.css';
-import { selectUserName, selectUserEmail } from '../../../services/functions/selectorFunctions';
+import { selectUserName, selectUserEmail, selectUserPassword } from '../../../services/functions/selectorFunctions';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserInfo, changeUserInfo } from '../../../services/actions/auth-actions';
 import { useEffect, useCallback, useState } from 'react';
 import { GET_USER_INFO_ENDPOINT, BASE_URL } from '../../../constants/constants';
 import { useFormAndValidation } from '../../../services/hooks/use-form-validation';
 
+type FormStateType = {
+    name : string,
+    email : string,
+    password? : string,
+};
+
 export function ProfilePage() {
     const dispatch = useDispatch() as any;
     const [buttonsVisible, setButtonsVisible] = useState(false);
-    const [inputDisabled, setInputDisabled] = useState(true);
 
     useEffect(() => {
         dispatch(getUserInfo());
@@ -19,7 +24,8 @@ export function ProfilePage() {
 
     const userName = useSelector(selectUserName);
     const userEmail = useSelector(selectUserEmail);
-    const [initialValues, setInitialValues] = useState({
+    const userPassword = useSelector(selectUserPassword);
+    const [initialValues, setInitialValues] = useState<FormStateType>({
         name: userName,
         email: userEmail,
     });
@@ -31,19 +37,19 @@ export function ProfilePage() {
         })
     }, [userEmail, userName]);
 
-    const {values, handleChange, errors, resetForm} = useFormAndValidation(initialValues);
+    const {values, handleChange, resetForm} = useFormAndValidation<FormStateType>(initialValues);
 
     const handleReset = useCallback(() => {
         dispatch(changeUserInfo(values));
     }, [values, dispatch]);
 
     useEffect(() => {
-        if(userEmail !== values.email || userName !== values.name || values.password) {
+        if(userEmail !== values.email || userName !== values.name || userPassword !== values.password) {
             setButtonsVisible(true);
         } else {
             setButtonsVisible(false);
         }
-    }, [userEmail, userName, values.email, values.name, values.password]);
+    }, [userEmail, userName, values.email, userPassword, values.name, values.password]);
 
     return (
         <form 
@@ -56,8 +62,6 @@ export function ProfilePage() {
                 placeholder="Имя" 
                 value={values?.name || ""} 
                 icon="EditIcon"
-                error={Boolean(errors.name)}
-                errorText={errors.name}
                 onChange={e => handleChange(e)}
                 name="name"
             />
@@ -72,14 +76,13 @@ export function ProfilePage() {
             <PasswordInput 
                 placeholder="Пароль" 
                 value={values?.password || ""} 
-                icon="EditIcon"
                 onChange={e => handleChange(e)}
                 name="password"
             />
             {buttonsVisible && (
                 <div className={styles.buttonBox}>
                 <Button extraClass="mt-6" htmlType='submit'>Сохранить</Button>
-                <Button extraClass="mt-6" htmlType='button' onClick={() => resetForm(initialValues)}>Отменить</Button>
+                <Button extraClass="mt-6" htmlType='button' onClick={() => resetForm()}>Отменить</Button>
             </div>
             )}
         </form> 

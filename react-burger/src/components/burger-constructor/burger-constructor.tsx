@@ -22,7 +22,7 @@ import {
     } from '../../services/functions/selectorFunctions';
 import { BUN } from '../../constants/constants';
 import { useNavigate } from 'react-router-dom';
-import { TIngredient } from '../../services/types/ingredinet-type';
+import { TIngredient, TIngredientWithUUID } from '../../services/types/types';
 
 
 function BurgerConstructor() {
@@ -76,7 +76,7 @@ function BurgerConstructor() {
                     const data = (items : TIngredient[]) => {
                         let resultArr = [];
                             resultArr.push(selectedBun._id);
-                            if (items.length) items.forEach(item => resultArr.push(item.ingredient._id));
+                            if (items.length) items.forEach(item => resultArr.push(item._id));
                         return resultArr;
                     };
                     const dataToPost : {} = {"ingredients": [...data(items)]};
@@ -88,7 +88,7 @@ function BurgerConstructor() {
     },[dispatch, items, selectedBun, navigate, loggedIn]);
 
     //dnd добавление ингредиента в конструктор
-    const [{ isHover }, dropTarget] = useDrop<TIngredient["ingredient"], void, {isHover : boolean}>({
+    const [{ isHover }, dropTarget] = useDrop<TIngredient, void, {isHover : boolean}>({
         accept: INGREDIENT,
         collect: monitor => ({
             isHover: monitor.isOver()
@@ -106,7 +106,7 @@ function BurgerConstructor() {
     //dnd получение индекса перетаскиваемого ингредиента
     const findIngredient = useCallback(
         (id : number) => {
-            const draggableItem = items.filter((item : TIngredient) => item.uuid === id)[0];
+            const draggableItem = items.filter((item : TIngredientWithUUID) => item.uuid === id)[0];
             return items.indexOf(draggableItem);
         },[items]);
 
@@ -118,8 +118,7 @@ function BurgerConstructor() {
                     {items.length > 0 ? (
                         <ul className={styles.listUl}>
                             {
-                                items.map((item : TIngredient) => {
-                                    console.log(items);
+                                items.map((item : TIngredientWithUUID) => {
                                     return (
                                         <li className={`${styles.constructorLi} ml-4`} key={item.uuid}>
                                             <ConstructorElementBlock 

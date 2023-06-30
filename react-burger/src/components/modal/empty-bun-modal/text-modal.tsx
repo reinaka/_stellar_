@@ -4,7 +4,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from '../error-modal/error-modal.module.css';
 import generalStyles from '../modal.module.css';
-import { TModal } from '../../../services/types/modal-type';
+import { TModal } from '../../../services/types/types';
 
 const modalRoot = document.getElementById("modalRoot");
 

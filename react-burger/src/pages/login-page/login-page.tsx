@@ -13,6 +13,11 @@ import RegistrationForm from '../../components/ui-elements/form-registration/for
 import RegisterFormText from '../../components/ui-elements/register-form-text/register-form-text';
 import { useFormAndValidation } from '../../services/hooks/use-form-validation';
 
+type FormStateType = {
+    email : string,
+    password : string,
+};
+
 export function LoginPage () {
     const dispatch = useDispatch() as any;
     const loggedIn = useSelector(selectLoginSuccess);
@@ -20,7 +25,10 @@ export function LoginPage () {
     const location = useLocation();
     const [errorText, setErrorText] = useState("");
     const [isModalVisible, openModal, closeModal] = useModal();
-    const {values, handleChange} = useFormAndValidation({});
+    const {values, handleChange} = useFormAndValidation<FormStateType>({
+        email : "",
+        password : "",
+    });
 
     useEffect(() => {
         if(authError) {

@@ -8,12 +8,22 @@ import RegistrationForm from '../../components/ui-elements/form-registration/for
 import RegisterFormText from '../../components/ui-elements/register-form-text/register-form-text';
 import { useFormAndValidation } from '../../services/hooks/use-form-validation';
 
+type FormStateType = {
+    name : string,
+    email : string,
+    password : string,
+};
+
 export function ForgotPasswordPage () {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch() as any;
 
-    const {values, handleChange} = useFormAndValidation({});
+    const {values, handleChange} = useFormAndValidation<FormStateType>({
+        name : "",
+        email : "",
+        password : "",
+    });
 
     const handleResetPassword = () => {
         const dataToPost = values.email;
@@ -29,12 +39,12 @@ export function ForgotPasswordPage () {
                 buttonText="Восстановить" 
                 onSubmit={(e) => {e.preventDefault();handleResetPassword()}}
             >
-                <EmailInput 
-                    extraClass="mb-6" 
-                    value={values?.email || ""} 
-                    name={'email'} 
-                    onChange={e => handleChange(e)}/>
-                <Button extraClass="mb-20 mt-6" htmlType="submit">Восстановить</Button>
+            <EmailInput 
+                extraClass="mb-6" 
+                value={values?.email || ""} 
+                name={'email'} 
+                onChange={e => handleChange(e)}/>
+            <Button extraClass="mb-20 mt-6" htmlType="submit">Восстановить</Button>
             </RegistrationForm>
             <RegisterFormText linkText="Войти" linkAddress="/login">Вспомнили пароль?</RegisterFormText>
         </RegistrationWrapper>

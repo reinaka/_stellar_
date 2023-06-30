@@ -5,14 +5,14 @@ import { memo, FC } from 'react';
 import { INGREDIENT_ITEM } from '../../../constants/constants';
 import { REORDER_INGREDIENTS_CONSTRUCTOR } from '../../../services/actions/constructor-actions';
 import { useDispatch } from 'react-redux';
-import { TIngredient } from '../../../services/types/ingredinet-type';
+import { TIngredient, TIngredientWithUUID } from '../../../services/types/types';
 
 type TProps = {
-    selectedBun? : TIngredient["ingredient"],
-    ingredient : TIngredient["ingredient"],
-    ingredientObject? : TIngredient,
+    selectedBun? : TIngredient,
+    ingredient : TIngredient,
+    ingredientObject? : TIngredientWithUUID,
     id? : string,
-    draggableIngredient? : TIngredient,
+    draggableIngredient? : TIngredientWithUUID,
     findIngredient? : Function,
     handleDelete? : Function,
     isLocked? : string,
@@ -52,7 +52,7 @@ const ConstructorElementBlock:FC<TProps> = memo(
         })},[]);
 
         //dnd элемент, на место которого перетаскиваем
-        const [, dropReorder] = useDrop<{uuid : TIngredient["uuid"]}>(
+        const [, dropReorder] = useDrop<{uuid : number}>(
             () => ({
                 accept: INGREDIENT_ITEM,
                 hover({uuid: draggedId}) {

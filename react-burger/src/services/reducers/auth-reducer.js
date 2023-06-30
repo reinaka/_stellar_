@@ -33,7 +33,10 @@ export const authReducer = (state = initialState, action) => {
                 userData: {
                     ...state.userData,
                     success: action.payload.success,
-                    user: action.payload.user,
+                    user: {
+                        ...action.payload.user,
+                        password: action.password,
+                    },
                 }
             }
         }

@@ -14,6 +14,10 @@ import RegistrationForm from '../../components/ui-elements/form-registration/for
 import RegisterFormText from '../../components/ui-elements/register-form-text/register-form-text';
 import { useFormAndValidation } from '../../services/hooks/use-form-validation';
 
+type FormStateType = {
+    password : string,
+};
+
 
 export function ResetPasswordPage () {
     const loggedIn = useSelector(selectLoginSuccess);
@@ -28,7 +32,7 @@ export function ResetPasswordPage () {
         setCode(e.target.value)
     }
 
-    const {values, handleChange} = useFormAndValidation({});
+    const {values, handleChange} = useFormAndValidation<FormStateType>({password : ""});
 
     const handleResetPassword = useCallback(() => {
         const dataToPost = {

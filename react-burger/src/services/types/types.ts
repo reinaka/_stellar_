@@ -1,6 +1,6 @@
+import { ReactNode } from "react";
+
 export type TIngredient = {
-    uuid? : number,
-    ingredient : {
         calories : number,
         carbohydrates : number,
         fat : number,
@@ -13,5 +13,15 @@ export type TIngredient = {
         type : string,
         __v : number,
         _id : string
-    }
+};
+
+export type TIngredientWithUUID = {
+        uuid?: number, 
+        ingredient: TIngredient
+};
+
+export type TModal = {
+        onClose : () => void,
+        title? : string,
+        children? : ReactNode,
 };

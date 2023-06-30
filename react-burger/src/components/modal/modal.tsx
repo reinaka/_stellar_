@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import { useEffect, FC } from 'react';
 import ModalOverlay from "./modal-overlay/modal-overlay";
 import ModalWrapper from '../ui-elements/modal-wrapper/modal-wrapper';
-import { TModal } from '../../services/types/modal-type';
+import { TModal } from '../../services/types/types';
 
 const modalRoot = document.getElementById("modalRoot");
 

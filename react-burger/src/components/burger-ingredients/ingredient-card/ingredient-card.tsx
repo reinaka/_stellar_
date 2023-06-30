@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 import { INGREDIENT } from '../../../constants/constants';
 import { selectBurgerConstructorItems, selectSelectedBun } from '../../../services/functions/selectorFunctions';
 import { Link, useLocation } from 'react-router-dom';
-import { TIngredient } from '../../../services/types/ingredinet-type';
+import { TIngredient } from '../../../services/types/types';
 
-const IngredientCard:FC<TIngredient> = memo((props) => {
+const IngredientCard = memo((props : {ingredient : TIngredient}) => {
     const ingredient = props.ingredient;
     const [quantity, setQuantity] = useState<number | null>(null);
     const constructorIngredients = useSelector(selectBurgerConstructorItems);
@@ -27,7 +27,7 @@ const IngredientCard:FC<TIngredient> = memo((props) => {
         } else {
             let count = 0;
             if(constructorIngredients) {
-                constructorIngredients.forEach((item : TIngredient["ingredient"]) => {
+                constructorIngredients.forEach((item : TIngredient) => {
                     if(item && (item._id === ingredient._id)) {
                         count++;
                     }

@@ -3,7 +3,7 @@ import IngredientCard from "../ingredient-card/ingredient-card";
 import { memo, useRef, useEffect, useMemo, FC } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAllIngredientsItems } from '../../../services/functions/selectorFunctions';
-import { TIngredient } from '../../../services/types/ingredinet-type';
+import { TIngredient } from '../../../services/types/types';
 
 type TProps = {
     title : string,
@@ -14,7 +14,7 @@ type TProps = {
 
 const IngredientsBlock:FC<TProps> = memo((props) => {
     const ingredientsData = useSelector(selectAllIngredientsItems);
-    const ingredients = useMemo(() => ingredientsData.filter((item : TIngredient["ingredient"]) => item.type === props.filter), [props.filter, ingredientsData]);
+    const ingredients = useMemo(() => ingredientsData.filter((item : TIngredient) => item.type === props.filter), [props.filter, ingredientsData]);
     const setCurrentSection = props.setCurrentSection;
 
     const ref = useRef<HTMLDivElement | null>(null);
@@ -35,7 +35,7 @@ const IngredientsBlock:FC<TProps> = memo((props) => {
                 <h2 className="text text_type_main-medium">{props.title}</h2>
                 <div ref={ref} className="pl-4 pr-4 pt-6 pb-10">
                     <ul className={styles.ulStyle}>
-                        {ingredients.map((item : TIngredient["ingredient"]) => {
+                        {ingredients.map((item : TIngredient) => {
                                 return (
                                     <li className={styles.liStyle} key={item._id} 
                                     onClick={() => props.onClickHandler(item)}>

@@ -3,7 +3,7 @@ import SupplementBlock from "./supplement-block/supplement-block";
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { selectAllIngredients, selectIngredientDetails } from '../../../services/functions/selectorFunctions';
-import { TIngredient } from '../../../services/types/ingredinet-type';
+import { TIngredient } from '../../../services/types/types';
 
 export default function IngredientDetails() {
     const params = useParams();
@@ -12,7 +12,7 @@ export default function IngredientDetails() {
 
     const ingredientData = selectedIngredient 
                         ? selectedIngredient 
-                        : allIngredients.filter((item : TIngredient["ingredient"]) => item._id === params.ingredientId)[0];
+                        : allIngredients.filter((item : TIngredient) => item._id === params.ingredientId)[0];
 
     return ingredientData && (
         <div className={`${styles.wrapper} mb-5`}>
