@@ -5,3 +5,7 @@
     width: auto;
     cursor: pointer;
 }
+
+.activeLink {
+    color: #fff;
+}

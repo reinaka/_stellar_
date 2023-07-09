@@ -123,7 +123,8 @@ export function changeUserInfo(dataToPost) {
         .then(res => {
                 dispatch({
                     type: AUTH_SUCCESS,
-                    payload: res
+                    payload: res,
+                    password : dataToPost.password
                 });
         })
         .catch(error => catchServerResponseError(error, dispatch))
