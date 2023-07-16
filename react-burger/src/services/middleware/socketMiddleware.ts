@@ -10,6 +10,7 @@ import {
     WS_SEND_MESSAGE,
     WS_CONNECTION_START_USER
 } from '../actions/socket-actions';
+import { WS_BASE_URL } from '../../constants/constants';
 
 export const socketMiddleware = (): Middleware => {
     const accessToken = localStorage.getItem('accessToken')!.replace('Bearer ', '');
@@ -23,10 +24,10 @@ export const socketMiddleware = (): Middleware => {
 
         if (type === WS_CONNECTION_START) {
             // объект класса WebSocket
-        socket = new WebSocket('wss://norma.nomoreparties.space/orders/all');
+        socket = new WebSocket(`${WS_BASE_URL}/all`);
         } else if (type === WS_CONNECTION_START_USER) {
             // объект класса WebSocket
-        socket = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${accessToken}`);
+        socket = new WebSocket(`${WS_BASE_URL}?token=${accessToken}`);
         }
         if (socket) {
         socket.onopen = event => {

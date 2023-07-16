@@ -14,3 +14,4 @@ export const SAUCE = 'sauce';
 export const INGREDIENT = 'INGREDIENT';
 export const INGREDIENT_ITEM = 'INGREDIENT_ITEM';
 export const ERROR_TEXT = "Что-то пошло не так, попробуйте ещё раз";
+export const WS_BASE_URL = 'wss://norma.nomoreparties.space/orders';
