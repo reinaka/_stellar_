@@ -7,17 +7,55 @@ import {
         RESET_PASSWORD_ENDPOINT, 
         FORGOT_PASSWORD_ENDPOINT 
     } from '../../constants/constants';
+import { AppDispatch } from '../types/thunkTypes';
+import { NavigateFunction, Location } from 'react-router-dom';
 
-export const AUTH_REQUEST="AUTH_REQUEST";
-export const AUTH_SUCCESS = "AUTH_SUCCESS";
-export const AUTH_FAILED = "AUTH_FAILED";
-export const UPDATE_TOKEN = "UPDATE_TOKEN";
-export const VERIFY_USER = "VERIFY_USER";
-export const LOGOUT = 'LOGOUT';
-export const AUTH_CHECKED = "AUTH_CHECKED";
+export const AUTH_REQUEST : 'AUTH_REQUEST' = 'AUTH_REQUEST';
+export const AUTH_SUCCESS : 'AUTH_SUCCESS' = 'AUTH_SUCCESS';
+export const AUTH_FAILED : 'AUTH_FAILED' = 'AUTH_FAILED';
+export const UPDATE_TOKEN : 'UPDATE_TOKEN' = 'UPDATE_TOKEN';
+export const VERIFY_USER : 'VERIFY_USER' = 'VERIFY_USER';
+export const LOGOUT : 'LOGOUT' = 'LOGOUT';
+export const AUTH_CHECKED : 'AUTH_CHECKED' = 'AUTH_CHECKED';
 
-export function getAuth(endpoint, dataToPost) {   
-    return async function(dispatch) {
+export interface IAuthRequestAction {
+    readonly type : typeof AUTH_REQUEST
+}
+
+export interface IAuthSuccessAction {
+    readonly type : typeof AUTH_SUCCESS,
+    readonly payload : {
+        success : boolean,
+        user : {},
+    },
+    readonly password? : string
+}
+
+export interface IUpdateTokenAction {
+    readonly type : typeof UPDATE_TOKEN,
+    readonly payload : {
+        accessToken : string,
+        refreshToken : string
+    }
+}
+
+export interface ILogout {
+    readonly type : typeof LOGOUT
+}
+
+export interface IAuthFailed {
+    readonly type : typeof AUTH_FAILED,
+    payload : string
+}
+
+export interface IAuthChecked {
+    readonly type : typeof AUTH_CHECKED
+}
+
+export type TAuthActions = IAuthRequestAction | IAuthSuccessAction | IUpdateTokenAction | ILogout | IAuthFailed | IAuthChecked;
+
+export function getAuth(endpoint : string, dataToPost : {}) {   
+    return async function(dispatch : AppDispatch) {
         dispatch({
             type: AUTH_REQUEST
         });
@@ -28,7 +66,7 @@ export function getAuth(endpoint, dataToPost) {
                     },
                     body: JSON.stringify(dataToPost)
         })
-        .then(res => {
+        .then((res) => {
                 dispatch({
                     type: AUTH_SUCCESS,
                     payload: res
@@ -40,7 +78,7 @@ export function getAuth(endpoint, dataToPost) {
 }
 
 export function refreshToken() {
-    return async function(dispatch) {
+    return async function(dispatch : AppDispatch) {
         getServerResponse(GET_TOKEN_ENDPOINT, {
             method: 'POST',
                     headers: {
@@ -62,7 +100,7 @@ export function refreshToken() {
 }
 
 export function verifyToken() {
-    return async function(dispatch) {
+    return async function(dispatch : AppDispatch) {
         return getServerResponse(GET_USER_INFO_ENDPOINT, {
             method: 'PATCH',
             headers: {
@@ -78,7 +116,7 @@ export function verifyToken() {
             return true;
         })
         .catch(error => {
-            error.then(error => {
+            error.then((error: { message: string; }) => {
                 if(error.message === "jwt expired") {
                     dispatch(refreshToken());
                 }
@@ -90,7 +128,7 @@ export function verifyToken() {
 }
 
 export function getUserInfo() {
-    return async function(dispatch) {
+    return async function(dispatch : AppDispatch) {
         dispatch({
             type: AUTH_REQUEST
         });
@@ -110,8 +148,8 @@ export function getUserInfo() {
         .catch(error => catchServerResponseError(error, dispatch))
 }}
 
-export function changeUserInfo(dataToPost) {
-    return async function(dispatch) {
+export function changeUserInfo(dataToPost : {name? : string, email? : string, password?: string}) {
+    return async function(dispatch : AppDispatch) {
         getServerResponse(GET_USER_INFO_ENDPOINT, {
             method: 'PATCH',
             headers: {
@@ -132,7 +170,7 @@ export function changeUserInfo(dataToPost) {
 }
 
 export function logout() {
-    return async function(dispatch) {
+    return async function(dispatch : AppDispatch) {
         getServerResponse(LOGOUT_ENDPOINT, {
             method: 'POST',
             headers: {
@@ -152,8 +190,8 @@ export function logout() {
     }
 }
 
-export function resetPassword(navigate, dataToPost) {
-    return async function(dispatch) {
+export function resetPassword(navigate: NavigateFunction, dataToPost : {password : string, token : string}) {
+    return async function(dispatch : AppDispatch) {
         getServerResponse(RESET_PASSWORD_ENDPOINT, {
             method: 'POST',
             headers: {
@@ -171,8 +209,8 @@ export function resetPassword(navigate, dataToPost) {
     }
 }
 
-export function forgotPassword(navigate, location, dataToPost) {
-    return async function(dispatch) {
+export function forgotPassword(navigate: NavigateFunction, location: Location, dataToPost : {}) {
+    return async function(dispatch : AppDispatch) {
         getServerResponse(FORGOT_PASSWORD_ENDPOINT, {
             method: 'POST',
             headers: {

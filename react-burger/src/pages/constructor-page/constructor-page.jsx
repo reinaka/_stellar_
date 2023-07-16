@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { selectAllIngredients } from '../../services/functions/selectorFunctions';
-import styles from './constructor-page.module.css';
+import styles from '../general-styles.module.css';
 
 export function ConstructorPage() {
 

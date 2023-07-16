@@ -8,9 +8,9 @@ import { GET_USER_INFO_ENDPOINT, BASE_URL } from '../../../constants/constants';
 import { useFormAndValidation } from '../../../services/hooks/use-form-validation';
 
 type FormStateType = {
-    name : string,
-    email : string,
-    password? : string,
+    name : string | undefined,
+    email : string | undefined,
+    password? : string | undefined,
 };
 
 export function ProfilePage() {
@@ -52,7 +52,7 @@ export function ProfilePage() {
     }, [userEmail, userName, values.email, userPassword, values.name, values.password]);
 
     return (
-        <form 
+        <form className={styles.general}
             onSubmit={(e) => {e.preventDefault(); handleReset()}}
             method="PATCH" 
             action={`${BASE_URL}${GET_USER_INFO_ENDPOINT}`}

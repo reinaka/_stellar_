@@ -1,0 +1,34 @@
+.wrapper {
+    border-radius: 40px;
+    background-color: #1C1C21;
+}
+
+.upperText {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.orderTitleText {
+    font-size: 24px;
+}
+
+.ingredientIcons {
+    display: flex;
+    flex-direction: row;
+}
+
+.list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.iconsAndPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.movedItems {
+    margin-left: -15px;
+}

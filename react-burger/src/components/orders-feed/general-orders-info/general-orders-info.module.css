@@ -1,12 +1,12 @@
-.layout {
+.general {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 60px;
 }
 
 .scroll {
     overflow-y: auto;
-    height: calc(100vh - 148px);
+    height: calc(100vh - 208px);
 }
 
 .scroll::-webkit-scrollbar {
@@ -24,18 +24,8 @@
     min-height: 50%;
 }
 
-.scroll a {
-    text-decoration: none;
-    color: #fff;
-}
-
-.scroll a:visited {
-    color: #fff;
-}
-
-.list {
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
 }

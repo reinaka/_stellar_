@@ -28,7 +28,7 @@ const ConstructorElementBlock:FC<TProps> = memo(
         const id = props.id;
 
         //dnd элемент, который перетаскиваем
-        const [{ isDragging }, dragReorder] = useDrag<{uuid: number | undefined; originalIndex: any}, void, {isDragging : boolean}>(
+        const [{ isDragging }, dragReorder] = useDrag<{ uuid: string | undefined; originalIndex: any; }, {uuid : string, originalIndex : number}, { isDragging: boolean; }>(
             () => {
             return (!props.draggableIngredient || !props.findIngredient)
             ? {type: INGREDIENT_ITEM}

@@ -1,12 +1,15 @@
-.layout {
+.list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
 }
 
 .scroll {
     overflow-y: auto;
-    height: calc(100vh - 148px);
+    height: calc(100vh - 208px);
 }
 
 .scroll::-webkit-scrollbar {
@@ -31,11 +34,4 @@
 
 .scroll a:visited {
     color: #fff;
-}
-
-.list {
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
 }

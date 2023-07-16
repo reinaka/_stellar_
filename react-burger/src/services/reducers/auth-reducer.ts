@@ -1,6 +1,24 @@
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILED, UPDATE_TOKEN, LOGOUT, AUTH_CHECKED } from '../actions/auth-actions';
+import { TAuthActions } from '../actions/auth-actions';
 
-const initialState = {
+type TState = {
+    requestFailed: boolean,
+    authError: null | string,
+    requestPending: boolean,
+    isAuthChecked: boolean,
+    userData: {
+        "success": boolean,
+        "accessToken": string,
+        "refreshToken": string,
+        "user": {
+            "email"?: string,
+            "name"?: string,
+            "password"? : string
+        }
+    }
+};
+
+const initialState : TState = {
     requestFailed: false,
     authError: null,
     requestPending: false,
@@ -12,11 +30,12 @@ const initialState = {
         "user": {
             "email": "",
             "name": "",
+            "password" : ""
         }
     }
 }
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action : TAuthActions) : TState => {
     switch(action.type) {
         case AUTH_REQUEST: {
             return {

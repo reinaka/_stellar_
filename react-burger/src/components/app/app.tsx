@@ -21,6 +21,10 @@ import { useCallback } from 'react';
 import { getData } from '../../services/actions/all-ingredients-actions';
 import { selectAllIngredients } from '../../services/functions/selectorFunctions';
 import { AUTH_CHECKED, verifyToken } from '../../services/actions/auth-actions';
+import { FeedPage } from '../../pages/feed-block/feed-page';
+import { OrderDetailedInfo } from '../modal/order-detailed-info/order-detailed-info';
+import { DELETE_CURRENT_ORDER_DETAILS } from '../../services/actions/current-order-actions';
+import { OrderDetailsPage } from '../../pages/order-details-page/order-details';
 
 export default function App() {
     const dispatch = useDispatch() as any;
@@ -42,19 +46,40 @@ export default function App() {
     const background = location.state && location.state.background;
     const prevPage = location.state?.from || '/';
     
-    const closeModal = useCallback(() => {
-        dispatch({type: DELETE_INGREDIENT_DETAILS});
+    const closeIngredientModal = useCallback(() => {
         navigate("/", {replace: true});
+        dispatch({type: DELETE_INGREDIENT_DETAILS});
+    }, [dispatch, navigate]);
+
+    const closeOrderModal = useCallback((path : string) => {
+        navigate(path, {replace: true});
+        dispatch({type: DELETE_CURRENT_ORDER_DETAILS});
     }, [dispatch, navigate]);
 
     //модальное окно
-    const modal = useMemo(
-        () => {
-            return (
-                <Modal onClose={closeModal} title='Детали ингредиента'>
-                    <IngredientDetails />
-                </Modal>)
-        }, [closeModal]);
+        const ingredientModal = useMemo(
+            () => {
+                return (
+                    <Modal onClose={closeIngredientModal} title='Детали ингредиента'>
+                        <IngredientDetails />
+                    </Modal>)
+            }, [closeIngredientModal]);
+
+        const orderModalFeed = useMemo(
+            () => {
+                return (
+                    <Modal onClose={() => {closeOrderModal("/feed")}} title='Детали заказа'>
+                        <OrderDetailedInfo />
+                    </Modal>)
+            }, [closeOrderModal]);
+
+        const orderModalProfile = useMemo(
+            () => {
+                return (
+                    <Modal onClose={() => {closeOrderModal("/profile/orders")}} title='Детали заказа'>
+                        <OrderDetailedInfo />
+                    </Modal>)
+            }, [closeOrderModal]);
 
     const allIngredients = useSelector(selectAllIngredients);
 
@@ -63,7 +88,10 @@ export default function App() {
                     <Routes location={background || location}>
                         <Route path="/" element={<MainLayoutPage />} >
                             <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />
+                            <Route path='/feed/:orderId' element={<OrderDetailsPage />} />
+                            <Route path='/profile/orders/:orderId' element={<OrderDetailsPage />} />
                             <Route index element={<ConstructorPage/>} />
+                            <Route path='/feed' element={<FeedPage />} />
                             <Route path="/login" element={<ProtectedRouteElement element={<LoginPage />} anonymous={true}/>} />
                             <Route path="register" element={<ProtectedRouteElement element={<RegistrationPage />} anonymous={true}/>} />
                             <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} anonymous={true}/>} />
@@ -80,13 +108,15 @@ export default function App() {
                                 <Route index element={<ProtectedRouteElement element={<ProfilePage />} anonymous={false}/>} />
                                 <Route path="/profile/orders" element={<ProtectedRouteElement element={<OrdersHistoryPage />} anonymous={false}/>} />
                             </Route>
-                            </Route>
-                            <Route path="*" element={< Page404 />} />
+                        </Route>
+                        <Route path="*" element={< Page404 />} />
                     </Routes>
 
                     {background &&
                         <Routes>
-                            <Route path='/ingredients/:ingredientId' element={modal}/>
+                            <Route path='/ingredients/:ingredientId' element={ingredientModal}/>
+                            <Route path='/feed/:orderId' element={orderModalFeed}/>
+                            <Route path='/profile/orders/:orderId' element={orderModalProfile}/>
                         </Routes>
                     }
             </div>

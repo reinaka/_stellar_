@@ -5,14 +5,22 @@ import {
         REORDER_INGREDIENTS_CONSTRUCTOR,
         CLEAR_CONSTRUCTOR
     } from '../actions/constructor-actions';
+import { TIngredient, TIngredientWithUUID } from '../types/types';
+import { TConstructorActions } from '../actions/constructor-actions';
 
-const initialState = {
+type TState = {
+    selectedBun: null | TIngredient,
+    items: TIngredientWithUUID[] | [],
+    totalCost: number,
+};
+
+const initialState : TState = {
     selectedBun: null,
     items: [],
     totalCost: 0,
 };
 
-export const constructorIngredientsReducer = (state=initialState, action) => {
+export const constructorIngredientsReducer = (state=initialState, action : TConstructorActions) : TState => {
     switch(action.type) {
         case ADD_INGREDIENT_CONSTRUCTOR: {
             const ingredient = {

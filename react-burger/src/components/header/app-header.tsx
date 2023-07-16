@@ -9,7 +9,7 @@ const AppHeader = memo(() => {
             <nav className={`${styles.general} ${styles.link}`}>
                 <span className={styles.span}>
                     <HeaderItemBlock to="/" icon={BurgerIcon} text="Конструктор" />
-                    <HeaderItemBlock to="/orders" icon={ListIcon} text="Лента заказов"/>
+                    <HeaderItemBlock to="/feed" icon={ListIcon} text="Лента заказов"/>
                 </span>
                 <span className={`${styles.alignCenter} ${styles.logo}`}>
                     <Logo />

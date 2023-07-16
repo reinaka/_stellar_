@@ -1,0 +1,17 @@
+.priceInfoGeneral {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.priceInfo svg {
+    width: 24px;
+    height: 24px;
+}
+
+.priceInfoBig svg {
+    width: 34px;
+    height: 34px;
+}

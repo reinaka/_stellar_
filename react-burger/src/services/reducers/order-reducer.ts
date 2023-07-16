@@ -4,13 +4,21 @@ import {
     UPLOAD_ORDER_DETAILS_FAILED
 } from '../actions/order-details-actions';
 
-const initialState = {
-    ordenNum: null,
+import { TOrderActions } from '../actions/order-details-actions';
+
+type TState = {
+    orderNum: number | null,
+    orderNumRequest: boolean,
+    orderNumFailed: boolean,
+}
+
+const initialState : TState = {
+    orderNum: null,
     orderNumRequest: false,
     orderNumFailed: false,
 };
 
-export const orderReducer  = (state=initialState, action) => {
+export const orderReducer  = (state=initialState, action : TOrderActions) : TState => {
     switch(action.type) {
         case UPLOAD_ORDER_DETAILS_REQUEST: {
             return {

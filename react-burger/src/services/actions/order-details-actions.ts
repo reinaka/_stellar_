@@ -1,12 +1,29 @@
 import { GET_ORDER_NUMBER_ENDPOINT } from '../../constants/constants';
 import { getServerResponse } from '../functions/getServerResponse';
 import { CLEAR_CONSTRUCTOR } from './constructor-actions';
-export const UPLOAD_ORDER_DETAILS_REQUEST = 'UPLOAD_ORDER_DETAILS_REQUEST';
-export const UPLOAD_ORDER_DETAILS_SUCCESS = 'UPLOAD_ORDER_DETAILS_SUCCESS';
-export const UPLOAD_ORDER_DETAILS_FAILED = 'UPLOAD_ORDER_DETAILS_FAILED';
+import { AppDispatch } from '../types/thunkTypes';
 
-export const getOrderNum = (dataToPost) => {
-    return async function(dispatch) {
+export const UPLOAD_ORDER_DETAILS_REQUEST : 'UPLOAD_ORDER_DETAILS_REQUEST' = 'UPLOAD_ORDER_DETAILS_REQUEST';
+export const UPLOAD_ORDER_DETAILS_SUCCESS : 'UPLOAD_ORDER_DETAILS_SUCCESS' = 'UPLOAD_ORDER_DETAILS_SUCCESS';
+export const UPLOAD_ORDER_DETAILS_FAILED : 'UPLOAD_ORDER_DETAILS_FAILED' = 'UPLOAD_ORDER_DETAILS_FAILED';
+
+export interface IOrderRequestAction {
+    readonly type : typeof UPLOAD_ORDER_DETAILS_REQUEST
+}
+
+export interface IOrderSuccess {
+    readonly type : typeof UPLOAD_ORDER_DETAILS_SUCCESS,
+    readonly payload : number
+}
+
+export interface IOrderFailed {
+    readonly type : typeof UPLOAD_ORDER_DETAILS_FAILED
+}
+
+export type TOrderActions = IOrderRequestAction | IOrderSuccess | IOrderFailed;
+
+export const getOrderNum = (dataToPost : {"ingredients" : string[]}) => {
+    return async function(dispatch : AppDispatch) {
         try {
             dispatch({
                 type: UPLOAD_ORDER_DETAILS_REQUEST

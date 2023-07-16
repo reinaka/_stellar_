@@ -1,22 +1,22 @@
 import { ReactNode } from "react";
 
 export type TIngredient = {
-        calories : number,
-        carbohydrates : number,
-        fat : number,
+        calories : string,
+        carbohydrates : string,
+        fat : string,
         image : string,
         image_large : string,
         image_mobile : string,
         name : string,
         price : number,
-        proteins : number,
+        proteins : string,
         type : string,
         __v : number,
         _id : string
 };
 
 export type TIngredientWithUUID = {
-        uuid?: number, 
+        uuid?: string, 
         ingredient: TIngredient
 };
 
@@ -25,3 +25,14 @@ export type TModal = {
         title? : string,
         children? : ReactNode,
 };
+
+export type TOrder = {
+        createdAt : string,
+        ingredients : string[],
+        name : string,
+        number : number,
+        status : 'done' | 'created' | 'pending',
+        updatedAt : string,
+        _id : string
+};
+
