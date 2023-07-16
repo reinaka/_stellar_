@@ -14,7 +14,6 @@ export const FeedPage:FC = () => {
         })
     },[dispatch]);
     
-
     return (
         <>
         <h1 className="text text_type_main-large pt-10 pb-5">Лента заказов</h1>

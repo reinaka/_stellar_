@@ -31,7 +31,8 @@ export const getOrderNum = (dataToPost : {"ingredients" : string[]}) => {
             getServerResponse(GET_ORDER_NUMBER_ENDPOINT, {
                 method: 'POST',
                 headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                authorization: localStorage.getItem('accessToken'),
                 },
                 body: JSON.stringify(dataToPost)
             })

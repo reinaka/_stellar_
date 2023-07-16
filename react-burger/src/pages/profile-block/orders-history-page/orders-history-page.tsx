@@ -6,14 +6,15 @@ import { TOrder } from "../../../services/types/types";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../../services/actions/socket-actions';
+import { WS_CONNECTION_START_USER, WS_CONNECTION_CLOSED } from '../../../services/actions/socket-actions';
 import { ADD_CURRENT_ORDER_DETAILS } from "../../../services/actions/current-order-actions";
 import { v4 as uuidv4 } from 'uuid';
+import { Spinner } from "../../../components/ui-elements/spinner/spinner";
 
 export const OrdersHistoryPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({type: WS_CONNECTION_START});
+        dispatch({type: WS_CONNECTION_START_USER});
         return (() => {
             dispatch({type: WS_CONNECTION_CLOSED});
         })
@@ -29,6 +30,7 @@ export const OrdersHistoryPage = () => {
     const orders = useSelector(selectOrders);
     const location = useLocation();
     
+    if(Object.keys(orders).length === 0) return <Spinner/>
     return( orders && 
         <div className={`${styles.layout} ${styles.scroll}`}>
             <ul className={styles.list}>

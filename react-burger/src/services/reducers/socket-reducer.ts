@@ -49,6 +49,8 @@ export const socketReducer = (state = initialState, action: TSocketActions) => {
             total: result.total,
             totalToday: result.totalToday
     };
+
+    
     default:
     return state;
     }
