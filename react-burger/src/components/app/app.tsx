@@ -88,8 +88,8 @@ export default function App() {
                     <Routes location={background || location}>
                         <Route path="/" element={<MainLayoutPage />} >
                             <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />
-                            <Route path='/feed/:orderId' element={<OrderDetailsPage />} />
-                            <Route path='/profile/orders/:orderId' element={<OrderDetailsPage />} />
+                            <Route path='/feed/:orderId' element={<OrderDetailsPage anonymous={false}/>} />
+                            <Route path='/profile/orders/:orderId' element={<ProtectedRouteElement element={<OrderDetailsPage anonymous={true}/>} anonymous={false}/>} />
                             <Route index element={<ConstructorPage/>} />
                             <Route path='/feed' element={<FeedPage />} />
                             <Route path="/login" element={<ProtectedRouteElement element={<LoginPage />} anonymous={true}/>} />

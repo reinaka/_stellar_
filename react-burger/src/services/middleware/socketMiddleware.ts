@@ -1,34 +1,27 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import { AppDispatch } from '../types/thunkTypes';
-import type { TAllActions } from '../types/actionTypes';
 import { RootState } from '../types/thunkTypes';
 import {
     WS_CONNECTION_START,
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_GET_MESSAGE,
-    WS_SEND_MESSAGE,
-    WS_CONNECTION_START_USER
+    WS_SEND_MESSAGE
 } from '../actions/socket-actions';
 import { WS_BASE_URL } from '../../constants/constants';
+import { TSocketActions } from '../actions/socket-actions';
 
 export const socketMiddleware = (): Middleware => {
-    const accessToken = localStorage.getItem('accessToken')!.replace('Bearer ', '');
-    console.log(accessToken);
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
 
-    return next => (action: TAllActions) => {
+    return next => (action: TSocketActions) => {
         const { dispatch } = store;
-        const { type } = action;
-
+        const { type, payload } = action;
         if (type === WS_CONNECTION_START) {
-            // объект класса WebSocket
-        socket = new WebSocket(`${WS_BASE_URL}/all`);
-        } else if (type === WS_CONNECTION_START_USER) {
-            // объект класса WebSocket
-        socket = new WebSocket(`${WS_BASE_URL}?token=${accessToken}`);
-        }
+            socket = new WebSocket(`${WS_BASE_URL}${payload}`);
+        };
+
         if (socket) {
         socket.onopen = event => {
             dispatch({ type: WS_CONNECTION_SUCCESS, payload: event });
@@ -39,7 +32,6 @@ export const socketMiddleware = (): Middleware => {
         };
 
         socket.onmessage = event => {
-            console.log(event);
             const { data } = event;
             dispatch({ type: WS_GET_MESSAGE, payload: data });
         };
@@ -49,7 +41,7 @@ export const socketMiddleware = (): Middleware => {
         };
 
         if (type === WS_SEND_MESSAGE) {
-            const { message }  = action;
+            const message  = action.payload;
             socket.send(JSON.stringify(message));
         }
     }

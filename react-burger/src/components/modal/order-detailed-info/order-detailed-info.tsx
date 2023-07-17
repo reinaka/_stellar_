@@ -17,13 +17,11 @@ export const OrderDetailedInfo = memo(() => {
 const params = useParams();
     const selectedOrder : TOrder = useSelector(selectCurrentOrder);
     const allOrders = useSelector(selectOrders);
+    if(allOrders) allOrders.filter((item : TOrder) => item._id === params.orderId);
     const storeIngredients : TIngredient[] = useSelector(selectAllIngredientsItems);
     const orderData = selectedOrder 
                         ? selectedOrder 
-                        : allOrders.filter((item : TOrder) => item._id === params.orderId)[0];
-        console.log(allOrders);
-        console.log(params.orderId);
-        console.log(orderData);
+                        : allOrders[0]
 
     if(!orderData) return <Spinner/>;
     if(orderData && Object.keys(orderData).length !== 0) {

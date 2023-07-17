@@ -7,11 +7,8 @@ export const WS_CONNECTION_CLOSED : 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOS
 export const WS_CONNECTION_START_USER : 'WS_CONNECTION_START_USER' = 'WS_CONNECTION_START_USER';
 
 export interface wsConnectionStart {
-    readonly type : typeof WS_CONNECTION_START
-}
-
-export interface wsConnectionStartUser {
-    readonly type : typeof WS_CONNECTION_START_USER
+    readonly type : typeof WS_CONNECTION_START,
+    payload: Event
 }
 
 export interface wsConnectionSuccess {
@@ -31,7 +28,7 @@ export interface wsGetMessage {
 
 export interface wsSendMessage {
     readonly type : typeof WS_SEND_MESSAGE,
-    message : {}
+    payload: {}
 }
 
 export interface wsConnectionClosed {
@@ -44,6 +41,5 @@ export type TSocketActions = wsConnectionStart
                             | wsConnectionError 
                             | wsGetMessage 
                             | wsSendMessage 
-                            | wsConnectionClosed
-                            | wsConnectionStartUser;
+                            | wsConnectionClosed;
 
