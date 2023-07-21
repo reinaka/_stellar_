@@ -14,7 +14,7 @@ type TProps = {
 export const IngredientCircle:FC<TProps> = (props) => {
     const storeIngredients : TIngredient[] = useSelector(selectAllIngredientsItems);
     const ingredient = storeIngredients.filter(item => item._id === props.itemID)[0];
-    return (
+    return (ingredient && 
         <div className={styles.outerCircle}>
             <div className={styles.innerCircle}>
                 <img alt={ingredient.name} src={ingredient.image} className={`${styles.image} ${props.last ? styles.inactiveImage : undefined}`}/>
