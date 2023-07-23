@@ -15,7 +15,6 @@ export const socketMiddleware = (wsActions: TWSActions): Middleware => {
 
         if (type === wsInit) {
             socket = new WebSocket(`${WS_BASE_URL}${payload}`);
-            console.log(socket);
         };
 
         if (socket) {

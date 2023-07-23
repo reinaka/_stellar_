@@ -55,15 +55,15 @@ export function selectAuthError(store : TStore) : string | null {
     return store.authData.authError;
 }
 
-export function selectOrders(store : TStore) : TOrder[] {
+export function selectOrders(store : TStore) : TOrder[] | [] {
     return store.wsSocket.orders;
 }
 
-export function selectOrdersToday(store : TStore) : number {
+export function selectOrdersToday(store : TStore) : number | null {
     return store.wsSocket.totalToday;
 }
 
-export function selectOrdersTotal(store : TStore) : number {
+export function selectOrdersTotal(store : TStore) : number | null {
     return store.wsSocket.total;
 }
 

@@ -11,7 +11,7 @@ type TWSState = {
     orders: [],
     total: number | null,
     totalToday: number | null,
-    error?: Event
+    error?: boolean
 }
 
 const initialState: TWSState = {
@@ -21,7 +21,7 @@ const initialState: TWSState = {
     orders: []
 }; 
 
-export const socketReducer = (state = initialState, action: TSocketActions) => {
+export const socketReducer = (state = initialState, action: TSocketActions) : TWSState => {
     switch (action.type) {
     case WS_CONNECTION_SUCCESS:
         return {
@@ -33,7 +33,7 @@ export const socketReducer = (state = initialState, action: TSocketActions) => {
     case WS_CONNECTION_ERROR:
         return {
         ...state,
-            error: action.payload,
+            error: true,
             wsConnected: false
     };
 
