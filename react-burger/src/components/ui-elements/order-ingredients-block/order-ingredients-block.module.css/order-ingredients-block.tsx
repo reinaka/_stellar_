@@ -2,7 +2,7 @@ import { IngredientCircle } from "../../ingredient-circle/ingredient-circle";
 import { FC, useMemo } from "react";
 import { Price } from "../../price/price";
 import { TIngredient } from "../../../../services/types/types";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../../services/hooks/reduxTypes";
 import { selectAllIngredientsItems } from "../../../../services/functions/selectorFunctions";
 import styles from './order-ingredients-block.module.css';
 
@@ -12,7 +12,7 @@ type TProps = {
 }
 
 export const OrderIngredientsBlock:FC<TProps> = (props) => {
-    const storeIngredients : TIngredient[] = useSelector(selectAllIngredientsItems);
+    const storeIngredients : TIngredient[] = useAppSelector(selectAllIngredientsItems);
     const price = useMemo(() => {
         return storeIngredients.filter(item => item._id === props.itemID)[0].price;
     }, [props.itemID, storeIngredients]);

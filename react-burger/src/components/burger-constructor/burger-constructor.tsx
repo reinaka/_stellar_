@@ -6,7 +6,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../modal/order-details/order-details";
 import styles from './burger-constructor.module.css';
 import { useMemo, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../services/hooks/reduxTypes';
 import { useDrop } from 'react-dnd';
 import { addToConstructor, deleteFromConstructor } from '../../services/actions/constructor-actions';
 import { getOrderNum } from '../../services/actions/order-details-actions';
@@ -24,25 +24,34 @@ import { BUN } from '../../constants/constants';
 import { useNavigate } from 'react-router-dom';
 import { TIngredient, TIngredientWithUUID } from '../../services/types/types';
 import { Price } from '../ui-elements/price/price';
+import { Spinner } from '../ui-elements/spinner/spinner';
 
 
 function BurgerConstructor() {
-    const items = useSelector(selectBurgerConstructorItems);
-    const selectedBun = useSelector(selectSelectedBun);
-    const totalCost = useSelector(selectConstructorTotalCost);
-    const orderNum = useSelector(selectOrderNum);
-    const loggedIn = useSelector(selectLoginSuccess);
+    const items = useAppSelector(selectBurgerConstructorItems);
+    const selectedBun = useAppSelector(selectSelectedBun);
+    const totalCost = useAppSelector(selectConstructorTotalCost);
+    const orderNum = useAppSelector(selectOrderNum);
+    const loggedIn = useAppSelector(selectLoginSuccess);
     const [isModalVisible, openModal, closeModal] = useModal();
-    const dispatch = useDispatch() as any;
+    const dispatch = useAppDispatch();
     const navigate= useNavigate();
 
     //модальное окно
     const modal = useMemo(
-        () => orderNum && (
+        () => {
+            if(!orderNum) return (
+                (<Modal onClose={() => closeModal()} title="Формируем заказ...">
+                    <div className="m-10">
+                        <Spinner />
+                    </div>
+                </Modal>)
+            )
+            return (
                 (<Modal onClose={() => closeModal()}>
                     <OrderDetails orderNum={orderNum}/>
                 </Modal>)
-            )
+            )}
             , [closeModal, orderNum]);
 
     //верхняя булка
@@ -80,6 +89,7 @@ function BurgerConstructor() {
     const handleOrderNum = useCallback(() => {
         if(selectedBun) {
             if(loggedIn) {
+                openModal();
                     const data = (items : TIngredientWithUUID[]) => {
                         let resultArr : string[] = [];
                             resultArr.push(selectedBun._id);
@@ -92,7 +102,7 @@ function BurgerConstructor() {
                 navigate("/login");
             }
         }
-    },[dispatch, items, selectedBun, navigate, loggedIn]);
+    },[dispatch, items, selectedBun, navigate, loggedIn, openModal]);
 
     //dnd добавление ингредиента в конструктор
     const [{ isHover }, dropTarget] = useDrop<TIngredient, void, {isHover : boolean}>({
@@ -113,7 +123,7 @@ function BurgerConstructor() {
     //dnd получение индекса перетаскиваемого ингредиента
     const findIngredient = useCallback(
         (id : string) => {
-            return items.findIndex((item : TIngredientWithUUID) => item.uuid === id);
+            return items.findIndex(item => item.uuid === id);
         },[items]);
 
     return ( 
@@ -124,7 +134,7 @@ function BurgerConstructor() {
                     {items.length > 0 ? (
                         <ul className={styles.listUl}>
                             {
-                                items.map((item : TIngredientWithUUID) => {
+                                items.map((item) => {
                                     return (
                                         <li className={`${styles.constructorLi} ml-4`} key={item.uuid}>
                                             <ConstructorElementBlock 
@@ -148,11 +158,13 @@ function BurgerConstructor() {
             <span className={`${styles.preOrderInfo} mt-10`}>
                 <Price price={totalCost} size="big" />
                 <Button htmlType="button" type="primary" size="large" extraClass={`${styles.button} ml-2 mr-4`} 
-                    onClick={() => {handleOrderNum(); openModal()}}>
+                    onClick={() => {handleOrderNum()}}
+                    disabled={selectedBun ? false : true}
+                >
                     <p className={`${styles.button_text} text text_type_main-small`}>Оформить заказ</p>
                 </Button>
             </span>
-            {orderNum && isModalVisible && modal}
+            {isModalVisible && modal}
         </article>
     )
 }

@@ -1,10 +1,9 @@
 import styles from './account.module.css';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import { logout } from '../../services/actions/auth-actions';
-import { useDispatch } from 'react-redux';
-
+import { useAppDispatch } from '../../services/hooks/reduxTypes';
 export function AccountPage() {
-    const dispatch = useDispatch() as any;
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const textColor = ({ isActive } : {isActive : boolean}) => isActive ? styles.text_color_active : "";
     

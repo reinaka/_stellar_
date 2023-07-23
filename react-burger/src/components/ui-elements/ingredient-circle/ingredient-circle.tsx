@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../services/hooks/reduxTypes";
 import { selectAllIngredientsItems } from "../../../services/functions/selectorFunctions";
 import { TIngredient } from "../../../services/types/types";
 import { FC } from "react";
@@ -12,7 +12,7 @@ type TProps = {
 }
 
 export const IngredientCircle:FC<TProps> = (props) => {
-    const storeIngredients : TIngredient[] = useSelector(selectAllIngredientsItems);
+    const storeIngredients : TIngredient[] = useAppSelector(selectAllIngredientsItems);
     const ingredient = storeIngredients.filter(item => item._id === props.itemID)[0];
     return (ingredient && 
         <div className={styles.outerCircle}>

@@ -11,7 +11,7 @@ import { ProfilePage } from '../../pages/profile-block/profile-page/profile-page
 import { OrdersHistoryPage } from '../../pages/profile-block/orders-history-page/orders-history-page';
 import ProtectedRouteElement from '../hoc/protected-route';
 import { ResetPasswordPage } from '../../pages/reset-password-page/reset-password-page';
-import { useDispatch, useSelector} from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/reduxTypes';
 import { useEffect, useMemo } from 'react';
 import Modal from '../modal/modal';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
@@ -22,12 +22,12 @@ import { getData } from '../../services/actions/all-ingredients-actions';
 import { selectAllIngredients } from '../../services/functions/selectorFunctions';
 import { AUTH_CHECKED, verifyToken } from '../../services/actions/auth-actions';
 import { FeedPage } from '../../pages/feed-block/feed-page';
-import { OrderDetailedInfo } from '../modal/order-detailed-info/order-detailed-info';
 import { DELETE_CURRENT_ORDER_DETAILS } from '../../services/actions/current-order-actions';
 import { OrderDetailsPage } from '../../pages/order-details-page/order-details';
+import { OrderDetailedInfo } from '../modal/order-detailed-info/order-detailed-info';
 
 export default function App() {
-    const dispatch = useDispatch() as any;
+    const dispatch = useAppDispatch();
     const accessTokenValue = localStorage.getItem("accessToken");
     useEffect(() => {
         dispatch(getData());
@@ -81,7 +81,7 @@ export default function App() {
                     </Modal>)
             }, [closeOrderModal]);
 
-    const allIngredients = useSelector(selectAllIngredients);
+    const allIngredients = useAppSelector(selectAllIngredients);
 
     return allIngredients && (
             <div className={styles.viewPort}>

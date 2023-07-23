@@ -1,21 +1,23 @@
 import { FC, useMemo } from "react";
 import styles from './orders-in-process.module.css';
-import { v4 as uuidv4 } from 'uuid';
 
 type TProps = {
     title : string,
     active? : boolean,
-    num : number[]
+    orders : {
+        num : number,
+        id : string
+    }[]
 };
 
 export const OrdersInProcess:FC<TProps> = (props) => {
     const columns = useMemo(() => {
-        return props.num.length < 11
+        return props.orders.length < 11
         ? (
             <div>
-                {props.num.map((item, index) => (
-                <li className={props.active ? styles.textColorActive : undefined} key={uuidv4()}>
-                    <p className="text text_type_digits-default">{item}</p>
+                {props.orders.map(item => (
+                <li className={props.active ? styles.textColorActive : undefined} key={item.id}>
+                    <p className="text text_type_digits-default">{item.num}</p>
                 </li>
                 ))}
             </div>
@@ -23,26 +25,26 @@ export const OrdersInProcess:FC<TProps> = (props) => {
         : (
             <>
                 <div>
-                {props.num.map((item, index) => (
+                {props.orders.map((item, index) => (
                     index < 10 && (
-                        <li className={props.active ? styles.textColorActive : undefined} key={uuidv4()}>
-                            <p className="text text_type_digits-default">{item}</p>
-                        </li>
+                        <li className={props.active ? styles.textColorActive : undefined} key={item.id}>
+                    <p className="text text_type_digits-default">{item.num}</p>
+                </li>
                     )
                 ))}
                 </div>
                 <div>
-                    {props.num.map((item, index) => (
+                    {props.orders.map((item, index) => (
                         index > 9 && index < 20 && (
-                            <li className={props.active ? styles.textColorActive : undefined} key={uuidv4()}>
-                                <p className="text text_type_digits-default">{item}</p>
+                            <li className={props.active ? styles.textColorActive : undefined} key={item.id}>
+                                <p className="text text_type_digits-default">{item.num}</p>
                             </li>
                         )
                     ))}
                 </div>
             </>
         )
-    }, [props.active, props.num]);
+    }, [props.active, props.orders]);
 
     return (
         <div>

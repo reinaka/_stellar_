@@ -2,11 +2,10 @@ import styles from './order-block.module.css';
 import { Price } from '../../ui-elements/price/price';
 import { FC, memo } from 'react';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../../services/hooks/reduxTypes';
 import { selectAllIngredientsItems } from '../../../services/functions/selectorFunctions';
-import { TIngredient, TOrder } from '../../../services/types/types';
+import { TOrder } from '../../../services/types/types';
 import { IngredientCircle } from '../../ui-elements/ingredient-circle/ingredient-circle';
-import { v4 as uuidv4 } from 'uuid';
 import { OrderStatus } from '../../ui-elements/order-status/order-status';
 
 type TProps = {
@@ -15,10 +14,10 @@ type TProps = {
 }
 
 export const OrderBlock:FC<TProps> = memo((props) => {
-    const storeIngredients : TIngredient[] = useSelector(selectAllIngredientsItems);
+    const storeIngredients = useAppSelector(selectAllIngredientsItems);
     const date = props.item.updatedAt || "";
     let sum = 0;
-    props.item.ingredients.forEach((item) => storeIngredients.forEach(ingredient => {
+    props.item.ingredients.forEach(item => storeIngredients.forEach(ingredient => {
         if(ingredient._id === item) sum += ingredient.price;
     }));
 
@@ -36,12 +35,12 @@ export const OrderBlock:FC<TProps> = memo((props) => {
                         {props.item.ingredients.map((ingredient, index) => {
                             if(index < 5) {
                                 return (
-                                <li key={uuidv4()} style={{zIndex: String(props.item.ingredients.length - index)}} className={index > 0? styles.movedItems : undefined}>
+                                <li key={index} style={{zIndex: String(props.item.ingredients.length - index)}} className={index > 0? styles.movedItems : undefined}>
                                     <IngredientCircle itemID={ingredient}/>
                                 </li>
                             )} else if(index === 5) {
                                 return (
-                                <li key={uuidv4()}>
+                                <li key={index}>
                                     <IngredientCircle itemID={ingredient} last={true} unshownIngredients={props.item.ingredients.length - index}/>
                                 </li>
                                 )

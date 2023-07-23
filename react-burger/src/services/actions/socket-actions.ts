@@ -36,6 +36,24 @@ export interface wsConnectionClosed {
     payload : Event
 }
 
+export type TWSActions = {
+    wsInit:     typeof WS_CONNECTION_START,
+    onOpen:     typeof WS_CONNECTION_SUCCESS,
+    onClosed:   typeof WS_CONNECTION_CLOSED,
+    onError:    typeof WS_CONNECTION_ERROR,
+    onMessage:  typeof WS_GET_MESSAGE,
+    onSendMessage : typeof WS_SEND_MESSAGE
+};
+
+export const socketActions = {
+    wsInit: WS_CONNECTION_START,
+    onOpen: WS_CONNECTION_SUCCESS,
+    onClosed: WS_CONNECTION_CLOSED,
+    onError:  WS_CONNECTION_ERROR,
+    onMessage: WS_GET_MESSAGE,
+    onSendMessage : WS_SEND_MESSAGE
+}
+
 export type TSocketActions = wsConnectionStart 
                             | wsConnectionSuccess 
                             | wsConnectionError 

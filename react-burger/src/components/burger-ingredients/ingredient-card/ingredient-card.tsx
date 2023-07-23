@@ -1,7 +1,7 @@
 import styles from './ingredient-card.module.css';
 import { useDrag } from 'react-dnd';
 import { memo, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../../services/hooks/reduxTypes';
 import { INGREDIENT } from '../../../constants/constants';
 import { selectBurgerConstructorItems, selectSelectedBun } from '../../../services/functions/selectorFunctions';
 import { Link, useLocation } from 'react-router-dom';
@@ -11,8 +11,8 @@ import { Price } from '../../ui-elements/price/price';
 const IngredientCard = memo((props : {ingredient : TIngredient}) => {
     const ingredient = props.ingredient;
     const [quantity, setQuantity] = useState<number | null>(null);
-    const constructorIngredients = useSelector(selectBurgerConstructorItems);
-    const selectedBun = useSelector(selectSelectedBun);
+    const constructorIngredients = useAppSelector(selectBurgerConstructorItems);
+    const selectedBun = useAppSelector(selectSelectedBun);
     const location = useLocation();
 
     useEffect(() => {

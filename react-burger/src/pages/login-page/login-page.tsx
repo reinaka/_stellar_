@@ -1,7 +1,7 @@
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components' ;
 import { RegistrationWrapper } from '../../components/ui-elements/form-registration-wrapper/form-registration-wrapper';
 import { getAuth } from '../../services/actions/auth-actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../services/hooks/reduxTypes';
 import { selectLoginSuccess, selectAuthError } from '../../services/functions/selectorFunctions';
 import { useCallback, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -19,9 +19,9 @@ type FormStateType = {
 };
 
 export function LoginPage () {
-    const dispatch = useDispatch() as any;
-    const loggedIn = useSelector(selectLoginSuccess);
-    const authError = useSelector(selectAuthError);
+    const dispatch = useAppDispatch();
+    const loggedIn = useAppSelector(selectLoginSuccess);
+    const authError = useAppSelector(selectAuthError);
     const location = useLocation();
     const [errorText, setErrorText] = useState("");
     const [isModalVisible, openModal, closeModal] = useModal();

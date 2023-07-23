@@ -2,7 +2,7 @@ import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-comp
 import { RegistrationWrapper } from '../../components/ui-elements/form-registration-wrapper/form-registration-wrapper';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FORGOT_PASSWORD_ENDPOINT, BASE_URL } from '../../constants/constants';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../services/hooks/reduxTypes';
 import { forgotPassword } from '../../services/actions/auth-actions';
 import RegistrationForm from '../../components/ui-elements/form-registration/form-registration';
 import RegisterFormText from '../../components/ui-elements/register-form-text/register-form-text';
@@ -17,7 +17,7 @@ type FormStateType = {
 export function ForgotPasswordPage () {
     const navigate = useNavigate();
     const location = useLocation();
-    const dispatch = useDispatch() as any;
+    const dispatch = useAppDispatch();
 
     const {values, handleChange} = useFormAndValidation<FormStateType>({
         name : "",

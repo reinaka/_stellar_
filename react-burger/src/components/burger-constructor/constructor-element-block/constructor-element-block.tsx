@@ -24,7 +24,7 @@ const ConstructorElementBlock:FC<TProps> = memo(
     (props) => {
         const dispatch = useDispatch();
         let selectedName = undefined;
-        if(props.selectedBun) {selectedName = `${props.ingredient.name} (${props.bun})`};
+        if(props.bun) {selectedName = `${props.ingredient.name} (${props.bun})`};
         const id = props.id;
 
         //dnd элемент, который перетаскиваем

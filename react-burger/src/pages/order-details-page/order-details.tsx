@@ -1,6 +1,6 @@
 import styles from './order-details.module.css';
 import { OrderDetailedInfo } from '../../components/modal/order-detailed-info/order-detailed-info';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../services/hooks/reduxTypes';
 import { useEffect, FC } from 'react';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/socket-actions';
 
@@ -14,7 +14,7 @@ export const OrderDetailsPage:FC<TProps> = (props) => {
     const endpoint = props.anonymous
     ? `?token=${accessToken}`
     : `/all`;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch({type: WS_CONNECTION_START, payload: endpoint});
         return (() => {

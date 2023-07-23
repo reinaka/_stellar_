@@ -24,7 +24,6 @@ const ErrorModal:FC<TProps> = (props) => {
         <ModalOverlay onClick={props.closeModal} />
         <div className={`${generalStyles.wrapper} ${styles.boxShaddow} p-10`}>
                 <div className={styles.errorWrapper}>
-                    <p className={`${styles.title} mr-9 mb-6 text text_type_main-large`}>Ошибка</p>
                     <p className={`${styles.title} mr-9 mb-10 text text_type_main-default`}>{props.message}</p>
                     <Button htmlType="button" onClick={props.closeModal}>Понятно</Button>
                 </div>

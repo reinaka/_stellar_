@@ -1,7 +1,7 @@
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components' ;
 import { RegistrationWrapper } from '../../components/ui-elements/form-registration-wrapper/form-registration-wrapper';
 import { useState, useCallback, useEffect, ChangeEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../services/hooks/reduxTypes';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { selectLoginSuccess } from '../../services/functions/selectorFunctions';
 import { resetPassword } from '../../services/actions/auth-actions';
@@ -20,11 +20,11 @@ type FormStateType = {
 
 
 export function ResetPasswordPage () {
-    const loggedIn = useSelector(selectLoginSuccess);
+    const loggedIn = useAppSelector(selectLoginSuccess);
     const navigate = useNavigate();
-    const dispatch = useDispatch() as any;
+    const dispatch = useAppDispatch();
     const location = useLocation();
-    const authError = useSelector(selectAuthError);
+    const authError = useAppSelector(selectAuthError);
     const from = location.state?.from || '/';
 
     const [code, setCode] = useState('');

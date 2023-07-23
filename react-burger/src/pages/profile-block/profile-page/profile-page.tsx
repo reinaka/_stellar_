@@ -1,7 +1,7 @@
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile-page.module.css';
 import { selectUserName, selectUserEmail, selectUserPassword } from '../../../services/functions/selectorFunctions';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../../services/hooks/reduxTypes';
 import { getUserInfo, changeUserInfo } from '../../../services/actions/auth-actions';
 import { useEffect, useCallback, useState } from 'react';
 import { GET_USER_INFO_ENDPOINT, BASE_URL } from '../../../constants/constants';
@@ -14,7 +14,7 @@ type FormStateType = {
 };
 
 export function ProfilePage() {
-    const dispatch = useDispatch() as any;
+    const dispatch = useAppDispatch();
     const [buttonsVisible, setButtonsVisible] = useState(false);
 
     useEffect(() => {
@@ -22,9 +22,9 @@ export function ProfilePage() {
     }, [dispatch]);
 
 
-    const userName = useSelector(selectUserName);
-    const userEmail = useSelector(selectUserEmail);
-    const userPassword = useSelector(selectUserPassword);
+    const userName = useAppSelector(selectUserName);
+    const userEmail = useAppSelector(selectUserEmail);
+    const userPassword = useAppSelector(selectUserPassword);
     const [initialValues, setInitialValues] = useState<FormStateType>({
         name: userName,
         email: userEmail,
