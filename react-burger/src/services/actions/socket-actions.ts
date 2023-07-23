@@ -8,7 +8,8 @@ export const WS_CONNECTION_START_USER : 'WS_CONNECTION_START_USER' = 'WS_CONNECT
 
 export interface wsConnectionStart {
     readonly type : typeof WS_CONNECTION_START,
-    payload: Event
+    payload: Event,
+    baseUrl : string
 }
 
 export interface wsConnectionSuccess {

@@ -1,7 +1,6 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import { AppDispatch } from '../types/thunkTypes';
 import { RootState } from '../types/thunkTypes';
-import { WS_BASE_URL } from '../../constants/constants';
 import { TWSActions, TSocketActions } from '../actions/socket-actions';
 
 export const socketMiddleware = (wsActions: TWSActions): Middleware => {
@@ -14,7 +13,7 @@ export const socketMiddleware = (wsActions: TWSActions): Middleware => {
         const { wsInit, onOpen, onClosed, onError, onMessage, onSendMessage } = wsActions;
 
         if (type === wsInit) {
-            socket = new WebSocket(`${WS_BASE_URL}${payload}`);
+            socket = new WebSocket(`${action.baseUrl}${payload}`);
         };
 
         if (socket) {

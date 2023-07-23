@@ -3,6 +3,7 @@ import { OrderDetailedInfo } from '../../components/modal/order-detailed-info/or
 import { useAppDispatch } from '../../services/hooks/reduxTypes';
 import { useEffect, FC } from 'react';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/socket-actions';
+import { WS_BASE_URL } from '../../constants/constants';
 
 type TProps = {
     anonymous? : boolean
@@ -16,7 +17,7 @@ export const OrderDetailsPage:FC<TProps> = (props) => {
     : `/all`;
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch({type: WS_CONNECTION_START, payload: endpoint});
+        dispatch({type: WS_CONNECTION_START, baseUrl: WS_BASE_URL, payload: endpoint});
         return (() => {
             dispatch({type: WS_CONNECTION_CLOSED});
         })

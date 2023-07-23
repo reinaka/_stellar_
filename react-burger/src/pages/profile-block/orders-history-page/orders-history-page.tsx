@@ -8,13 +8,14 @@ import { useAppSelector, useAppDispatch } from "../../../services/hooks/reduxTyp
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../../services/actions/socket-actions';
 import { ADD_CURRENT_ORDER_DETAILS } from "../../../services/actions/current-order-actions";
 import { Spinner } from "../../../components/ui-elements/spinner/spinner";
+import { WS_BASE_URL } from "../../../constants/constants";
 
 export const OrdersHistoryPage = () => {
     const dispatch = useAppDispatch();
     let accessToken = localStorage.getItem('accessToken');
     if(accessToken) {accessToken = accessToken.replace('Bearer ', '')};
     useEffect(() => {
-        dispatch({type: WS_CONNECTION_START, payload: `?token=${accessToken}`});
+        dispatch({type: WS_CONNECTION_START, baseUrl: WS_BASE_URL, payload: `?token=${accessToken}`});
         return (() => {
             dispatch({type: WS_CONNECTION_CLOSED});
         })

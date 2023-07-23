@@ -6,11 +6,12 @@ import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/action
 import { useAppDispatch, useAppSelector } from '../../services/hooks/reduxTypes';
 import { selectWSConnectionSuccess } from "../../services/functions/selectorFunctions";
 import { Spinner } from "../../components/ui-elements/spinner/spinner";
+import { WS_BASE_URL } from '../../constants/constants';
 
 export const FeedPage:FC = () => {
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch({type: WS_CONNECTION_START, payload: `/all`});
+        dispatch({type: WS_CONNECTION_START, baseUrl: WS_BASE_URL, payload: `/all`});
         return (() => {
             dispatch({type: WS_CONNECTION_CLOSED});
         })
