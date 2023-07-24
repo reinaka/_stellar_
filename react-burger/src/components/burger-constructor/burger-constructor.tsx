@@ -1,4 +1,4 @@
-import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ConstructorElementBlock from './constructor-element-block/constructor-element-block';
 import EmptyConstructorBlock from './empty-constructor-block/empty-constructor-block';
 import { EmptyBunBlock } from './empty-bun-block/empty-bun-block';
@@ -6,7 +6,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../modal/order-details/order-details";
 import styles from './burger-constructor.module.css';
 import { useMemo, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../services/hooks/reduxTypes';
 import { useDrop } from 'react-dnd';
 import { addToConstructor, deleteFromConstructor } from '../../services/actions/constructor-actions';
 import { getOrderNum } from '../../services/actions/order-details-actions';
@@ -23,49 +23,65 @@ import {
 import { BUN } from '../../constants/constants';
 import { useNavigate } from 'react-router-dom';
 import { TIngredient, TIngredientWithUUID } from '../../services/types/types';
+import { Price } from '../ui-elements/price/price';
+import { Spinner } from '../ui-elements/spinner/spinner';
 
 
 function BurgerConstructor() {
-    const items = useSelector(selectBurgerConstructorItems);
-    const selectedBun = useSelector(selectSelectedBun);
-    const totalCost = useSelector(selectConstructorTotalCost);
-    const orderNum = useSelector(selectOrderNum);
-    const loggedIn = useSelector(selectLoginSuccess);
+    const items = useAppSelector(selectBurgerConstructorItems);
+    const selectedBun = useAppSelector(selectSelectedBun);
+    const totalCost = useAppSelector(selectConstructorTotalCost);
+    const orderNum = useAppSelector(selectOrderNum);
+    const loggedIn = useAppSelector(selectLoginSuccess);
     const [isModalVisible, openModal, closeModal] = useModal();
-    const dispatch = useDispatch() as any;
+    const dispatch = useAppDispatch();
     const navigate= useNavigate();
 
     //модальное окно
     const modal = useMemo(
-        () => orderNum && (
+        () => {
+            if(!orderNum) return (
+                (<Modal onClose={() => closeModal()} title="Формируем заказ...">
+                    <div className="m-10">
+                        <Spinner />
+                    </div>
+                </Modal>)
+            )
+            return (
                 (<Modal onClose={() => closeModal()}>
                     <OrderDetails orderNum={orderNum}/>
                 </Modal>)
-            )
+            )}
             , [closeModal, orderNum]);
 
     //верхняя булка
     const topBun = useMemo(
         () => {
-            return (<div className={`${styles.constructorElementBlock} ml-4`}>
-                <ConstructorElementBlock ingredient={selectedBun} isLocked="true" bun="верх" type="top"/>
-                </div>)
+            if(selectedBun) {
+                return (
+                    <div className={`${styles.constructorElementBlock} ml-4`}>
+                        <ConstructorElementBlock ingredient={selectedBun} isLocked="true" bun="верх" type="top"/>
+                    </div>
+                )
+            }
         }
     , [selectedBun]);
     
     //нижняя булка
     const bottomBun = useMemo(
         () => {
-            return (
-                <div className={`${styles.constructorElementBlock} ml-4`}>
-                    <ConstructorElementBlock ingredient={selectedBun} isLocked="true" bun="низ" type="bottom"/>
-                </div>
-            )
+            if(selectedBun) {
+                return (
+                    <div className={`${styles.constructorElementBlock} ml-4`}>
+                        <ConstructorElementBlock ingredient={selectedBun} isLocked="true" bun="низ" type="bottom"/>
+                    </div>
+                )
+            }
         }
     , [selectedBun])
 
     //хэндлер удаления ингредиентов из конструктора
-    const deleteIngredientfromConstructor = useCallback((uuid : number, price : number) => {
+    const deleteIngredientfromConstructor = useCallback((uuid : string, price : number) => {
         dispatch(deleteFromConstructor(items, uuid, price));
     }, [dispatch, items])
 
@@ -73,19 +89,20 @@ function BurgerConstructor() {
     const handleOrderNum = useCallback(() => {
         if(selectedBun) {
             if(loggedIn) {
-                    const data = (items : TIngredient[]) => {
-                        let resultArr = [];
+                openModal();
+                    const data = (items : TIngredientWithUUID[]) => {
+                        let resultArr : string[] = [];
                             resultArr.push(selectedBun._id);
-                            if (items.length) items.forEach(item => resultArr.push(item._id));
+                            if (items.length) items.forEach(item => resultArr.push(item.ingredient._id));
                         return resultArr;
                     };
-                    const dataToPost : {} = {"ingredients": [...data(items)]};
+                    const dataToPost = {"ingredients": [...data(items)]};
                     dispatch(getOrderNum(dataToPost));
             } else {
                 navigate("/login");
             }
         }
-    },[dispatch, items, selectedBun, navigate, loggedIn]);
+    },[dispatch, items, selectedBun, navigate, loggedIn, openModal]);
 
     //dnd добавление ингредиента в конструктор
     const [{ isHover }, dropTarget] = useDrop<TIngredient, void, {isHover : boolean}>({
@@ -105,9 +122,8 @@ function BurgerConstructor() {
 
     //dnd получение индекса перетаскиваемого ингредиента
     const findIngredient = useCallback(
-        (id : number) => {
-            const draggableItem = items.filter((item : TIngredientWithUUID) => item.uuid === id)[0];
-            return items.indexOf(draggableItem);
+        (id : string) => {
+            return items.findIndex(item => item.uuid === id);
         },[items]);
 
     return ( 
@@ -118,7 +134,7 @@ function BurgerConstructor() {
                     {items.length > 0 ? (
                         <ul className={styles.listUl}>
                             {
-                                items.map((item : TIngredientWithUUID) => {
+                                items.map((item) => {
                                     return (
                                         <li className={`${styles.constructorLi} ml-4`} key={item.uuid}>
                                             <ConstructorElementBlock 
@@ -140,16 +156,15 @@ function BurgerConstructor() {
                 {(selectedBun && bottomBun) || <EmptyBunBlock />}
             </div>            
             <span className={`${styles.preOrderInfo} mt-10`}>
-                <span className={styles.prePriceInfo}>
-                    <p className="text text_type_digits-medium">{totalCost}</p>
-                    <CurrencyIcon type="primary"/>
-                </span>
+                <Price price={totalCost} size="big" />
                 <Button htmlType="button" type="primary" size="large" extraClass={`${styles.button} ml-2 mr-4`} 
-                    onClick={() => {handleOrderNum(); openModal()}}>
+                    onClick={() => {handleOrderNum()}}
+                    disabled={selectedBun ? false : true}
+                >
                     <p className={`${styles.button_text} text text_type_main-small`}>Оформить заказ</p>
                 </Button>
             </span>
-            {orderNum && isModalVisible && modal}
+            {isModalVisible && modal}
         </article>
     )
 }

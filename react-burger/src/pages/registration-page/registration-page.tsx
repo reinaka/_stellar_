@@ -2,7 +2,7 @@ import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-de
 import { RegistrationWrapper } from '../../components/ui-elements/form-registration-wrapper/form-registration-wrapper';
 import { useCallback, useState, useEffect } from 'react';
 import { getAuth } from '../../services/actions/auth-actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../services/hooks/reduxTypes';
 import { Navigate, useLocation } from 'react-router-dom';
 import { selectLoginSuccess } from '../../services/functions/selectorFunctions';
 import { useModal } from '../../services/hooks/use-modal';
@@ -20,8 +20,8 @@ type FormStateType = {
 };
 
 export function RegistrationPage () {
-    const dispatch = useDispatch() as any;
-    const loggedIn = useSelector(selectLoginSuccess);
+    const dispatch = useAppDispatch();
+    const loggedIn = useAppSelector(selectLoginSuccess);
     const location = useLocation();
     
     const {values, handleChange} = useFormAndValidation<FormStateType>({
@@ -41,7 +41,7 @@ export function RegistrationPage () {
             dispatch(getAuth(REGISTRATION_ENDPOINT, data));
     },[dispatch]);
 
-    const authError = useSelector(selectAuthError);
+    const authError = useAppSelector(selectAuthError);
     const [errorText, setErrorText] = useState<string>();
     const [isModalVisible, openModal, closeModal] = useModal();
 

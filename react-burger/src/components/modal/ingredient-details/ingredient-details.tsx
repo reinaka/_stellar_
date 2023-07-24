@@ -1,14 +1,14 @@
 import styles from './ingredient-details.module.css';
 import SupplementBlock from "./supplement-block/supplement-block";
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../../services/hooks/reduxTypes';
 import { useParams } from 'react-router-dom';
 import { selectAllIngredients, selectIngredientDetails } from '../../../services/functions/selectorFunctions';
 import { TIngredient } from '../../../services/types/types';
 
 export default function IngredientDetails() {
     const params = useParams();
-    const selectedIngredient = useSelector(selectIngredientDetails);
-    const allIngredients = useSelector(selectAllIngredients).items;
+    const selectedIngredient = useAppSelector(selectIngredientDetails);
+    const allIngredients = useAppSelector(selectAllIngredients).items;
 
     const ingredientData = selectedIngredient 
                         ? selectedIngredient 

@@ -1,0 +1,32 @@
+.outerCircle {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+    border-radius: 50%;
+}
+
+.innerCircle {
+    width: 60px;
+    height: 60px;
+    background: #1C1C21;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.image {
+    width: 100%;
+}
+
+.inactiveImage {
+    opacity: 40%;
+}
+
+.inactiveIcon {
+    position: absolute;
+}

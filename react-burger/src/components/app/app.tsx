@@ -11,7 +11,7 @@ import { ProfilePage } from '../../pages/profile-block/profile-page/profile-page
 import { OrdersHistoryPage } from '../../pages/profile-block/orders-history-page/orders-history-page';
 import ProtectedRouteElement from '../hoc/protected-route';
 import { ResetPasswordPage } from '../../pages/reset-password-page/reset-password-page';
-import { useDispatch, useSelector} from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/reduxTypes';
 import { useEffect, useMemo } from 'react';
 import Modal from '../modal/modal';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
@@ -21,9 +21,13 @@ import { useCallback } from 'react';
 import { getData } from '../../services/actions/all-ingredients-actions';
 import { selectAllIngredients } from '../../services/functions/selectorFunctions';
 import { AUTH_CHECKED, verifyToken } from '../../services/actions/auth-actions';
+import { FeedPage } from '../../pages/feed-block/feed-page';
+import { DELETE_CURRENT_ORDER_DETAILS } from '../../services/actions/current-order-actions';
+import { OrderDetailsPage } from '../../pages/order-details-page/order-details';
+import { OrderDetailedInfo } from '../modal/order-detailed-info/order-detailed-info';
 
 export default function App() {
-    const dispatch = useDispatch() as any;
+    const dispatch = useAppDispatch();
     const accessTokenValue = localStorage.getItem("accessToken");
     useEffect(() => {
         dispatch(getData());
@@ -42,28 +46,52 @@ export default function App() {
     const background = location.state && location.state.background;
     const prevPage = location.state?.from || '/';
     
-    const closeModal = useCallback(() => {
-        dispatch({type: DELETE_INGREDIENT_DETAILS});
+    const closeIngredientModal = useCallback(() => {
         navigate("/", {replace: true});
+        dispatch({type: DELETE_INGREDIENT_DETAILS});
+    }, [dispatch, navigate]);
+
+    const closeOrderModal = useCallback((path : string) => {
+        navigate(path, {replace: true});
+        dispatch({type: DELETE_CURRENT_ORDER_DETAILS});
     }, [dispatch, navigate]);
 
     //модальное окно
-    const modal = useMemo(
-        () => {
-            return (
-                <Modal onClose={closeModal} title='Детали ингредиента'>
-                    <IngredientDetails />
-                </Modal>)
-        }, [closeModal]);
+        const ingredientModal = useMemo(
+            () => {
+                return (
+                    <Modal onClose={closeIngredientModal} title='Детали ингредиента'>
+                        <IngredientDetails />
+                    </Modal>)
+            }, [closeIngredientModal]);
 
-    const allIngredients = useSelector(selectAllIngredients);
+        const orderModalFeed = useMemo(
+            () => {
+                return (
+                    <Modal onClose={() => {closeOrderModal("/feed")}} title='Детали заказа'>
+                        <OrderDetailedInfo />
+                    </Modal>)
+            }, [closeOrderModal]);
+
+        const orderModalProfile = useMemo(
+            () => {
+                return (
+                    <Modal onClose={() => {closeOrderModal("/profile/orders")}} title='Детали заказа'>
+                        <OrderDetailedInfo />
+                    </Modal>)
+            }, [closeOrderModal]);
+
+    const allIngredients = useAppSelector(selectAllIngredients);
 
     return allIngredients && (
             <div className={styles.viewPort}>
                     <Routes location={background || location}>
                         <Route path="/" element={<MainLayoutPage />} >
                             <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />
+                            <Route path='/feed/:orderId' element={<OrderDetailsPage anonymous={false}/>} />
+                            <Route path='/profile/orders/:orderId' element={<ProtectedRouteElement element={<OrderDetailsPage anonymous={true}/>} anonymous={false}/>} />
                             <Route index element={<ConstructorPage/>} />
+                            <Route path='/feed' element={<FeedPage />} />
                             <Route path="/login" element={<ProtectedRouteElement element={<LoginPage />} anonymous={true}/>} />
                             <Route path="register" element={<ProtectedRouteElement element={<RegistrationPage />} anonymous={true}/>} />
                             <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} anonymous={true}/>} />
@@ -80,13 +108,15 @@ export default function App() {
                                 <Route index element={<ProtectedRouteElement element={<ProfilePage />} anonymous={false}/>} />
                                 <Route path="/profile/orders" element={<ProtectedRouteElement element={<OrdersHistoryPage />} anonymous={false}/>} />
                             </Route>
-                            </Route>
-                            <Route path="*" element={< Page404 />} />
+                        </Route>
+                        <Route path="*" element={< Page404 />} />
                     </Routes>
 
                     {background &&
                         <Routes>
-                            <Route path='/ingredients/:ingredientId' element={modal}/>
+                            <Route path='/ingredients/:ingredientId' element={ingredientModal}/>
+                            <Route path='/feed/:orderId' element={orderModalFeed}/>
+                            <Route path='/profile/orders/:orderId' element={orderModalProfile}/>
                         </Routes>
                     }
             </div>

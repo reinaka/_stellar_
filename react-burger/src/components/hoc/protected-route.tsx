@@ -1,5 +1,5 @@
 import { useLocation, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/hooks/reduxTypes";
 import { selectLoginSuccess, selectAuthChecked } from "../../services/functions/selectorFunctions";
 import { Spinner } from '../ui-elements/spinner/spinner';
 
@@ -12,8 +12,8 @@ const ProtectedRouteElement = (props : TProps) => {
     const location = useLocation();
     const from = location.state?.from || '/';
 
-    const authChecked = useSelector(selectAuthChecked);
-    const access = useSelector(selectLoginSuccess);
+    const authChecked = useAppSelector(selectAuthChecked);
+    const access = useAppSelector(selectLoginSuccess);
 
     if (!authChecked) {
         return <Spinner />;

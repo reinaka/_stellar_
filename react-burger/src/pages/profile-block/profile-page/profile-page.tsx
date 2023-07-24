@@ -1,20 +1,20 @@
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile-page.module.css';
 import { selectUserName, selectUserEmail, selectUserPassword } from '../../../services/functions/selectorFunctions';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../../services/hooks/reduxTypes';
 import { getUserInfo, changeUserInfo } from '../../../services/actions/auth-actions';
 import { useEffect, useCallback, useState } from 'react';
 import { GET_USER_INFO_ENDPOINT, BASE_URL } from '../../../constants/constants';
 import { useFormAndValidation } from '../../../services/hooks/use-form-validation';
 
 type FormStateType = {
-    name : string,
-    email : string,
-    password? : string,
+    name : string | undefined,
+    email : string | undefined,
+    password? : string | undefined,
 };
 
 export function ProfilePage() {
-    const dispatch = useDispatch() as any;
+    const dispatch = useAppDispatch();
     const [buttonsVisible, setButtonsVisible] = useState(false);
 
     useEffect(() => {
@@ -22,9 +22,9 @@ export function ProfilePage() {
     }, [dispatch]);
 
 
-    const userName = useSelector(selectUserName);
-    const userEmail = useSelector(selectUserEmail);
-    const userPassword = useSelector(selectUserPassword);
+    const userName = useAppSelector(selectUserName);
+    const userEmail = useAppSelector(selectUserEmail);
+    const userPassword = useAppSelector(selectUserPassword);
     const [initialValues, setInitialValues] = useState<FormStateType>({
         name: userName,
         email: userEmail,
@@ -52,7 +52,7 @@ export function ProfilePage() {
     }, [userEmail, userName, values.email, userPassword, values.name, values.password]);
 
     return (
-        <form 
+        <form className={styles.general}
             onSubmit={(e) => {e.preventDefault(); handleReset()}}
             method="PATCH" 
             action={`${BASE_URL}${GET_USER_INFO_ENDPOINT}`}

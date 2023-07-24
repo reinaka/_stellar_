@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconAndTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.priceAndQuantity {
+    display: flex;
+    flex-direction: row;
+}
+
+.title {
+    max-width : 320px;
+}

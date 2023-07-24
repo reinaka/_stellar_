@@ -2,14 +2,15 @@
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-column-gap: 60px;
-    margin-top: 120px;
+    margin-top: 40px;
 }
 
 .contentBlock {
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 80px;
 }
 
 .link a {

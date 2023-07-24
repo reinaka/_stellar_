@@ -4,7 +4,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { memo, FC } from 'react';
 import { INGREDIENT_ITEM } from '../../../constants/constants';
 import { REORDER_INGREDIENTS_CONSTRUCTOR } from '../../../services/actions/constructor-actions';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../services/hooks/reduxTypes';
 import { TIngredient, TIngredientWithUUID } from '../../../services/types/types';
 
 type TProps = {
@@ -22,13 +22,13 @@ type TProps = {
 
 const ConstructorElementBlock:FC<TProps> = memo(
     (props) => {
-        const dispatch = useDispatch();
+        const dispatch = useAppDispatch();
         let selectedName = undefined;
-        if(props.selectedBun) {selectedName = `${props.ingredient.name} (${props.bun})`};
+        if(props.bun) {selectedName = `${props.ingredient.name} (${props.bun})`};
         const id = props.id;
 
         //dnd элемент, который перетаскиваем
-        const [{ isDragging }, dragReorder] = useDrag<{uuid: number | undefined; originalIndex: any}, void, {isDragging : boolean}>(
+        const [{ isDragging }, dragReorder] = useDrag<{ uuid: string | undefined; originalIndex: any; }, {uuid : string, originalIndex : number}, { isDragging: boolean; }>(
             () => {
             return (!props.draggableIngredient || !props.findIngredient)
             ? {type: INGREDIENT_ITEM}
