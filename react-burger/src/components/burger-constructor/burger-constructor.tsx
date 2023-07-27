@@ -128,7 +128,7 @@ function BurgerConstructor() {
 
     return ( 
         <article>
-            <div ref={dropTarget} className={isHover ? styles.borderStyling : styles.borderInvisible}>
+            <div ref={dropTarget} className={isHover ? styles.borderStyling : styles.borderInvisible} data-cy="constructor">
                 {(selectedBun && topBun) || <EmptyBunBlock />}
                 <section className={`${styles.scroll} mt-4 mb-4`}>
                     {items.length > 0 ? (

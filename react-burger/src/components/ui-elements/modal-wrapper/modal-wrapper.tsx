@@ -10,10 +10,10 @@ type TProps = {
 
 const ModalWrapper:FC<TProps> = (props) => {
     return (
-        <div className={`${styles.wrapper} p-10`}>
+        <div className={`${styles.wrapper} p-10`} data-cy="modal">
             <span className={`${styles.top} mb-4`}>
                 <p className={`${styles.title} mr-9 text text_type_main-large`}>{props.title}</p>
-                    <CloseIcon type="primary" onClick={props.onClose}/>
+                <CloseIcon type="primary" onClick={props.onClose}/>
             </span>
             {props.children}
         </div>
