@@ -14,7 +14,7 @@ type TState = {
     totalCost: number,
 };
 
-const initialState : TState = {
+export const initialState : TState = {
     selectedBun: null,
     items: [],
     totalCost: 0,

@@ -1,56 +1,59 @@
-import { orderReducer } from "./order-reducer";
-import { TOrderActions } from "../actions/order-details-actions";
+import { orderReducer, initialState } from "./order-reducer";
+import { 
+    UPLOAD_ORDER_DETAILS_REQUEST, 
+    UPLOAD_ORDER_DETAILS_SUCCESS, 
+    UPLOAD_ORDER_DETAILS_FAILED 
+} from "../actions/order-details-actions";
 
 describe('order reducer', () => {
-    it('should return the initial state', () => {
-        expect(orderReducer(undefined, {})).toEqual([
+    it('should return initial state', () => {
+        expect(orderReducer(undefined, {})).toEqual(
         {
             orderNum: null,
             orderNumRequest: false,
             orderNumFailed: false,
-        }
-        ])
+        })
     })
 
     it('should handle UPLOAD_ORDER_DETAILS_REQUEST', () => {
         expect(
-            orderReducer([], {
-            type: TOrderActions.UPLOAD_ORDER_DETAILS_REQUEST,
-            text: 'Run the tests'
-        })
-        ).toEqual([
-        {
-            text: 'Run the tests',
-            completed: false,
-            id: 0
-        }
-        ])
+            orderReducer(initialState, {
+                type: UPLOAD_ORDER_DETAILS_REQUEST
+            })
+            ).toEqual(
+            {
+                orderNum: null,
+                orderNumRequest: true,
+                orderNumFailed: false,
+            })
+    })
 
+
+    it('should handle UPLOAD_ORDER_DETAILS_SUCCESS', () => {
         expect(
-            orderReducer(
-            [
+            orderReducer(initialState, {
+                type: UPLOAD_ORDER_DETAILS_SUCCESS,
+                payload: 1255
+            })
+            ).toEqual(
+            {
+                orderNum: 1255,
+                orderNumRequest: false,
+                orderNumFailed: false,
+            })
+    })
+
+
+    it('should handle UPLOAD_ORDER_DETAILS_FAILED', () => {
+        expect(
+            orderReducer(initialState, {
+                type: UPLOAD_ORDER_DETAILS_FAILED,
+            })
+            ).toEqual(
             {
                 orderNum: null,
                 orderNumRequest: false,
-                orderNumFailed: false,
-            }
-            ],
-            {
-            type: TOrderActions.UPLOAD_ORDER_DETAILS_REQUEST,
-            text: 'Run the tests'
-            }
-        )
-        ).toEqual([
-        {
-            text: 'Run the tests',
-            completed: false,
-            id: 1
-        },
-        {
-            text: 'Use Redux',
-            completed: false,
-            id: 0
-        }
-        ])
+                orderNumFailed: true,
+            })
     })
 }) 
