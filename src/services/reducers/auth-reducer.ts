@@ -18,7 +18,7 @@ type TState = {
     }
 };
 
-const initialState : TState = {
+export const initialState : TState = {
     requestFailed: false,
     authError: null,
     requestPending: false,

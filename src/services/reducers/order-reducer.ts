@@ -12,7 +12,7 @@ type TState = {
     orderNumFailed: boolean,
 }
 
-const initialState : TState = {
+export const initialState : TState = {
     orderNum: null,
     orderNumRequest: false,
     orderNumFailed: false,

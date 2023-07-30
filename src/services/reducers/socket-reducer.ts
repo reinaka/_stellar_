@@ -14,7 +14,7 @@ type TWSState = {
     error?: boolean
 }
 
-const initialState: TWSState = {
+export const initialState: TWSState = {
     wsConnected: false,
     total: null,
     totalToday: null,
