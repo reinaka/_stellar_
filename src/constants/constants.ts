@@ -73,6 +73,5 @@ export const ORDER_DETAILS_FOR_TEST = {"_id":"64c38c5b82e277001bfa4d1d",
 "createdAt":"2023-07-28T09:37:31.718Z",
 "updatedAt":"2023-07-28T09:37:31.864Z",
 "number":14807};
-export const URL_FOR_TEST = "http://localhost:3000/_stellar_";
 export const EMAIL_FOR_TEST = "juliabednaia@gmail.com";
 export const PASSWORD_FOR_TEST = "1234567";
