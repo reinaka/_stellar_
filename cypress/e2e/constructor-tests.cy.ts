@@ -1,6 +1,8 @@
-describe("Тестированеи роутинга", () => {
+import { EMAIL_FOR_TEST, PASSWORD_FOR_TEST, URL_FOR_TEST } from '../../src/constants/constants';
+
+describe("Тестирование роутинга", () => {
     before(() => {
-        cy.visit('http://localhost:3000/_stellar_');
+        cy.visit(URL_FOR_TEST);
     });
 
     it("Должна открыться страница Конструктора", () => {
@@ -8,19 +10,19 @@ describe("Тестированеи роутинга", () => {
     });
 
     it("Должен произойти переход на Ленту заказов", () => {
-        cy.visit('http://localhost:3000/_stellar_')
+        cy.visit(URL_FOR_TEST)
         cy.contains("Лента заказов").click()
         cy.contains("Выполнено")
     });
 
     it("Должен произойти переход в Личный кабинет или на страницу логина", () => {
-        cy.visit('http://localhost:3000/_stellar_')
+        cy.visit(URL_FOR_TEST)
         cy.contains("Личный кабинет").click()
         cy.contains("Вход" || "изменить свои персональные данные") 
     });
 
     it("Должен прооизойти переход на страницу Конструктора", () => {
-        cy.visit('http://localhost:3000/_stellar_')
+        cy.visit(URL_FOR_TEST)
         cy.contains("Конструктор").click()
         cy.contains("Соберите бургер");
     })
@@ -29,12 +31,12 @@ describe("Тестированеи роутинга", () => {
 
 describe("Тестирование формы для логина", () => {
     it("Пробуем залогиниться", () => {
-        cy.visit('http://localhost:3000/_stellar_/login')
+        cy.visit(`${URL_FOR_TEST}/login`)
         cy.get("div").contains('E-mail').parent().within(() => {
-            cy.get("input").type("juliabednaia@gmail.com")
+            cy.get("input").type(EMAIL_FOR_TEST)
         })
         cy.get("div").contains("Пароль").parent().within(() => {
-            cy.get("input").type("1234567")
+            cy.get("input").type(PASSWORD_FOR_TEST)
         })
         cy.contains("Войти").click()
         cy.contains("Конструктор")
@@ -43,7 +45,7 @@ describe("Тестирование формы для логина", () => {
 
 describe("Тестируем корректность загрузки ингредиентов и работоспособность функционала", () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000/_stellar_')
+        cy.visit(URL_FOR_TEST)
         cy.wait(3000)
         it("Проверка структуры ингредиентов", () => {
             cy.intercept("GET", "api/ingredients", {fixture: "ingredients.json"})
@@ -89,12 +91,12 @@ describe("Тестируем корректность загрузки ингр�
 
 
     it("Проверка модального окна с деталями заказа", () => {
-        cy.visit('http://localhost:3000/_stellar_/login')
+        cy.visit(`${URL_FOR_TEST}/login`)
         cy.get("div").contains('E-mail').parent().within(() => {
-            cy.get("input").type("juliabednaia@gmail.com")
+            cy.get("input").type(EMAIL_FOR_TEST)
         })
         cy.get("div").contains("Пароль").parent().within(() => {
-            cy.get("input").type("1234567")
+            cy.get("input").type(PASSWORD_FOR_TEST)
         })
         cy.contains("Войти").click()
         cy.contains("Конструктор")

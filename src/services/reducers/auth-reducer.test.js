@@ -3,23 +3,7 @@ import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILED, UPDATE_TOKEN, LOGOUT, AUTH_CHE
 
 describe("auth reducer", () => {
     it('should return initial state', () => {
-        expect(authReducer(undefined, {})).toEqual(
-        {
-            requestFailed: false,
-            authError: null,
-            requestPending: false,
-            isAuthChecked: false,
-            userData: {
-                "success": false,
-                "accessToken": "",
-                "refreshToken": "",
-                "user": {
-                    "email": "",
-                    "name": "",
-                    "password" : ""
-                }
-            }
-        })
+        expect(authReducer(undefined, {})).toEqual(initialState);
     })
 
 
@@ -30,20 +14,8 @@ describe("auth reducer", () => {
             })
             ).toEqual(
             {
-                requestFailed: false,
-                authError: null,
-                requestPending: true,
-                isAuthChecked: false,
-                userData: {
-                    "success": false,
-                    "accessToken": "",
-                    "refreshToken": "",
-                    "user": {
-                        "email": "",
-                        "name": "",
-                        "password" : ""
-                    }
-                }
+                ...initialState,
+                requestPending: true
             })
         })
 
@@ -63,14 +35,10 @@ describe("auth reducer", () => {
             })
             ).toEqual(
             {
-                requestFailed: false,
-                authError: null,
-                requestPending: false,
-                isAuthChecked: false,
+                ...initialState,
                 userData: {
+                    ...initialState.userData,
                     "success": true,
-                    "accessToken": "",
-                    "refreshToken": "",
                     "user": {
                         "email": "kate@gmail.com",
                         "name": "Kate",
@@ -89,20 +57,9 @@ describe("auth reducer", () => {
             })
             ).toEqual(
             {
+                ...initialState,
                 requestFailed: true,
-                authError: "Error message",
-                requestPending: false,
-                isAuthChecked: false,
-                userData: {
-                    "success": false,
-                    "accessToken": "",
-                    "refreshToken": "",
-                    "user": {
-                        "email": "",
-                        "name": "",
-                        "password" : ""
-                    }
-                }
+                authError: "Error message"
             })
         })
 
@@ -118,19 +75,12 @@ describe("auth reducer", () => {
             })
             ).toEqual(
             {
-                requestFailed: false,
-                authError: null,
-                requestPending: false,
-                isAuthChecked: false,
+                ...initialState,
                 userData: {
+                    ...initialState.userData,
                     "success": true,
                     "accessToken": "access12345",
-                    "refreshToken": "refresh12345",
-                    "user": {
-                        "email": "",
-                        "name": "",
-                        "password" : ""
-                    }
+                    "refreshToken": "refresh12345"
                 }
             })
         })
@@ -141,23 +91,7 @@ describe("auth reducer", () => {
             authReducer(initialState, {
                 type: LOGOUT
             })
-            ).toEqual(
-                {
-                    requestFailed: false,
-                    authError: null,
-                    requestPending: false,
-                    isAuthChecked: false,
-                    userData: {
-                        "success": false,
-                        "accessToken": "",
-                        "refreshToken": "",
-                        "user": {
-                            "email": "",
-                            "name": "",
-                            "password" : ""
-                        }
-                    }
-                })
+            ).toEqual(initialState)
         })
 
     it('should handle AUTH_CHECKED', () => {
@@ -167,20 +101,8 @@ describe("auth reducer", () => {
             })
             ).toEqual(
                 {
-                    requestFailed: false,
-                    authError: null,
-                    requestPending: false,
-                    isAuthChecked: true,
-                    userData: {
-                        "success": false,
-                        "accessToken": "",
-                        "refreshToken": "",
-                        "user": {
-                            "email": "",
-                            "name": "",
-                            "password" : ""
-                        }
-                    }
+                    ...initialState,
+                    isAuthChecked: true
                 })
         })
 })

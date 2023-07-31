@@ -6,6 +6,7 @@ import {
     REORDER_INGREDIENTS_CONSTRUCTOR,
     CLEAR_CONSTRUCTOR
 } from '../actions/constructor-actions';
+import { BUN_FOR_TEST, FILLING_FOR_TEST, SAUCE_FOR_TEST } from '../../constants/constants';
 
 describe("constructor ingredients reducer", () => {
     it("Should return initial state", () => {
@@ -21,37 +22,11 @@ describe("constructor ingredients reducer", () => {
         expect(
             constructorIngredientsReducer(initialState, {
                 type: ADD_BUN_CONSTRUCTOR,
-                payload: {
-                    "_id":"60666c42cc7b410027a1a9b1",
-                    "name":"Краторная булка N-200i",
-                    "type":"bun",
-                    "proteins":80,
-                    "fat":24,
-                    "carbohydrates":53,
-                    "calories":420,
-                    "price":1255,
-                    "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    "__v":0
-                }
+                payload: BUN_FOR_TEST
             })
             ).toEqual(
             {
-                selectedBun: {
-                    "_id":"60666c42cc7b410027a1a9b1",
-                    "name":"Краторная булка N-200i",
-                    "type":"bun",
-                    "proteins":80,
-                    "fat":24,
-                    "carbohydrates":53,
-                    "calories":420,
-                    "price":1255,
-                    "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    "__v":0
-                },
+                selectedBun: BUN_FOR_TEST,
                 items: [],
                 totalCost: 2510,
             })
@@ -62,20 +37,7 @@ describe("constructor ingredients reducer", () => {
         expect(
             constructorIngredientsReducer(initialState, {
                 type: ADD_INGREDIENT_CONSTRUCTOR,
-                payload: {
-                    "_id":"60666c42cc7b410027a1a9b7",
-                    "name":"Соус Spicy-X",
-                    "type":"sauce",
-                    "proteins":30,
-                    "fat":20,
-                    "carbohydrates":40,
-                    "calories":30,
-                    "price":90,
-                    "image":"https://code.s3.yandex.net/react/code/sauce-02.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/sauce-02-large.png",
-                    "__v":0
-                },
+                payload: FILLING_FOR_TEST,
                 uuid: 1234
             })
             ).toEqual(
@@ -83,24 +45,11 @@ describe("constructor ingredients reducer", () => {
                 selectedBun: null,
                 items: [
                     {
-                        ingredient: {
-                            "_id":"60666c42cc7b410027a1a9b7",
-                            "name":"Соус Spicy-X",
-                            "type":"sauce",
-                            "proteins":30,
-                            "fat":20,
-                            "carbohydrates":40,
-                            "calories":30,
-                            "price":90,
-                            "image":"https://code.s3.yandex.net/react/code/sauce-02.png",
-                            "image_mobile":"https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-                            "image_large":"https://code.s3.yandex.net/react/code/sauce-02-large.png",
-                            "__v":0
-                        },
+                        ingredient: FILLING_FOR_TEST,
                         uuid: 1234
                     }
                 ],
-                totalCost: 90,
+                totalCost: 3000,
             })
     })
 
@@ -110,30 +59,17 @@ describe("constructor ingredients reducer", () => {
             selectedBun: null,
             items: [
                 {
-                    ingredient: {
-                        "_id":"60666c42cc7b410027a1a9b7",
-                        "name":"Соус Spicy-X",
-                        "type":"sauce",
-                        "proteins":30,
-                        "fat":20,
-                        "carbohydrates":40,
-                        "calories":30,
-                        "price":90,
-                        "image":"https://code.s3.yandex.net/react/code/sauce-02.png",
-                        "image_mobile":"https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-                        "image_large":"https://code.s3.yandex.net/react/code/sauce-02-large.png",
-                        "__v":0
-                    },
+                    ingredient: FILLING_FOR_TEST,
                     uuid: 1234
                 }
             ],
-            totalCost: 90,
+            totalCost: 3000,
         };
         expect(
             constructorIngredientsReducer(currentState, {
                 type: DELETE_INGREDIENT_CONSTRUCTOR,
                 payload: [],
-                price: 90
+                price: 3000
             })
             ).toEqual(
             {
@@ -149,41 +85,15 @@ describe("constructor ingredients reducer", () => {
             selectedBun: null,
             items: [
                 {
-                    ingredient: {
-                        "_id":"60666c42cc7b410027a1a9b7",
-                        "name":"Соус Spicy-X",
-                        "type":"sauce",
-                        "proteins":30,
-                        "fat":20,
-                        "carbohydrates":40,
-                        "calories":30,
-                        "price":90,
-                        "image":"https://code.s3.yandex.net/react/code/sauce-02.png",
-                        "image_mobile":"https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-                        "image_large":"https://code.s3.yandex.net/react/code/sauce-02-large.png",
-                        "__v":0
-                    },
+                    ingredient: FILLING_FOR_TEST,
                     uuid: 1234
                 },
                 {
-                    ingredient: {
-                        "_id":"60666c42cc7b410027a1a9b8",
-                        "name":"Соус фирменный Space Sauce",
-                        "type":"sauce",
-                        "proteins":50,
-                        "fat":22,
-                        "carbohydrates":11,
-                        "calories":14,
-                        "price":80,
-                        "image":"https://code.s3.yandex.net/react/code/sauce-04.png",
-                        "image_mobile":"https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
-                        "image_large":"https://code.s3.yandex.net/react/code/sauce-04-large.png",
-                        "__v":0
-                    },
+                    ingredient: SAUCE_FOR_TEST,
                     uuid: 5678
                 }
             ],
-            totalCost: 170,
+            totalCost: 3080,
         };
         expect(
             constructorIngredientsReducer(currentState, {
@@ -196,81 +106,29 @@ describe("constructor ingredients reducer", () => {
                 selectedBun: null,
                 items: [
                     {
-                        ingredient: {
-                            "_id":"60666c42cc7b410027a1a9b8",
-                            "name":"Соус фирменный Space Sauce",
-                            "type":"sauce",
-                            "proteins":50,
-                            "fat":22,
-                            "carbohydrates":11,
-                            "calories":14,
-                            "price":80,
-                            "image":"https://code.s3.yandex.net/react/code/sauce-04.png",
-                            "image_mobile":"https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
-                            "image_large":"https://code.s3.yandex.net/react/code/sauce-04-large.png",
-                            "__v":0
-                        },
+                        ingredient: SAUCE_FOR_TEST,
                         uuid: 5678
                     },
                     {
-                        ingredient: {
-                            "_id":"60666c42cc7b410027a1a9b7",
-                            "name":"Соус Spicy-X",
-                            "type":"sauce",
-                            "proteins":30,
-                            "fat":20,
-                            "carbohydrates":40,
-                            "calories":30,
-                            "price":90,
-                            "image":"https://code.s3.yandex.net/react/code/sauce-02.png",
-                            "image_mobile":"https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-                            "image_large":"https://code.s3.yandex.net/react/code/sauce-02-large.png",
-                            "__v":0
-                        },
+                        ingredient: FILLING_FOR_TEST,
                         uuid: 1234
                     }
                 ],
-                totalCost: 170,
+                totalCost: 3080,
             })
     })
 
 
     it("Should handle CLEAR_CONSTRUCTOR", () => {
         const currentState = {
-            selectedBun: {
-                "_id":"60666c42cc7b410027a1a9b1",
-                "name":"Краторная булка N-200i",
-                "type":"bun",
-                "proteins":80,
-                "fat":24,
-                "carbohydrates":53,
-                "calories":420,
-                "price":1255,
-                "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                "__v":0
-            },
+            selectedBun: BUN_FOR_TEST,
             items: [
                 {
-                    ingredient: {
-                        "_id":"60666c42cc7b410027a1a9b7",
-                        "name":"Соус Spicy-X",
-                        "type":"sauce",
-                        "proteins":30,
-                        "fat":20,
-                        "carbohydrates":40,
-                        "calories":30,
-                        "price":90,
-                        "image":"https://code.s3.yandex.net/react/code/sauce-02.png",
-                        "image_mobile":"https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-                        "image_large":"https://code.s3.yandex.net/react/code/sauce-02-large.png",
-                        "__v":0
-                    },
+                    ingredient: FILLING_FOR_TEST,
                     uuid: 1234
                 }
             ],
-            totalCost: 2600,
+            totalCost: 3000,
         };
         expect(
             constructorIngredientsReducer(currentState, {

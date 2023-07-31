@@ -4,15 +4,11 @@ import {
     UPLOAD_INGREDIENTS_DATA_SUCCESS, 
     UPLOAD_INGREDIENTS_DATA_FAILED,
 } from '../actions/all-ingredients-actions';
+import { BUN_FOR_TEST, FILLING_FOR_TEST } from "../../constants/constants";
 
 describe("all ingredients redicer", () => {
     it('should return initial state', () => {
-        expect(allIngredientsReducer(undefined, {})).toEqual(
-        {
-            items: [],
-            itemsRequest: false,
-            itemsFailed: false,
-        })
+        expect(allIngredientsReducer(undefined, {})).toEqual(initialState);
     })
 
 
@@ -23,9 +19,8 @@ describe("all ingredients redicer", () => {
             })
             ).toEqual(
             {
-                items: [],
-                itemsRequest: true,
-                itemsFailed: false,
+                ...initialState,
+                itemsRequest: true
             })
     })
 
@@ -34,71 +29,12 @@ describe("all ingredients redicer", () => {
         expect(
             allIngredientsReducer(initialState, {
                 type: UPLOAD_INGREDIENTS_DATA_SUCCESS,
-                items: [
-                    {
-                        "_id":"60666c42cc7b410027a1a9b1",
-                        "name":"Краторная булка N-200i",
-                        "type":"bun",
-                        "proteins":80,
-                        "fat":24,
-                        "carbohydrates":53,
-                        "calories":420,
-                        "price":1255,
-                        "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                        "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                        "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                        "__v":0
-                    },
-                    {
-                        "_id":"60666c42cc7b410027a1a9b5",
-                        "name":"Говяжий метеорит (отбивная)",
-                        "type":"main",
-                        "proteins":800,
-                        "fat":800,
-                        "carbohydrates":300,
-                        "calories":2674,
-                        "price":3000,
-                        "image":"https://code.s3.yandex.net/react/code/meat-04.png",
-                        "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-                        "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
-                        "__v":0
-                    }
-                ]
+                items: [BUN_FOR_TEST, FILLING_FOR_TEST]
             })
             ).toEqual(
             {
-                items: [
-                    {
-                        "_id":"60666c42cc7b410027a1a9b1",
-                        "name":"Краторная булка N-200i",
-                        "type":"bun",
-                        "proteins":80,
-                        "fat":24,
-                        "carbohydrates":53,
-                        "calories":420,
-                        "price":1255,
-                        "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                        "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                        "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                        "__v":0
-                    },
-                    {
-                        "_id":"60666c42cc7b410027a1a9b5",
-                        "name":"Говяжий метеорит (отбивная)",
-                        "type":"main",
-                        "proteins":800,
-                        "fat":800,
-                        "carbohydrates":300,
-                        "calories":2674,
-                        "price":3000,
-                        "image":"https://code.s3.yandex.net/react/code/meat-04.png",
-                        "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-                        "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
-                        "__v":0
-                    }
-                ],
-                itemsRequest: false,
-                itemsFailed: false,
+                ...initialState,
+                items: [BUN_FOR_TEST, FILLING_FOR_TEST]
             })
     })
 
@@ -109,9 +45,8 @@ describe("all ingredients redicer", () => {
             })
             ).toEqual(
             {
-                itemsFailed: true, 
-                itemsRequest: false,
-                items: []
+                ...initialState,
+                itemsFailed: true
             })
     })
 })

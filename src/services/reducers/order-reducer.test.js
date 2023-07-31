@@ -7,12 +7,7 @@ import {
 
 describe('order reducer', () => {
     it('should return initial state', () => {
-        expect(orderReducer(undefined, {})).toEqual(
-        {
-            orderNum: null,
-            orderNumRequest: false,
-            orderNumFailed: false,
-        })
+        expect(orderReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle UPLOAD_ORDER_DETAILS_REQUEST', () => {
@@ -22,9 +17,8 @@ describe('order reducer', () => {
             })
             ).toEqual(
             {
-                orderNum: null,
-                orderNumRequest: true,
-                orderNumFailed: false,
+                ...initialState,
+                orderNumRequest: true
             })
     })
 
@@ -37,9 +31,8 @@ describe('order reducer', () => {
             })
             ).toEqual(
             {
-                orderNum: 1255,
-                orderNumRequest: false,
-                orderNumFailed: false,
+                ...initialState,
+                orderNum: 1255
             })
     })
 
@@ -51,9 +44,8 @@ describe('order reducer', () => {
             })
             ).toEqual(
             {
-                orderNum: null,
-                orderNumRequest: false,
-                orderNumFailed: true,
+                ...initialState,
+                orderNumFailed: true
             })
     })
 }) 

@@ -1,5 +1,6 @@
 import { currentIngredientReducer, initialState } from './current-ingredient-reducer';
 import { ADD_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS} from '../actions/current-ingredient-actions';
+import { SAUCE_FOR_TEST } from '../../constants/constants';
 
 describe("currentIngredientReducer", () => {
     it('should return initial state', () => {
@@ -10,54 +11,15 @@ describe("currentIngredientReducer", () => {
         expect(
             currentIngredientReducer(initialState, {
                 type: ADD_INGREDIENT_DETAILS,
-                payload: {
-                    "_id":"60666c42cc7b410027a1a9b8",
-                    "name":"Соус фирменный Space Sauce",
-                    "type":"sauce",
-                    "proteins":50,
-                    "fat":22,
-                    "carbohydrates":11,
-                    "calories":14,
-                    "price":80,
-                    "image":"https://code.s3.yandex.net/react/code/sauce-04.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/sauce-04-large.png",
-                    "__v":0
-                }
+                payload: SAUCE_FOR_TEST
             })
             ).toEqual(
-                {
-                    "_id":"60666c42cc7b410027a1a9b8",
-                    "name":"Соус фирменный Space Sauce",
-                    "type":"sauce",
-                    "proteins":50,
-                    "fat":22,
-                    "carbohydrates":11,
-                    "calories":14,
-                    "price":80,
-                    "image":"https://code.s3.yandex.net/react/code/sauce-04.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/sauce-04-large.png",
-                    "__v":0
-                })
+                SAUCE_FOR_TEST)
     })
 
 
     it('should handle DELETE_INGREDIENT_DETAILS', () => {
-        const currentState = {
-            "_id":"60666c42cc7b410027a1a9b8",
-            "name":"Соус фирменный Space Sauce",
-            "type":"sauce",
-            "proteins":50,
-            "fat":22,
-            "carbohydrates":11,
-            "calories":14,
-            "price":80,
-            "image":"https://code.s3.yandex.net/react/code/sauce-04.png",
-            "image_mobile":"https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
-            "image_large":"https://code.s3.yandex.net/react/code/sauce-04-large.png",
-            "__v":0
-        }
+        const currentState = SAUCE_FOR_TEST
         expect(
             currentIngredientReducer(currentState, {
                 type: DELETE_INGREDIENT_DETAILS,
